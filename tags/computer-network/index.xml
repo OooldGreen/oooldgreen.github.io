@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>computer network on Snow Cabin</title>
-    <link>/tags/computer-network/</link>
+    <link>https://oooldgreen.github.io/tags/computer-network/</link>
     <description>Recent content in computer network on Snow Cabin</description>
     <image>
-      <url></url>
-      <link></link>
+      <url>https://oooldgreen.github.io/</url>
+      <link>https://oooldgreen.github.io/</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 14 Nov 2022 15:57:02 +0800</lastBuildDate><atom:link href="/tags/computer-network/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 14 Nov 2022 15:57:02 +0800</lastBuildDate><atom:link href="https://oooldgreen.github.io/tags/computer-network/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>计算机网络</title>
-      <link>/posts/cs/computer-networks/</link>
+      <link>https://oooldgreen.github.io/posts/cs/computer-networks/</link>
       <pubDate>Mon, 14 Nov 2022 15:57:02 +0800</pubDate>
       
-      <guid>/posts/cs/computer-networks/</guid>
+      <guid>https://oooldgreen.github.io/posts/cs/computer-networks/</guid>
       <description>Computer Network is a MOOC class.</description>
     </item>
     

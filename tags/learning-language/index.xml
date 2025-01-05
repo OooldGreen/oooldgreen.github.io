@@ -2,29 +2,29 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>learning language on Snow Cabin</title>
-    <link>/tags/learning-language/</link>
+    <link>https://oooldgreen.github.io/tags/learning-language/</link>
     <description>Recent content in learning language on Snow Cabin</description>
     <image>
-      <url></url>
-      <link></link>
+      <url>https://oooldgreen.github.io/</url>
+      <link>https://oooldgreen.github.io/</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 30 Aug 2023 10:01:00 +0800</lastBuildDate><atom:link href="/tags/learning-language/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 30 Aug 2023 10:01:00 +0800</lastBuildDate><atom:link href="https://oooldgreen.github.io/tags/learning-language/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>みんなの日本語</title>
-      <link>/posts/language/%E3%81%BF%E3%82%93%E3%81%AA%E3%81%AE%E6%97%A5%E6%9C%AC%E8%AA%9E/</link>
+      <link>https://oooldgreen.github.io/posts/language/%E3%81%BF%E3%82%93%E3%81%AA%E3%81%AE%E6%97%A5%E6%9C%AC%E8%AA%9E/</link>
       <pubDate>Wed, 30 Aug 2023 10:01:00 +0800</pubDate>
       
-      <guid>/posts/language/%E3%81%BF%E3%82%93%E3%81%AA%E3%81%AE%E6%97%A5%E6%9C%AC%E8%AA%9E/</guid>
+      <guid>https://oooldgreen.github.io/posts/language/%E3%81%BF%E3%82%93%E3%81%AA%E3%81%AE%E6%97%A5%E6%9C%AC%E8%AA%9E/</guid>
       <description>大家的日语课堂笔记</description>
     </item>
     
     <item>
       <title>日语语法汇总</title>
-      <link>/posts/language/japanese-grammar/</link>
+      <link>https://oooldgreen.github.io/posts/language/japanese-grammar/</link>
       <pubDate>Sat, 26 Aug 2023 15:28:12 +0800</pubDate>
       
-      <guid>/posts/language/japanese-grammar/</guid>
+      <guid>https://oooldgreen.github.io/posts/language/japanese-grammar/</guid>
       <description>&lt;h2 id=&#34;日语语法学习&#34;&gt;日语语法学习&lt;/h2&gt;
 &lt;p&gt;听不懂暂停了，学完再来总结吧&lt;/p&gt;</description>
     </item>

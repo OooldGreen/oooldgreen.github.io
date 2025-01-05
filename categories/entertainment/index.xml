@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Entertainment on Snow Cabin</title>
-    <link>/categories/entertainment/</link>
+    <link>https://oooldgreen.github.io/categories/entertainment/</link>
     <description>Recent content in Entertainment on Snow Cabin</description>
     <image>
-      <url></url>
-      <link></link>
+      <url>https://oooldgreen.github.io/</url>
+      <link>https://oooldgreen.github.io/</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 21 Feb 2023 20:16:36 +0800</lastBuildDate><atom:link href="/categories/entertainment/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 21 Feb 2023 20:16:36 +0800</lastBuildDate><atom:link href="https://oooldgreen.github.io/categories/entertainment/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>礼物</title>
-      <link>/posts/daily/christmas-santa-2022/</link>
+      <link>https://oooldgreen.github.io/posts/daily/christmas-santa-2022/</link>
       <pubDate>Tue, 21 Feb 2023 20:16:36 +0800</pubDate>
       
-      <guid>/posts/daily/christmas-santa-2022/</guid>
+      <guid>https://oooldgreen.github.io/posts/daily/christmas-santa-2022/</guid>
       <description>交换礼物的时候抱着一种好奇心，很好奇会收到怎么样的礼物。再加上寒假早早的回家又让我与礼物擦肩而过，去拿礼物时真的已经迫不及待啦。
 结果果然出乎我的意料！
 没有想到能够在快结束寝室生活的时候，能和朋友们用正宗的宽敞的电火锅一起在宿舍吃上一顿火锅：）
@@ -28,10 +28,10 @@
     
     <item>
       <title>Angean Blue</title>
-      <link>/posts/daily/angean-blue/</link>
+      <link>https://oooldgreen.github.io/posts/daily/angean-blue/</link>
       <pubDate>Sun, 16 Oct 2022 00:00:00 +0000</pubDate>
       
-      <guid>/posts/daily/angean-blue/</guid>
+      <guid>https://oooldgreen.github.io/posts/daily/angean-blue/</guid>
       <description>&lt;p&gt;周末和朋友约了一起去吃一家希腊菜餐厅，超级远的&lt;/p&gt;
 &lt;p&gt;但是很好吃，不辜负我公交快坐晕车 :)&lt;/p&gt;</description>
     </item>

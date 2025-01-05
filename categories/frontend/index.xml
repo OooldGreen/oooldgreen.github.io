@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Frontend on Snow Cabin</title>
-    <link>/categories/frontend/</link>
+    <link>https://oooldgreen.github.io/categories/frontend/</link>
     <description>Recent content in Frontend on Snow Cabin</description>
     <image>
-      <url></url>
-      <link></link>
+      <url>https://oooldgreen.github.io/</url>
+      <link>https://oooldgreen.github.io/</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sun, 06 Nov 2022 15:35:31 +0800</lastBuildDate><atom:link href="/categories/frontend/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 06 Nov 2022 15:35:31 +0800</lastBuildDate><atom:link href="https://oooldgreen.github.io/categories/frontend/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Promise</title>
-      <link>/posts/frontend/js-promise/</link>
+      <link>https://oooldgreen.github.io/posts/frontend/js-promise/</link>
       <pubDate>Sun, 06 Nov 2022 15:35:31 +0800</pubDate>
       
-      <guid>/posts/frontend/js-promise/</guid>
+      <guid>https://oooldgreen.github.io/posts/frontend/js-promise/</guid>
       <description>汇总 Promise 对象的由来、用法、方法和 async/await。
 从是什么，怎么用开始讲起，然后讲讲具体有哪些方法和应用场景，最后再浅提一下 async/await。
 为什么要有 Promise 对象 一句话：解决回调地狱 (callback hell)
@@ -27,28 +27,28 @@
     
     <item>
       <title>期末知识点复习</title>
-      <link>/posts/frontend/interview-practice/</link>
+      <link>https://oooldgreen.github.io/posts/frontend/interview-practice/</link>
       <pubDate>Sun, 30 Oct 2022 10:35:16 +0800</pubDate>
       
-      <guid>/posts/frontend/interview-practice/</guid>
+      <guid>https://oooldgreen.github.io/posts/frontend/interview-practice/</guid>
       <description>&lt;p&gt;方便反复诵读复习&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Budget Travel 项目记录 Day2</title>
-      <link>/posts/frontend/vue-budget-travel-day2/</link>
+      <link>https://oooldgreen.github.io/posts/frontend/vue-budget-travel-day2/</link>
       <pubDate>Sat, 29 Oct 2022 00:00:00 +0000</pubDate>
       
-      <guid>/posts/frontend/vue-budget-travel-day2/</guid>
+      <guid>https://oooldgreen.github.io/posts/frontend/vue-budget-travel-day2/</guid>
       <description>&lt;p&gt;穷游小项目跟练第二天。发现这虽然只是个随便练手的小项目，但是真的能练到很多理论上看过但没用过的功能（对我这种没有实战经验的小菜鸡来说）。&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Budget Travel 项目记录 Day1</title>
-      <link>/posts/frontend/vue-budget-travel-day1/</link>
+      <link>https://oooldgreen.github.io/posts/frontend/vue-budget-travel-day1/</link>
       <pubDate>Wed, 19 Oct 2022 20:54:07 +0800</pubDate>
       
-      <guid>/posts/frontend/vue-budget-travel-day1/</guid>
+      <guid>https://oooldgreen.github.io/posts/frontend/vue-budget-travel-day1/</guid>
       <description>&lt;p&gt;穷游小项目跟练第一天。&lt;/p&gt;</description>
     </item>
     

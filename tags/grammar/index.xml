@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>grammar on Snow Cabin</title>
-    <link>/tags/grammar/</link>
+    <link>https://oooldgreen.github.io/tags/grammar/</link>
     <description>Recent content in grammar on Snow Cabin</description>
     <image>
-      <url></url>
-      <link></link>
+      <url>https://oooldgreen.github.io/</url>
+      <link>https://oooldgreen.github.io/</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sat, 26 Aug 2023 15:28:12 +0800</lastBuildDate><atom:link href="/tags/grammar/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 26 Aug 2023 15:28:12 +0800</lastBuildDate><atom:link href="https://oooldgreen.github.io/tags/grammar/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>日语语法汇总</title>
-      <link>/posts/language/japanese-grammar/</link>
+      <link>https://oooldgreen.github.io/posts/language/japanese-grammar/</link>
       <pubDate>Sat, 26 Aug 2023 15:28:12 +0800</pubDate>
       
-      <guid>/posts/language/japanese-grammar/</guid>
+      <guid>https://oooldgreen.github.io/posts/language/japanese-grammar/</guid>
       <description>&lt;h2 id=&#34;日语语法学习&#34;&gt;日语语法学习&lt;/h2&gt;
 &lt;p&gt;听不懂暂停了，学完再来总结吧&lt;/p&gt;</description>
     </item>

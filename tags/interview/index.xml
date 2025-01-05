@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>interview on Snow Cabin</title>
-    <link>/tags/interview/</link>
+    <link>https://oooldgreen.github.io/tags/interview/</link>
     <description>Recent content in interview on Snow Cabin</description>
     <image>
-      <url></url>
-      <link></link>
+      <url>https://oooldgreen.github.io/</url>
+      <link>https://oooldgreen.github.io/</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sun, 30 Oct 2022 10:35:16 +0800</lastBuildDate><atom:link href="/tags/interview/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 30 Oct 2022 10:35:16 +0800</lastBuildDate><atom:link href="https://oooldgreen.github.io/tags/interview/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>期末知识点复习</title>
-      <link>/posts/frontend/interview-practice/</link>
+      <link>https://oooldgreen.github.io/posts/frontend/interview-practice/</link>
       <pubDate>Sun, 30 Oct 2022 10:35:16 +0800</pubDate>
       
-      <guid>/posts/frontend/interview-practice/</guid>
+      <guid>https://oooldgreen.github.io/posts/frontend/interview-practice/</guid>
       <description>&lt;p&gt;方便反复诵读复习&lt;/p&gt;</description>
     </item>
     

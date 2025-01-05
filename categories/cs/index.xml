@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>CS on Snow Cabin</title>
-    <link>/categories/cs/</link>
+    <link>https://oooldgreen.github.io/categories/cs/</link>
     <description>Recent content in CS on Snow Cabin</description>
     <image>
-      <url></url>
-      <link></link>
+      <url>https://oooldgreen.github.io/</url>
+      <link>https://oooldgreen.github.io/</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 13 Feb 2023 20:17:33 +0800</lastBuildDate><atom:link href="/categories/cs/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 13 Feb 2023 20:17:33 +0800</lastBuildDate><atom:link href="https://oooldgreen.github.io/categories/cs/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Vue2 Elm Day5</title>
-      <link>/posts/frontend/vue2-elm-day5/</link>
+      <link>https://oooldgreen.github.io/posts/frontend/vue2-elm-day5/</link>
       <pubDate>Mon, 13 Feb 2023 20:17:33 +0800</pubDate>
       
-      <guid>/posts/frontend/vue2-elm-day5/</guid>
+      <guid>https://oooldgreen.github.io/posts/frontend/vue2-elm-day5/</guid>
       <description>餐馆列表页 首先在 ShopList.vue 中将单纯的列表改为路由跳转
 1 2 3 &amp;lt;ul v-load-more=&amp;#34;loaderMore&amp;#34; type=&amp;#34;1&amp;#34; v-if=&amp;#34;shopList.length&amp;#34;&amp;gt; &amp;lt;router-link :to=&amp;#34;{ path: &amp;#39;shop&amp;#39;, query: { geohash, id: item.id} }&amp;#34; class=&amp;#34;shop-info&amp;#34; v-for=&amp;#34;item in shopList&amp;#34; :key=&amp;#34;item.id&amp;#34;&amp;gt;&amp;lt;/router-link&amp;gt; &amp;lt;/ul&amp;gt; 父子页面跳转，父页面隐藏 路由 index.js ，添加 showPage 控制页面的显示与隐藏：
 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 const routes = [ { path: &amp;#39;/shop&amp;#39;, component: Shop, children: [ { path: &amp;#39;shopDetail&amp;#39;, component: ShopDetail, meta: { showPage: false } } ], meta: { showPage: true } } ] 父页面 Shop.</description>
@@ -23,19 +23,19 @@
     
     <item>
       <title>Vue2 Elm 项目记录 Day4</title>
-      <link>/posts/frontend/vue2-elm-day4/</link>
+      <link>https://oooldgreen.github.io/posts/frontend/vue2-elm-day4/</link>
       <pubDate>Mon, 28 Nov 2022 00:00:00 +0000</pubDate>
       
-      <guid>/posts/frontend/vue2-elm-day4/</guid>
+      <guid>https://oooldgreen.github.io/posts/frontend/vue2-elm-day4/</guid>
       <description>从 Msite 导航进入的商家列表 从 url 得到点击的分类 id 1 2 3 4 5 6 7 8 9 10 11 &amp;lt;router-link v-for=&amp;#34;foodItem in item&amp;#34; :key=&amp;#34;foodItem.id&amp;#34; :to=&amp;#34;{ path: &amp;#39;/food&amp;#39;, query: { geohash, title: foodItem.title, restaurantCateId: getCateId(foodItem.link) } }&amp;#34; &amp;gt;&amp;lt;/router-link&amp;gt; 1 2 3 4 5 6 7 8 9 // 得到餐厅分类id getCateId(url) { let urlData = decodeURIComponent(url.split(&amp;#39;=&amp;#39;)[1].replace(&amp;#39;&amp;amp;target_name&amp;#39;,&amp;#39;&amp;#39;)); if (/restaurant_category_id/gi.test(urlData)) { return JSON.parse(urlData).restaurant_category_id.id } else { return &amp;#39;&amp;#39; } } 下拉菜单制作 CSS 类的动态选择 可以使用 计算属性 或者 通过模版代码孔氏是否添加CSS样式</description>
     </item>
     
     <item>
       <title>Vue2 Elm 项目记录 Day3</title>
-      <link>/posts/frontend/vue2-elm-day3/</link>
+      <link>https://oooldgreen.github.io/posts/frontend/vue2-elm-day3/</link>
       <pubDate>Tue, 22 Nov 2022 00:00:00 +0000</pubDate>
       
-      <guid>/posts/frontend/vue2-elm-day3/</guid>
+      <guid>https://oooldgreen.github.io/posts/frontend/vue2-elm-day3/</guid>
       <description>第三天啦，加油！
 数据处理 需要处理数据将数组分成 8 个一组，方便后面引入 Swiper 的分页器效果
 1 2 3 4 5 msiteFood(geohash).then(res =&amp;gt; { while (res.length !== 0) { this.foodCate.push(res.splice(0, 8)) } }) 处理前返回的结果: 处理后的数组: 使用 Swiper 在 Vue 中使用Swiper Swiper 文档 先安装 Swiper
@@ -45,10 +45,10 @@
     
     <item>
       <title>Vue2 Elm 项目记录 Day2</title>
-      <link>/posts/frontend/vue2-elm-day2/</link>
+      <link>https://oooldgreen.github.io/posts/frontend/vue2-elm-day2/</link>
       <pubDate>Sat, 19 Nov 2022 00:00:00 +0000</pubDate>
       
-      <guid>/posts/frontend/vue2-elm-day2/</guid>
+      <guid>https://oooldgreen.github.io/posts/frontend/vue2-elm-day2/</guid>
       <description>路由 参考
 路由跳转 标签跳转 使用 &amp;lt;router-link&amp;gt; 进行导航，通过传递 to 来指定链接，&amp;lt;router-view&amp;gt; 作为路由出口，是路由匹配的组件渲染的地方。
 1 2 3 4 5 &amp;lt;router-link to=&amp;#34;/&amp;#34;&amp;gt;Go to Home&amp;lt;/router-link&amp;gt; &amp;lt;router-link to=&amp;#34;/city&amp;#34;&amp;gt;&amp;lt;router-link&amp;gt; &amp;lt;!-- 需要传参的情况 --&amp;gt; &amp;lt;router-link :to=&amp;#34;&amp;#39;/city/&amp;#39; + this.id&amp;#34;&amp;gt;&amp;lt;/router-link&amp;gt; 事件跳转（编程式路由导航） 使用 this.$router.push(&#39;&#39;) 或 router.push(&#39;&#39;)
@@ -59,19 +59,19 @@
     
     <item>
       <title>计算机网络</title>
-      <link>/posts/cs/computer-networks/</link>
+      <link>https://oooldgreen.github.io/posts/cs/computer-networks/</link>
       <pubDate>Mon, 14 Nov 2022 15:57:02 +0800</pubDate>
       
-      <guid>/posts/cs/computer-networks/</guid>
+      <guid>https://oooldgreen.github.io/posts/cs/computer-networks/</guid>
       <description>Computer Network is a MOOC class.</description>
     </item>
     
     <item>
       <title>Promise</title>
-      <link>/posts/frontend/js-promise/</link>
+      <link>https://oooldgreen.github.io/posts/frontend/js-promise/</link>
       <pubDate>Sun, 06 Nov 2022 15:35:31 +0800</pubDate>
       
-      <guid>/posts/frontend/js-promise/</guid>
+      <guid>https://oooldgreen.github.io/posts/frontend/js-promise/</guid>
       <description>汇总 Promise 对象的由来、用法、方法和 async/await。
 从是什么，怎么用开始讲起，然后讲讲具体有哪些方法和应用场景，最后再浅提一下 async/await。
 为什么要有 Promise 对象 一句话：解决回调地狱 (callback hell)
@@ -83,46 +83,46 @@
     
     <item>
       <title>Shell操作指南</title>
-      <link>/posts/cs/shell/</link>
+      <link>https://oooldgreen.github.io/posts/cs/shell/</link>
       <pubDate>Tue, 01 Nov 2022 19:43:16 +0800</pubDate>
       
-      <guid>/posts/cs/shell/</guid>
+      <guid>https://oooldgreen.github.io/posts/cs/shell/</guid>
       <description>&lt;p&gt;记录一些 shell 指令&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>期末知识点复习</title>
-      <link>/posts/frontend/interview-practice/</link>
+      <link>https://oooldgreen.github.io/posts/frontend/interview-practice/</link>
       <pubDate>Sun, 30 Oct 2022 10:35:16 +0800</pubDate>
       
-      <guid>/posts/frontend/interview-practice/</guid>
+      <guid>https://oooldgreen.github.io/posts/frontend/interview-practice/</guid>
       <description>&lt;p&gt;方便反复诵读复习&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Budget Travel 项目记录 Day2</title>
-      <link>/posts/frontend/vue-budget-travel-day2/</link>
+      <link>https://oooldgreen.github.io/posts/frontend/vue-budget-travel-day2/</link>
       <pubDate>Sat, 29 Oct 2022 00:00:00 +0000</pubDate>
       
-      <guid>/posts/frontend/vue-budget-travel-day2/</guid>
+      <guid>https://oooldgreen.github.io/posts/frontend/vue-budget-travel-day2/</guid>
       <description>&lt;p&gt;穷游小项目跟练第二天。发现这虽然只是个随便练手的小项目，但是真的能练到很多理论上看过但没用过的功能（对我这种没有实战经验的小菜鸡来说）。&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Budget Travel 项目记录 Day1</title>
-      <link>/posts/frontend/vue-budget-travel-day1/</link>
+      <link>https://oooldgreen.github.io/posts/frontend/vue-budget-travel-day1/</link>
       <pubDate>Wed, 19 Oct 2022 20:54:07 +0800</pubDate>
       
-      <guid>/posts/frontend/vue-budget-travel-day1/</guid>
+      <guid>https://oooldgreen.github.io/posts/frontend/vue-budget-travel-day1/</guid>
       <description>&lt;p&gt;穷游小项目跟练第一天。&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Vue2 Elm 项目记录 Day1</title>
-      <link>/posts/frontend/vue2-elm-day1/</link>
+      <link>https://oooldgreen.github.io/posts/frontend/vue2-elm-day1/</link>
       <pubDate>Wed, 19 Oct 2022 09:27:45 +0800</pubDate>
       
-      <guid>/posts/frontend/vue2-elm-day1/</guid>
+      <guid>https://oooldgreen.github.io/posts/frontend/vue2-elm-day1/</guid>
       <description>&lt;p&gt;一直想练手但是拖了好久的项目。&lt;/p&gt;</description>
     </item>
     

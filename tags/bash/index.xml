@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>bash on Snow Cabin</title>
-    <link>/tags/bash/</link>
+    <link>https://oooldgreen.github.io/tags/bash/</link>
     <description>Recent content in bash on Snow Cabin</description>
     <image>
-      <url></url>
-      <link></link>
+      <url>https://oooldgreen.github.io/</url>
+      <link>https://oooldgreen.github.io/</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 01 Nov 2022 19:43:16 +0800</lastBuildDate><atom:link href="/tags/bash/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 01 Nov 2022 19:43:16 +0800</lastBuildDate><atom:link href="https://oooldgreen.github.io/tags/bash/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Shell操作指南</title>
-      <link>/posts/cs/shell/</link>
+      <link>https://oooldgreen.github.io/posts/cs/shell/</link>
       <pubDate>Tue, 01 Nov 2022 19:43:16 +0800</pubDate>
       
-      <guid>/posts/cs/shell/</guid>
+      <guid>https://oooldgreen.github.io/posts/cs/shell/</guid>
       <description>&lt;p&gt;记录一些 shell 指令&lt;/p&gt;</description>
     </item>
     

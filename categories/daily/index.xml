@@ -2,38 +2,47 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Daily on Snow Cabin</title>
-    <link>/categories/daily/</link>
+    <link>https://oooldgreen.github.io/categories/daily/</link>
     <description>Recent content in Daily on Snow Cabin</description>
     <image>
-      <url></url>
-      <link></link>
+      <url>https://oooldgreen.github.io/</url>
+      <link>https://oooldgreen.github.io/</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 14 Aug 2023 10:21:12 +0800</lastBuildDate><atom:link href="/categories/daily/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 05 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://oooldgreen.github.io/categories/daily/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Starry Sky</title>
-      <link>/posts/daily/starry-sky/</link>
+      <link>https://oooldgreen.github.io/posts/daily/starry-sky/</link>
       <pubDate>Mon, 14 Aug 2023 10:21:12 +0800</pubDate>
       
-      <guid>/posts/daily/starry-sky/</guid>
+      <guid>https://oooldgreen.github.io/posts/daily/starry-sky/</guid>
       <description>官厅的星空。The starry sky in Guanting.</description>
     </item>
     
     <item>
+      <title>新年好，2025</title>
+      <link>https://oooldgreen.github.io/posts/daily/review2024/</link>
+      <pubDate>Sun, 05 Jan 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://oooldgreen.github.io/posts/daily/review2024/</guid>
+      <description>&lt;p&gt;距离我上一次写博客竟然已经一年，总结一下这一年干了些什么吧。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>云的形状❤️</title>
-      <link>/posts/daily/guanting-newlife/</link>
+      <link>https://oooldgreen.github.io/posts/daily/guanting-newlife/</link>
       <pubDate>Tue, 18 Jul 2023 11:56:29 +0800</pubDate>
       
-      <guid>/posts/daily/guanting-newlife/</guid>
+      <guid>https://oooldgreen.github.io/posts/daily/guanting-newlife/</guid>
       <description>&lt;p&gt;记录每天的云不同的形状。&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>毕业</title>
-      <link>/posts/daily/endof-school-life/</link>
+      <link>https://oooldgreen.github.io/posts/daily/endof-school-life/</link>
       <pubDate>Fri, 19 May 2023 22:15:34 +0800</pubDate>
       
-      <guid>/posts/daily/endof-school-life/</guid>
+      <guid>https://oooldgreen.github.io/posts/daily/endof-school-life/</guid>
       <description>一转眼两个多月没维护自己的小网站了，符合我三天打鱼两天晒网的调调，不过到底舍不得，一直记挂着。
 毕业的事情终于也忙的差不多了，缓了两天，吃了散伙饭，才终于有了些实感，整个人松了口气。
 行李收拾的差不多了，一抬眼寝室里的人也都走的差不多了，不少人打算再回来，毕竟还要拿毕业证不是。我没留时间给这个活动了，策划了好久的旅游，之后大概会在这里写游记吧。
@@ -50,10 +59,10 @@
     
     <item>
       <title>Sakura</title>
-      <link>/posts/daily/sakura2023/</link>
+      <link>https://oooldgreen.github.io/posts/daily/sakura2023/</link>
       <pubDate>Sun, 05 Mar 2023 19:20:07 +0800</pubDate>
       
-      <guid>/posts/daily/sakura2023/</guid>
+      <guid>https://oooldgreen.github.io/posts/daily/sakura2023/</guid>
       <description>天气好起来啦，一年中最爱的温度，空气不再冷冽，晚风不再具有攻击性，温柔的拂过脸庞，只是在晚风中散步就很幸福。
 学校的樱花渐次开放，有的已经开得繁盛，有的还零零落落。庆幸昨天下午抓住最后一点阳光，从实验室走出来的时候，天色还不晚，看到人烟，看到春天。想在下周周末去东湖看樱花。但是天气预报显示下周周末下雨降温。若是这样，就得盼望下下周樱花还开得繁盛啦。从上海到武汉，每一年樱花季都尽量不错过，就算疫情加下雨都预约了去武汉看樱花。这是疫情之后第一次看樱花，希望能如愿呀！
 看了兰心和羊驼玩耍的 vlog，灿烂的阳光，可爱的羊驼妈妈和羊驼宝宝，她的笑容也很灿烂，真好呀。
@@ -64,10 +73,10 @@
     
     <item>
       <title>礼物</title>
-      <link>/posts/daily/christmas-santa-2022/</link>
+      <link>https://oooldgreen.github.io/posts/daily/christmas-santa-2022/</link>
       <pubDate>Tue, 21 Feb 2023 20:16:36 +0800</pubDate>
       
-      <guid>/posts/daily/christmas-santa-2022/</guid>
+      <guid>https://oooldgreen.github.io/posts/daily/christmas-santa-2022/</guid>
       <description>交换礼物的时候抱着一种好奇心，很好奇会收到怎么样的礼物。再加上寒假早早的回家又让我与礼物擦肩而过，去拿礼物时真的已经迫不及待啦。
 结果果然出乎我的意料！
 没有想到能够在快结束寝室生活的时候，能和朋友们用正宗的宽敞的电火锅一起在宿舍吃上一顿火锅：）
@@ -80,10 +89,10 @@
     
     <item>
       <title>开 学 啦！</title>
-      <link>/posts/daily/hello2023/</link>
+      <link>https://oooldgreen.github.io/posts/daily/hello2023/</link>
       <pubDate>Mon, 06 Feb 2023 00:00:00 +0000</pubDate>
       
-      <guid>/posts/daily/hello2023/</guid>
+      <guid>https://oooldgreen.github.io/posts/daily/hello2023/</guid>
       <description>时光如梭，一眨眼年就过完了。
 这一个多月经历了很多，阳了，以为是无症状，结果还是烧了，阴了，又皮炎了；因为皮炎好吃的爱吃的全都不能吃，吃的药还让我足足吐了一晚上；拒了我仅有的俩offer，一切从头开始；憋了一个月多的论文，总算写完了，不敢出去玩，只去山上玩了一天；学会了飞无人机，还没来的及好好玩就回学校了；拒绝了同学聚会，和好姊妹和发小吃了两次饭，看了电影深海，据说是春节档最好看的；看了好多年没举办过的舞龙，看了长大后再也没看过的但是记忆里最漂亮的烟花秀，不过都是市民自己放的。
 本命年的开端迷茫又忙碌又好像什么都没忙，一晃神开学了又要每天来实验室了，普通话都觉得说不太利索了，夹杂了好多方言习惯；走在路上努力回想来学校的地铁流程，恍惚连门牌号都不太记得了，仿佛这三年不存在一般。很想快点毕业，又不知道毕业能去哪里，我会在哪里流浪？我会过的快乐吗？我能实现梦想吗？眼前的事情都很急迫，脑子却早已漂浮到外太空，身边的一切仿佛都不是真实。可能大脑放了太久的假，一时之间找不到在哪里。
@@ -92,38 +101,38 @@
     
     <item>
       <title>Test 测试用例</title>
-      <link>/posts/daily/test/</link>
+      <link>https://oooldgreen.github.io/posts/daily/test/</link>
       <pubDate>Thu, 10 Nov 2022 00:00:00 +0000</pubDate>
       
-      <guid>/posts/daily/test/</guid>
+      <guid>https://oooldgreen.github.io/posts/daily/test/</guid>
       <description>&lt;p&gt;月光之下，我们哭过笑过；月光之下，你曾说你爱我&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>立冬有感</title>
-      <link>/posts/draft/emotion-221109/</link>
+      <link>https://oooldgreen.github.io/posts/draft/emotion-221109/</link>
       <pubDate>Wed, 09 Nov 2022 00:00:00 +0000</pubDate>
       
-      <guid>/posts/draft/emotion-221109/</guid>
+      <guid>https://oooldgreen.github.io/posts/draft/emotion-221109/</guid>
       <description>&lt;p&gt;我羡慕鹰，因为它拥有自由。我羡慕云，因为它可以走到哪就是哪，不问来处，不问去处。&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Angean Blue</title>
-      <link>/posts/daily/angean-blue/</link>
+      <link>https://oooldgreen.github.io/posts/daily/angean-blue/</link>
       <pubDate>Sun, 16 Oct 2022 00:00:00 +0000</pubDate>
       
-      <guid>/posts/daily/angean-blue/</guid>
+      <guid>https://oooldgreen.github.io/posts/daily/angean-blue/</guid>
       <description>&lt;p&gt;周末和朋友约了一起去吃一家希腊菜餐厅，超级远的&lt;/p&gt;
 &lt;p&gt;但是很好吃，不辜负我公交快坐晕车 :)&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>My First Post</title>
-      <link>/posts/daily/my-first-post/</link>
+      <link>https://oooldgreen.github.io/posts/daily/my-first-post/</link>
       <pubDate>Sun, 16 Oct 2022 00:00:00 +0000</pubDate>
       
-      <guid>/posts/daily/my-first-post/</guid>
+      <guid>https://oooldgreen.github.io/posts/daily/my-first-post/</guid>
       <description>&lt;p&gt;今天是10月16日，终于动手用hugo搭建了自己的博客。希望在找不到工作的焦虑和毕业论文的压迫中找到一点成就感。&lt;/p&gt;
 &lt;p&gt;作为一个记性不太好的人，这个博客想要用来记录前端学习的一切，以及一些温暖的日常。&lt;/p&gt;</description>
     </item>

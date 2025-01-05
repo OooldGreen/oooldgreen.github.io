@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>CS on Snow Cabin</title>
+    <link>/posts/cs/</link>
+    <description>Recent content in CS on Snow Cabin</description>
+    <image>
+      <url></url>
+      <link></link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 14 Nov 2022 15:57:02 +0800</lastBuildDate><atom:link href="/posts/cs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>计算机网络</title>
+      <link>/posts/cs/computer-networks/</link>
+      <pubDate>Mon, 14 Nov 2022 15:57:02 +0800</pubDate>
+      
+      <guid>/posts/cs/computer-networks/</guid>
+      <description>Computer Network is a MOOC class.</description>
+    </item>
+    
+    <item>
+      <title>Shell操作指南</title>
+      <link>/posts/cs/shell/</link>
+      <pubDate>Tue, 01 Nov 2022 19:43:16 +0800</pubDate>
+      
+      <guid>/posts/cs/shell/</guid>
+      <description>&lt;p&gt;记录一些 shell 指令&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

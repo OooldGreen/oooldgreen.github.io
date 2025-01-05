@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Scenery Photography on Snow Cabin</title>
+    <link>/categories/scenery-photography/</link>
+    <description>Recent content in Scenery Photography on Snow Cabin</description>
+    <image>
+      <url></url>
+      <link></link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 14 Aug 2023 10:21:12 +0800</lastBuildDate><atom:link href="/categories/scenery-photography/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Starry Sky</title>
+      <link>/posts/daily/starry-sky/</link>
+      <pubDate>Mon, 14 Aug 2023 10:21:12 +0800</pubDate>
+      
+      <guid>/posts/daily/starry-sky/</guid>
+      <description>官厅的星空。The starry sky in Guanting.</description>
+    </item>
+    
+    <item>
+      <title>云的形状❤️</title>
+      <link>/posts/daily/guanting-newlife/</link>
+      <pubDate>Tue, 18 Jul 2023 11:56:29 +0800</pubDate>
+      
+      <guid>/posts/daily/guanting-newlife/</guid>
+      <description>&lt;p&gt;记录每天的云不同的形状。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

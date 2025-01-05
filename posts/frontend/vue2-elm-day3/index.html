@@ -1,0 +1,756 @@
+<!doctype html><html lang=en dir=auto><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>Vue2 Elm 项目记录 Day3 | Snow Cabin</title><meta name=keywords content="vue,elm,项目记录"><meta name=description content="第三天啦，加油！
+数据处理 需要处理数据将数组分成 8 个一组，方便后面引入 Swiper 的分页器效果
+1 2 3 4 5 msiteFood(geohash).then(res => { while (res.length !== 0) { this.foodCate.push(res.splice(0, 8)) } }) 处理前返回的结果: 处理后的数组: 使用 Swiper 在 Vue 中使用Swiper Swiper 文档 先安装 Swiper
+1 npm install swiper --save-dev 根据文档在组件中引入 Swiper 的 js 和 css，引入 Swiper 只有基础模块，如果需要其他组件功能需要另外引用，最后在 mounted 中初始化。
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 // msite.vue // 引入 js import Swiper, { Pagination } from 'swiper' // 引入 css import 'swiper/css' import 'swiper/css/pagination' export default { components: { Swiper, SwiperSlide }, mounted() { // 引入 Swiper const swiper = new Swiper('."><meta name=author content="Silva"><link rel=canonical href=/posts/frontend/vue2-elm-day3/><meta name=google-site-verification content="XYZabc"><meta name=yandex-verification content="XYZabc"><meta name=msvalidate.01 content="XYZabc"><link crossorigin=anonymous href=/assets/css/stylesheet.464f9b77111bda4aee49bf2ad1987e36490fb9f4103f2d1b02945f1f0e06ac94.css integrity="sha256-Rk+bdxEb2kruSb8q0Zh+NkkPufQQPy0bApRfHw4GrJQ=" rel="preload stylesheet" as=style><script defer crossorigin=anonymous src=/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG+9vmJ0cTS+ovo0FeA=" onload=hljs.initHighlightingOnLoad()></script>
+<link rel=icon href=/favicon.ico><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=apple-touch-icon href=%3Clink%20/%20absolute%20url%3E><link rel=mask-icon href=%3Clink%20/%20absolute%20url%3E><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--hljs-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51)}.list{background:var(--theme)}.list:not(.dark)::-webkit-scrollbar-track{background:0 0}.list:not(.dark)::-webkit-scrollbar-thumb{border-color:var(--theme)}}</style></noscript><link href=https://fonts.cdnfonts.com/css/montserrat rel=stylesheet><link href=https://fonts.cdnfonts.com/css/freemono rel=stylesheet><progress id=content_progress value=0></progress>
+<script>document.addEventListener("DOMContentLoaded",function(){var t=window.innerHeight,n=document.documentElement.scrollHeight,e=document.querySelector("#content_progress");e.max=n-t,e.value=window.scrollY,document.addEventListener("scroll",function(){e.max=document.documentElement.scrollHeight-window.innerHeight,e.value=window.scrollY})})</script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.3/dist/katex.min.css integrity=sha384-Juol1FqnotbkyZUT5Z7gUPjQ9gzlwCENvUZTpQBAPxtusdwFLRy382PSDx5UUJ4/ crossorigin=anonymous><script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.3/dist/katex.min.js integrity=sha384-97gW6UIJxnlKemYavrqDHSX3SiygeOwIZhwyOKRfSaf0JWKRVj9hLASHgFTzT+0O crossorigin=anonymous></script>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.3/dist/contrib/auto-render.min.js integrity=sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05 crossorigin=anonymous onload=renderMathInElement(document.body)></script>
+<script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(e,t,n,s,o,i,a){e.GoogleAnalyticsObject=o,e[o]=e[o]||function(){(e[o].q=e[o].q||[]).push(arguments)},e[o].l=1*new Date,i=t.createElement(n),a=t.getElementsByTagName(n)[0],i.async=1,i.src=s,a.parentNode.insertBefore(i,a)}(window,document,"script","https://www.google-analytics.com/analytics.js","ga"),ga("create","UA-123-45","auto"),ga("send","pageview"))</script><meta property="og:title" content="Vue2 Elm 项目记录 Day3"><meta property="og:description" content="第三天啦，加油！
+数据处理 需要处理数据将数组分成 8 个一组，方便后面引入 Swiper 的分页器效果
+1 2 3 4 5 msiteFood(geohash).then(res => { while (res.length !== 0) { this.foodCate.push(res.splice(0, 8)) } }) 处理前返回的结果: 处理后的数组: 使用 Swiper 在 Vue 中使用Swiper Swiper 文档 先安装 Swiper
+1 npm install swiper --save-dev 根据文档在组件中引入 Swiper 的 js 和 css，引入 Swiper 只有基础模块，如果需要其他组件功能需要另外引用，最后在 mounted 中初始化。
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 // msite.vue // 引入 js import Swiper, { Pagination } from 'swiper' // 引入 css import 'swiper/css' import 'swiper/css/pagination' export default { components: { Swiper, SwiperSlide }, mounted() { // 引入 Swiper const swiper = new Swiper('."><meta property="og:type" content="article"><meta property="og:url" content="/posts/frontend/vue2-elm-day3/"><meta property="og:image" content><meta property="article:section" content="posts"><meta property="article:published_time" content="2022-11-22T00:00:00+00:00"><meta property="article:modified_time" content="2022-11-22T00:00:00+00:00"><meta property="og:site_name" content="Snow Cabin"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content><meta name=twitter:title content="Vue2 Elm 项目记录 Day3"><meta name=twitter:description content="第三天啦，加油！
+数据处理 需要处理数据将数组分成 8 个一组，方便后面引入 Swiper 的分页器效果
+1 2 3 4 5 msiteFood(geohash).then(res => { while (res.length !== 0) { this.foodCate.push(res.splice(0, 8)) } }) 处理前返回的结果: 处理后的数组: 使用 Swiper 在 Vue 中使用Swiper Swiper 文档 先安装 Swiper
+1 npm install swiper --save-dev 根据文档在组件中引入 Swiper 的 js 和 css，引入 Swiper 只有基础模块，如果需要其他组件功能需要另外引用，最后在 mounted 中初始化。
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 // msite.vue // 引入 js import Swiper, { Pagination } from 'swiper' // 引入 css import 'swiper/css' import 'swiper/css/pagination' export default { components: { Swiper, SwiperSlide }, mounted() { // 引入 Swiper const swiper = new Swiper('."><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":2,"name":"Posts","item":"/posts/"},{"@type":"ListItem","position":3,"name":"Frontend","item":"/posts/frontend/"},{"@type":"ListItem","position":4,"name":"Vue2 Elm 项目记录 Day3","item":"/posts/frontend/vue2-elm-day3/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"Vue2 Elm 项目记录 Day3","name":"Vue2 Elm 项目记录 Day3","description":"第三天啦，加油！\n数据处理 需要处理数据将数组分成 8 个一组，方便后面引入 Swiper 的分页器效果\n1 2 3 4 5 msiteFood(geohash).then(res =\u0026gt; { while (res.length !== 0) { this.foodCate.push(res.splice(0, 8)) } }) 处理前返回的结果: 处理后的数组: 使用 Swiper 在 Vue 中使用Swiper Swiper 文档 先安装 Swiper\n1 npm install swiper --save-dev 根据文档在组件中引入 Swiper 的 js 和 css，引入 Swiper 只有基础模块，如果需要其他组件功能需要另外引用，最后在 mounted 中初始化。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 // msite.vue // 引入 js import Swiper, { Pagination } from \u0026#39;swiper\u0026#39; // 引入 css import \u0026#39;swiper/css\u0026#39; import \u0026#39;swiper/css/pagination\u0026#39; export default { components: { Swiper, SwiperSlide }, mounted() { // 引入 Swiper const swiper = new Swiper(\u0026#39;.","keywords":["vue","elm","项目记录"],"articleBody":"第三天啦，加油！\n数据处理 需要处理数据将数组分成 8 个一组，方便后面引入 Swiper 的分页器效果\n1 2 3 4 5 msiteFood(geohash).then(res =\u003e { while (res.length !== 0) { this.foodCate.push(res.splice(0, 8)) } }) 处理前返回的结果: 处理后的数组: 使用 Swiper 在 Vue 中使用Swiper Swiper 文档 先安装 Swiper\n1 npm install swiper --save-dev 根据文档在组件中引入 Swiper 的 js 和 css，引入 Swiper 只有基础模块，如果需要其他组件功能需要另外引用，最后在 mounted 中初始化。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 // msite.vue // 引入 js import Swiper, { Pagination } from 'swiper' // 引入 css import 'swiper/css' import 'swiper/css/pagination' export default { components: { Swiper, SwiperSlide }, mounted() { // 引入 Swiper const swiper = new Swiper('.swiper', { modules: [Pagination] }) } } 调试很久，报错 swiper is not a constructor，看到另一篇博客也有说这种报错，解决方法就是直接本地引入 js 和 css：\n1 2 import 'src/plugins/swiper.min.js' import 'src/style/swiper.min.css' 但即使不再报错，我的 Pagination 还是没有显示，试了一下分页功能可以正常拖动，检查 swiper-pagination 中没有小圆点元素。检查我的 Swiper 版本： 所以直到把初始化 Swiper 的写法改成下面这样，小圆点才出来，无语住了\n1 2 3 new Swiper('.swiper-container', { pagination: '.swiper-pagination' }) 上拉加载功能 上拉加载的实现就是在页面开始滑动时获取高度，在页面停止滑动后监听计算页面是否到达底部，触底则进行动作\ntouchstart: 运动开始时获取元素 touchmove: 监听 scrollTop 是否到达底部 touchend: 运动结束时判断是否有惯性动作，惯性动作结束后判断是否到达底部 功能实现需要获取元素 padding 值和 margin 值，所以将用于获取 style 属性值的方法提取出来：\n1 2 3 4 5 6 7 8 9 10 11 12 export const getStyle = ((ele, attr, NumberNode='int') =\u003e { let target if (attr === 'scrollTop') { target = ele.scrollTop } else if (ele.currenStyle) { target = ele.currenStyle[attr] } else { target = document.defaultView.getComputedStyle(ele.null)[attr] } // 获取 opacity 需要获取小数 return NumberNode == 'float' ? parseFloat(target) : parseInt(target) }) 上拉加载功能的实现：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 export const loadMore = { directives: { 'load-more': { bind: (el, binding) =\u003e { let windowHeight = window.screen.height let height let setTop let paddingBottom let marginBottom let requestFram let oldScrollTop let scrollEl let heightEl let scrollType = el.attributes.type \u0026\u0026 el.attributes.type.value let scrollReduce = 2 if (scrollType === 2) { scrollEl = el heightEl = el.children[0] } else { scrollEl = document.body heightEl = el } // 运动开始时获取元素：高度、offsetTop、padding、margin el.addEventListener('touchstart', () =\u003e { height = heightEl.clientHeight if (scrollType === 2) { height = height } setTop = el.offsetTop paddingBottom = getStyle(el, 'paddingBottom') marginBottom = getStyle(el, 'marginBottom') }, false) // 监听 scrollTop 的值是否到达底部 el.addEventListener('touchmove', () =\u003e { loadMore() }, false) // 运动结束时判断是否有惯性动作，惯性动作结束后判断是否到达底部 el.addEventListener('touchend', () =\u003e { oldScrollTop = scrollEl.scrollTop moveEnd() }, false) const moveEnd = () =\u003e { requestFram = requestAnimationFrame(() =\u003e { if (scrollEl.scrollTop !== oldScrollTop) { oldScrollTop = document.body.scrollTop loadMore() moveEnd() } else { cancelAnimationFrame(requestFram) // 为了防止鼠标抬起时已经渲染好数据从而导致重获取数据，重新获取dom高度 height = heightEl.clientHeight loadMore() } }) } // 判断是否到达底部 const loadMore = () =\u003e { if (document.body.scrollTop + windowHeight \u003e= height + setTop + paddingBottom + marginBottom - scrollReduce) { binding.value() } } } } } } 在组件中使用：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 \u003ctemplate\u003e \u003cdiv\u003e \u003cul v-load-more=\"loaderMore\"\u003e \u003cli\u003e...\u003c/li\u003e \u003c/ul\u003e \u003cp class=\"touchend\" v-if=\"touchend\"\u003e没有更多了\u003c/p\u003e \u003c/div\u003e \u003c/template\u003e \u003cscript\u003e import { loadMore } from '../../../config/mUtils' export default { data() { return { offset: 0, shopList: [], touchend: false, // 没有更多数据 showLoading: true, // 显示加载动画 preventRepeatRequest: false, // 防止重复加载 } }, mixins: [loadMore], methods: { async loaderMore () { if (this.touchend) { return } if (this.preventRepeatRequest) { return } // 展示loading this.showLoading = true this.preventRepeatRequest = true // 再加载20条数据 this.offset += 20 let res = await shopList(this.latitude, this.longitude, this.offset, this.restaurantCategoryId) // 隐藏loading this.hideLoading() // 扩展shopList this.shopList = [...this.shopList, ...res] // 获取数据小于2-，表明没有更多数据了 if(res.length \u003c 20) { this.touchend = true } this.preventRepeatRequest = false } \u003c/script\u003e 返回顶部功能 返回顶部函数，只要文本高度大于 500，显示返回顶部按钮（在 callback 中自定义）\n1 2 3 4 5 6 7 const showBackFun = () =\u003e { if (document.body.scrollTop \u003e 500) { cb(true) } else { cb(false) } } 完整代码是在开始、结束、运动都对页面所在的位置进行判断决定是否显示按钮\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 export const showBack = cb =\u003e { let requestFram let oldScrollTop document.addEventListener('scroll', () =\u003e { showBackFun() }, false) document.addEventListener('touchstart', () =\u003e { showBackFun() }, false) document.addEventListener('touchmove', () =\u003e { showBackFun() }, { passive: true }) document.addEventListener('touchend', () =\u003e { oldScrollTop = document.body.scrollTop moveEnd() }, { passive: true }) const moveEnd = () =\u003e { requestFram = requestAnimationFrame(() =\u003e { if (document.body.scrollTop !== oldScrollTop) { oldScrollTop = document.body.scrollTop moveEnd() } else { cancelAnimationFrame(requestFram) } }) showBackFun() } const showBackFun = () =\u003e { if (document.body.scrollTop \u003e 500) { cb(true) } else { cb(false) } } } 在需要使用的组件的 mounted 中挂载\n1 2 3 4 5 6 7 8 9 10 11 12 import { showBack } from '../../../config/mUtils' export default { data: { showBackTop: false // 显示返回顶部按钮 }, mounted: { showBack(status =\u003e { this.showBackTop = status }) } } 创建返回顶部 svg，引入，添加点击返回顶部事件\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 \u003ctemplate\u003e \u003caside class=\"back-top\" @click=\"backTop\" v-if=\"showBackTop\"\u003e \u003csvg class=\"back_top_svg\"\u003e \u003cuse xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\"#backtop\"\u003e\u003c/use\u003e \u003c/svg\u003e \u003c/aside\u003e \u003c/template\u003e \u003cscript\u003e export default { methods: { backTop() { animate(document.body, {scrollTop: '0'}, 400, 'ease-out') } } } \u003c/script\u003e 加载动画 创建单独的 Loading 子组件\n制作动画 一跳一跳的 load 动画\n1 2 3 4 5 @keyframes load { 0% { transform: translateY(0); } 50% { transform: translateY(-50px); } 100% { transform: translateY(0px); } } 下方椭圆阴影变化动画（水果跳上去阴影变小，水果落下来阴影变大）\n1 2 3 4 5 @keyframes ellipse { 0% { transform: scale(1); } 50% { transform: scale(0.3); } 100% { transform: scale(1); } } animation 语法\n1 animation: name duration timing-function delay iteration-count direction fill-mode play-state; name 是设定的关键帧的名字；duration 是多久完成这个动画；timing-function 是动画运动的方式，比方说 linear 就是线性运动，ease-in-out 是动画缓慢过渡，加速再减速；iteration-count 设置为 infinite 迭代次数无穷大，即为不断重复。\n设定背景图片为加载动画图，并配上动画：\n1 2 3 4 5 6 7 8 .load-img { background: url(../../../images/icon_loading.png) no-repeat 0 0; animation: load .6s ease-in-out infinite; } .load-ellipse { animation: ellipse .6s ease-in-out infinite; } 图片定时切换 load 图片一列七个，每次弹跳变换不同的图片，绑定一个变换的 style 属性，通过调整 background 的位置改变图片\n1 \u003cdiv class=\"load-img\" :style=\"{ backgroundPositionY: -(positionY%7) + 'rem' }\"\u003e\u003c/div\u003e 再开一个定时器，每 0.6s 换一次图片。一定记得销毁组件之前销毁定时器。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 export default { data() { return { positionY: 0, timer: null } }, mounted() { this.timer = setInterval(() =\u003e { this.positionY++; }, 600) }, beforeDestroy() { clearInterval(this.timer) } } background 参考 animation 参考 使用 引入 Loading 子组件\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 \u003ctemplate\u003e \u003ctransition v-if=\"showLoading\"\u003e \u003cLoading/\u003e \u003c/transition\u003e \u003c/template\u003e \u003cscript\u003e import Loading from '../fun/Loading.vue' export default { data() { return { showLoading: true, // 显示加载动画，默认显示，页面加载后隐藏 } }, components: { Loading }, mounted { shopList(this.latitude, this.longitude, this.offset, this.restaurantCategoryId).then(res =\u003e { this.hideLoading() }) }, methods: { hideLoading() { this.showLoading = false } } } \u003c/script\u003e 星星打分 新建一个组件，先做一排五个灰色星星\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 \u003ctemplate\u003e \u003cdiv class=\"container\"\u003e \u003cspan class=\"star-container\"\u003e \u003csvg class=\"star\" v-for=\"item in 5\" :key=\"item\"\u003e \u003cuse xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\"#star\"\u003e\u003c/use\u003e \u003c/svg\u003e \u003c/span\u003e \u003c/div\u003e \u003c/template\u003e \u003cstyle lang='scss' scoped\u003e @import '../../../style/mixin.scss'; .container { position: relative; width: 3rem; } .star-container { display: flex; position: absolute; height: 0.6rem; top: 0.2rem; } .star { height: 0.6rem; width: 0.6rem; fill: #d1d1d1; } \u003c/style\u003e 再做一排橙色星星，宽度按照父组件传过来的 rating 计算比例\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 \u003ctemplate\u003e \u003cdiv :style=\"{ width: (rating/5)*3 + 'rem' }\" class=\"star-overflow\"\u003e \u003cspan class=\"star-container\"\u003e \u003csvg class=\"star orange\" v-for=\"item in 5\" :key=\"item\"\u003e \u003cuse xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\"#star\"\u003e\u003c/use\u003e \u003c/svg\u003e \u003c/span\u003e \u003c/div\u003e \u003c/template\u003e \u003cscript\u003e export default { props: ['rating'] } \u003c/script\u003e \u003cstyle lang='scss' scoped\u003e .star-overflow { overflow: hidden; height: 100%; position: relative; .orange { fill: $orange; } } \u003c/style\u003e 在父组件中引入，使用，传入 rating：\n1 2 3 4 5 6 7 8 9 10 \u003ctemplate\u003e \u003cRatingStar :rating='item.rating'\u003e\u003c/RatingStar\u003e \u003c/template\u003e \u003cscript\u003e import RatingStar from '../fun/RatingStar.vue' export default { components: { RatingStar } } \u003c/script\u003e 目标功能 定位功能 选择城市 搜索地址 展示所选地址附近商家列表 ","wordCount":"1350","inLanguage":"en","datePublished":"2022-11-22T00:00:00Z","dateModified":"2022-11-22T00:00:00Z","author":{"@type":"Person","name":"Silva"},"mainEntityOfPage":{"@type":"WebPage","@id":"/posts/frontend/vue2-elm-day3/"},"publisher":{"@type":"Organization","name":"Snow Cabin","logo":{"@type":"ImageObject","url":"/favicon.ico"}}}</script></head><body id=top><script>localStorage.getItem("pref-theme")==="dark"?document.body.classList.add("dark"):localStorage.getItem("pref-theme")==="light"?document.body.classList.remove("dark"):window.matchMedia("(prefers-color-scheme: dark)").matches&&document.body.classList.add("dark")</script><header class=header><nav class=nav><div class=logo><a href accesskey=h title="SNOW CABIN (Alt + H)"><img src=/snowman.png alt aria-label=logo height=35>SNOW CABIN</a><div class=logo-switches><button id=theme-toggle accesskey=t title="(Alt + T)"><svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg><svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu><li><a href=/archives/ title=Archive><span>Archive</span></a></li><li><a href=/categories/ title=Categories><span>Categories</span></a></li><li><a href=/tags/ title=Tags><span>Tags</span></a></li><li><a href=/about/ title=About><span>About</span></a></li></ul><div id=menu2><button onclick=done() id=guideBtn class=guideBtn><svg viewBox="0 0 100 80" width="25" height="25" fill="var(--primary)"><rect width="100" height="10" rx="2"/><rect y="30" width="100" height="10" rx="2"/><rect y="60" width="100" height="10" rx="2"/></svg></button></div><nav id=guide style=display:none><ul class=guide-ul><li><a href=/archives/ title=Archive><span>Archive</span></a></li><li><a href=/categories/ title=Categories><span>Categories</span></a></li><li><a href=/tags/ title=Tags><span>Tags</span></a></li><li><a href=/about/ title=About><span>About</span></a></li></ul></nav></nav></header><script type=text/javascript>var guideBtn=document.getElementById("guideBtn"),guide=document.getElementById("guide");function done(){guide.style.display=="none"?guide.style.display="block":guide.style.display="none"}</script><main class=main><article class=post-single><header class=post-header><div class=breadcrumbs><a href>Home</a>
+&nbsp; > &nbsp;<a href=/posts/>Posts</a>
+&nbsp; > &nbsp;<a href=/posts/frontend/>Frontend</a></div><h1 class=post-title>Vue2 Elm 项目记录 Day3</h1><div class=post-meta><span title='2022-11-22 00:00:00 +0000 UTC'>November 22, 2022</span>&nbsp;&nbsp;<span>[LastMod:&nbsp;November 22, 2022]</span></div></header><aside id=toc-container class="toc-container wide"><div class=toc><details open><summary accesskey=c title="(Alt + C)"><span class=details>Table of Contents</span></summary><div class=inner><ul><li><a href=#%e6%95%b0%e6%8d%ae%e5%a4%84%e7%90%86 aria-label=数据处理>数据处理</a></li><li><a href=#%e4%bd%bf%e7%94%a8-swiper aria-label="使用 Swiper">使用 Swiper</a></li><li><a href=#%e4%b8%8a%e6%8b%89%e5%8a%a0%e8%bd%bd%e5%8a%9f%e8%83%bd aria-label=上拉加载功能>上拉加载功能</a></li><li><a href=#%e8%bf%94%e5%9b%9e%e9%a1%b6%e9%83%a8%e5%8a%9f%e8%83%bd aria-label=返回顶部功能>返回顶部功能</a></li><li><a href=#%e5%8a%a0%e8%bd%bd%e5%8a%a8%e7%94%bb aria-label=加载动画>加载动画</a><ul><li><a href=#%e5%88%b6%e4%bd%9c%e5%8a%a8%e7%94%bb aria-label=制作动画>制作动画</a></li><li><a href=#%e5%9b%be%e7%89%87%e5%ae%9a%e6%97%b6%e5%88%87%e6%8d%a2 aria-label=图片定时切换>图片定时切换</a></li><li><a href=#%e4%bd%bf%e7%94%a8 aria-label=使用>使用</a></li></ul></li><li><a href=#%e6%98%9f%e6%98%9f%e6%89%93%e5%88%86 aria-label=星星打分>星星打分</a></li><li><a href=#%e7%9b%ae%e6%a0%87%e5%8a%9f%e8%83%bd aria-label=目标功能>目标功能</a></li></ul></div></details></div></aside><script>let activeElement,elements;window.addEventListener("DOMContentLoaded",function(){checkTocPosition(),elements=document.querySelectorAll("h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]"),activeElement=elements[0];const t=encodeURI(activeElement.getAttribute("id")).toLowerCase();document.querySelector(`.inner ul li a[href="#${t}"]`).classList.add("active")},!1),window.addEventListener("resize",function(){checkTocPosition()},!1),window.addEventListener("scroll",()=>{activeElement=Array.from(elements).find(e=>{if(getOffsetTop(e)-window.pageYOffset>0&&getOffsetTop(e)-window.pageYOffset<window.innerHeight/2)return e})||activeElement,elements.forEach(e=>{const t=encodeURI(e.getAttribute("id")).toLowerCase();e===activeElement?document.querySelector(`.inner ul li a[href="#${t}"]`).classList.add("active"):document.querySelector(`.inner ul li a[href="#${t}"]`).classList.remove("active")})},!1);const main=parseInt(getComputedStyle(document.body).getPropertyValue("--article-width"),10),toc=parseInt(getComputedStyle(document.body).getPropertyValue("--toc-width"),10),gap=parseInt(getComputedStyle(document.body).getPropertyValue("--gap"),10);function checkTocPosition(){const e=document.body.scrollWidth;e-main-toc*2-gap*4>0?document.getElementById("toc-container").classList.add("wide"):document.getElementById("toc-container").classList.remove("wide")}function getOffsetTop(e){if(!e.getClientRects().length)return 0;let t=e.getBoundingClientRect(),n=e.ownerDocument.defaultView;return t.top+n.pageYOffset}</script><div class=post-content><p>第三天啦，加油！</p><h1 id=数据处理>数据处理<a hidden class=anchor aria-hidden=true href=#数据处理>#</a></h1><p>需要处理数据将数组分成 8 个一组，方便后面引入 Swiper 的分页器效果</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-js data-lang=js><span class=line><span class=cl><span class=nx>msiteFood</span><span class=p>(</span><span class=nx>geohash</span><span class=p>).</span><span class=nx>then</span><span class=p>(</span><span class=nx>res</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=k>while</span> <span class=p>(</span><span class=nx>res</span><span class=p>.</span><span class=nx>length</span> <span class=o>!==</span> <span class=mi>0</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>this</span><span class=p>.</span><span class=nx>foodCate</span><span class=p>.</span><span class=nx>push</span><span class=p>(</span><span class=nx>res</span><span class=p>.</span><span class=nx>splice</span><span class=p>(</span><span class=mi>0</span><span class=p>,</span> <span class=mi>8</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>})</span>
+</span></span></code></pre></td></tr></table></div></div><p>处理前返回的结果:
+<img loading=lazy src=/image/frontend/vue-elm/food-category.png alt=处理前返回的结果></p><p>处理后的数组:
+<img loading=lazy src=/image/frontend/vue-elm/food-category2.png alt=处理后的数组></p><h1 id=使用-swiper>使用 Swiper<a hidden class=anchor aria-hidden=true href=#使用-swiper>#</a></h1><ul><li>在 Vue 中使用<a href=https://swiperjs.com/vue>Swiper</a></li><li><a href=https://www.swiper.com.cn/api>Swiper 文档</a></li></ul><p>先安装 Swiper</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>npm install swiper --save-dev
+</span></span></code></pre></td></tr></table></div></div><p>根据文档在组件中引入 Swiper 的 js 和 css，引入 Swiper 只有基础模块，如果需要其他组件功能需要另外引用，最后在 mounted 中初始化。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-js data-lang=js><span class=line><span class=cl><span class=c1>// msite.vue
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl><span class=c1>// 引入 js
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kr>import</span> <span class=nx>Swiper</span><span class=p>,</span> <span class=p>{</span> <span class=nx>Pagination</span> <span class=p>}</span> <span class=nx>from</span> <span class=s1>&#39;swiper&#39;</span>
+</span></span><span class=line><span class=cl><span class=c1>// 引入 css
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kr>import</span> <span class=s1>&#39;swiper/css&#39;</span>
+</span></span><span class=line><span class=cl><span class=kr>import</span> <span class=s1>&#39;swiper/css/pagination&#39;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=nx>components</span><span class=o>:</span> <span class=p>{</span> <span class=nx>Swiper</span><span class=p>,</span> <span class=nx>SwiperSlide</span> <span class=p>},</span>
+</span></span><span class=line><span class=cl>  <span class=nx>mounted</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// 引入 Swiper
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=kr>const</span> <span class=nx>swiper</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>Swiper</span><span class=p>(</span><span class=s1>&#39;.swiper&#39;</span><span class=p>,</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=nx>modules</span><span class=o>:</span> <span class=p>[</span><span class=nx>Pagination</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>    <span class=p>})</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>调试很久，报错 <code>swiper is not a constructor</code>，看到<a href="https://segmentfault.com/a/1190000020754838?utm_source=sf-similar-article">另一篇博客</a>也有说这种报错，解决方法就是直接本地引入 js 和 css：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-js data-lang=js><span class=line><span class=cl><span class=kr>import</span> <span class=s1>&#39;src/plugins/swiper.min.js&#39;</span>
+</span></span><span class=line><span class=cl><span class=kr>import</span> <span class=s1>&#39;src/style/swiper.min.css&#39;</span>
+</span></span></code></pre></td></tr></table></div></div><p>但即使不再报错，我的 Pagination 还是没有显示，试了一下分页功能可以正常拖动，检查 <code>swiper-pagination</code> 中没有小圆点元素。检查我的 Swiper 版本：
+<img loading=lazy src=/image/frontend/vue-elm/swiper.png alt="swiper 版本"></p><p>所以直到把初始化 Swiper 的写法改成下面这样，小圆点才出来，无语住了</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-js data-lang=js><span class=line><span class=cl><span class=k>new</span> <span class=nx>Swiper</span><span class=p>(</span><span class=s1>&#39;.swiper-container&#39;</span><span class=p>,</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=nx>pagination</span><span class=o>:</span> <span class=s1>&#39;.swiper-pagination&#39;</span>
+</span></span><span class=line><span class=cl><span class=p>})</span>
+</span></span></code></pre></td></tr></table></div></div><h1 id=上拉加载功能>上拉加载功能<a hidden class=anchor aria-hidden=true href=#上拉加载功能>#</a></h1><p>上拉加载的实现就是在页面开始滑动时获取高度，在页面停止滑动后监听计算页面是否到达底部，触底则进行动作</p><ul><li>touchstart: 运动开始时获取元素</li><li>touchmove: 监听 scrollTop 是否到达底部</li><li>touchend: 运动结束时判断是否有惯性动作，惯性动作结束后判断是否到达底部</li></ul><p>功能实现需要获取元素 padding 值和 margin 值，所以将用于获取 style 属性值的方法提取出来：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-js data-lang=js><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>getStyle</span> <span class=o>=</span> <span class=p>((</span><span class=nx>ele</span><span class=p>,</span> <span class=nx>attr</span><span class=p>,</span> <span class=nx>NumberNode</span><span class=o>=</span><span class=s1>&#39;int&#39;</span><span class=p>)</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=kd>let</span> <span class=nx>target</span>
+</span></span><span class=line><span class=cl>  <span class=k>if</span> <span class=p>(</span><span class=nx>attr</span> <span class=o>===</span> <span class=s1>&#39;scrollTop&#39;</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>target</span> <span class=o>=</span> <span class=nx>ele</span><span class=p>.</span><span class=nx>scrollTop</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span> <span class=k>else</span> <span class=k>if</span> <span class=p>(</span><span class=nx>ele</span><span class=p>.</span><span class=nx>currenStyle</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>target</span> <span class=o>=</span> <span class=nx>ele</span><span class=p>.</span><span class=nx>currenStyle</span><span class=p>[</span><span class=nx>attr</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>target</span> <span class=o>=</span> <span class=nb>document</span><span class=p>.</span><span class=nx>defaultView</span><span class=p>.</span><span class=nx>getComputedStyle</span><span class=p>(</span><span class=nx>ele</span><span class=p>.</span><span class=kc>null</span><span class=p>)[</span><span class=nx>attr</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=c1>// 获取 opacity 需要获取小数
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=k>return</span> <span class=nx>NumberNode</span> <span class=o>==</span> <span class=s1>&#39;float&#39;</span> <span class=o>?</span> <span class=nb>parseFloat</span><span class=p>(</span><span class=nx>target</span><span class=p>)</span> <span class=o>:</span> <span class=nb>parseInt</span><span class=p>(</span><span class=nx>target</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>})</span>
+</span></span></code></pre></td></tr></table></div></div><p>上拉加载功能的实现：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span><span class=lnt>65
+</span><span class=lnt>66
+</span><span class=lnt>67
+</span><span class=lnt>68
+</span><span class=lnt>69
+</span><span class=lnt>70
+</span><span class=lnt>71
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-js data-lang=js><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>loadMore</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=nx>directives</span><span class=o>:</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=s1>&#39;load-more&#39;</span><span class=o>:</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=nx>bind</span><span class=o>:</span> <span class=p>(</span><span class=nx>el</span><span class=p>,</span> <span class=nx>binding</span><span class=p>)</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kd>let</span> <span class=nx>windowHeight</span> <span class=o>=</span> <span class=nb>window</span><span class=p>.</span><span class=nx>screen</span><span class=p>.</span><span class=nx>height</span>
+</span></span><span class=line><span class=cl>        <span class=kd>let</span> <span class=nx>height</span>
+</span></span><span class=line><span class=cl>        <span class=kd>let</span> <span class=nx>setTop</span>
+</span></span><span class=line><span class=cl>        <span class=kd>let</span> <span class=nx>paddingBottom</span>
+</span></span><span class=line><span class=cl>        <span class=kd>let</span> <span class=nx>marginBottom</span>
+</span></span><span class=line><span class=cl>        <span class=kd>let</span> <span class=nx>requestFram</span>
+</span></span><span class=line><span class=cl>        <span class=kd>let</span> <span class=nx>oldScrollTop</span>
+</span></span><span class=line><span class=cl>        <span class=kd>let</span> <span class=nx>scrollEl</span>
+</span></span><span class=line><span class=cl>        <span class=kd>let</span> <span class=nx>heightEl</span>
+</span></span><span class=line><span class=cl>        <span class=kd>let</span> <span class=nx>scrollType</span> <span class=o>=</span> <span class=nx>el</span><span class=p>.</span><span class=nx>attributes</span><span class=p>.</span><span class=nx>type</span> <span class=o>&amp;&amp;</span> <span class=nx>el</span><span class=p>.</span><span class=nx>attributes</span><span class=p>.</span><span class=nx>type</span><span class=p>.</span><span class=nx>value</span>
+</span></span><span class=line><span class=cl>        <span class=kd>let</span> <span class=nx>scrollReduce</span> <span class=o>=</span> <span class=mi>2</span>
+</span></span><span class=line><span class=cl>        
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=nx>scrollType</span> <span class=o>===</span> <span class=mi>2</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>          <span class=nx>scrollEl</span> <span class=o>=</span> <span class=nx>el</span>
+</span></span><span class=line><span class=cl>          <span class=nx>heightEl</span> <span class=o>=</span> <span class=nx>el</span><span class=p>.</span><span class=nx>children</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>          <span class=nx>scrollEl</span> <span class=o>=</span> <span class=nb>document</span><span class=p>.</span><span class=nx>body</span>
+</span></span><span class=line><span class=cl>          <span class=nx>heightEl</span> <span class=o>=</span> <span class=nx>el</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1>// 运动开始时获取元素：高度、offsetTop、padding、margin
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=nx>el</span><span class=p>.</span><span class=nx>addEventListener</span><span class=p>(</span><span class=s1>&#39;touchstart&#39;</span><span class=p>,</span> <span class=p>()</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>          <span class=nx>height</span> <span class=o>=</span> <span class=nx>heightEl</span><span class=p>.</span><span class=nx>clientHeight</span>
+</span></span><span class=line><span class=cl>          <span class=k>if</span> <span class=p>(</span><span class=nx>scrollType</span> <span class=o>===</span> <span class=mi>2</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=nx>height</span> <span class=o>=</span> <span class=nx>height</span>
+</span></span><span class=line><span class=cl>          <span class=p>}</span>
+</span></span><span class=line><span class=cl>          <span class=nx>setTop</span> <span class=o>=</span> <span class=nx>el</span><span class=p>.</span><span class=nx>offsetTop</span>
+</span></span><span class=line><span class=cl>          <span class=nx>paddingBottom</span> <span class=o>=</span> <span class=nx>getStyle</span><span class=p>(</span><span class=nx>el</span><span class=p>,</span> <span class=s1>&#39;paddingBottom&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>          <span class=nx>marginBottom</span> <span class=o>=</span> <span class=nx>getStyle</span><span class=p>(</span><span class=nx>el</span><span class=p>,</span> <span class=s1>&#39;marginBottom&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=p>},</span> <span class=kc>false</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1>// 监听 scrollTop 的值是否到达底部
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=nx>el</span><span class=p>.</span><span class=nx>addEventListener</span><span class=p>(</span><span class=s1>&#39;touchmove&#39;</span><span class=p>,</span> <span class=p>()</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>          <span class=nx>loadMore</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=p>},</span> <span class=kc>false</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1>// 运动结束时判断是否有惯性动作，惯性动作结束后判断是否到达底部
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=nx>el</span><span class=p>.</span><span class=nx>addEventListener</span><span class=p>(</span><span class=s1>&#39;touchend&#39;</span><span class=p>,</span> <span class=p>()</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>          <span class=nx>oldScrollTop</span> <span class=o>=</span> <span class=nx>scrollEl</span><span class=p>.</span><span class=nx>scrollTop</span>
+</span></span><span class=line><span class=cl>          <span class=nx>moveEnd</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=p>},</span> <span class=kc>false</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=kr>const</span> <span class=nx>moveEnd</span> <span class=o>=</span> <span class=p>()</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>          <span class=nx>requestFram</span> <span class=o>=</span> <span class=nx>requestAnimationFrame</span><span class=p>(()</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=p>(</span><span class=nx>scrollEl</span><span class=p>.</span><span class=nx>scrollTop</span> <span class=o>!==</span> <span class=nx>oldScrollTop</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>              <span class=nx>oldScrollTop</span> <span class=o>=</span> <span class=nb>document</span><span class=p>.</span><span class=nx>body</span><span class=p>.</span><span class=nx>scrollTop</span>
+</span></span><span class=line><span class=cl>              <span class=nx>loadMore</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>              <span class=nx>moveEnd</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>              <span class=nx>cancelAnimationFrame</span><span class=p>(</span><span class=nx>requestFram</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>              <span class=c1>// 为了防止鼠标抬起时已经渲染好数据从而导致重获取数据，重新获取dom高度
+</span></span></span><span class=line><span class=cl><span class=c1></span>              <span class=nx>height</span> <span class=o>=</span> <span class=nx>heightEl</span><span class=p>.</span><span class=nx>clientHeight</span>
+</span></span><span class=line><span class=cl>              <span class=nx>loadMore</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span>
+</span></span><span class=line><span class=cl>          <span class=p>})</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1>// 判断是否到达底部
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=kr>const</span> <span class=nx>loadMore</span> <span class=o>=</span> <span class=p>()</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>          <span class=k>if</span> <span class=p>(</span><span class=nb>document</span><span class=p>.</span><span class=nx>body</span><span class=p>.</span><span class=nx>scrollTop</span> <span class=o>+</span> <span class=nx>windowHeight</span> <span class=o>&gt;=</span> <span class=nx>height</span> <span class=o>+</span> <span class=nx>setTop</span> <span class=o>+</span> <span class=nx>paddingBottom</span> <span class=o>+</span> <span class=nx>marginBottom</span> <span class=o>-</span> <span class=nx>scrollReduce</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=nx>binding</span><span class=p>.</span><span class=nx>value</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>          <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>在组件中使用：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-vue data-lang=vue><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>template</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>  <span class=p>&lt;</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>ul</span> <span class=na>v</span><span class=nt>-load-more</span><span class=err>=&#34;</span><span class=na>loaderMore</span><span class=err>&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>      <span class=p>&lt;</span><span class=nt>li</span><span class=p>&gt;...&lt;/</span><span class=nt>li</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>&lt;/</span><span class=nt>ul</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>p</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;touchend&#34;</span> <span class=nt>v-if</span><span class=s>=&#34;touchend&#34;</span><span class=p>&gt;</span><span class=na>没有更多了</span><span class=p>&lt;/</span><span class=nt>p</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>  <span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>template</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>script</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>  <span class=kr>import</span> <span class=p>{</span> <span class=nx>loadMore</span> <span class=p>}</span> <span class=nx>from</span> <span class=s1>&#39;../../../config/mUtils&#39;</span>
+</span></span><span class=line><span class=cl>  <span class=kr>export</span> <span class=k>default</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=nx>data</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=nx>offset</span><span class=o>:</span> <span class=mi>0</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>      <span class=nx>shopList</span><span class=o>:</span> <span class=p>[],</span>
+</span></span><span class=line><span class=cl>      <span class=nx>touchend</span><span class=o>:</span> <span class=kc>false</span><span class=p>,</span> <span class=c1>// 没有更多数据
+</span></span></span><span class=line><span class=cl><span class=c1></span>      <span class=nx>showLoading</span><span class=o>:</span> <span class=kc>true</span><span class=p>,</span> <span class=c1>// 显示加载动画
+</span></span></span><span class=line><span class=cl><span class=c1></span>      <span class=nx>preventRepeatRequest</span><span class=o>:</span> <span class=kc>false</span><span class=p>,</span> <span class=c1>// 防止重复加载
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=p>},</span>
+</span></span><span class=line><span class=cl>  <span class=nx>mixins</span><span class=o>:</span> <span class=p>[</span><span class=nx>loadMore</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>  <span class=nx>methods</span><span class=o>:</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>async</span> <span class=nx>loaderMore</span> <span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=k>if</span> <span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=nx>touchend</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span>
+</span></span><span class=line><span class=cl>      <span class=k>if</span> <span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=nx>preventRepeatRequest</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span>
+</span></span><span class=line><span class=cl>      <span class=c1>// 展示loading
+</span></span></span><span class=line><span class=cl><span class=c1></span>      <span class=k>this</span><span class=p>.</span><span class=nx>showLoading</span> <span class=o>=</span> <span class=kc>true</span>
+</span></span><span class=line><span class=cl>      <span class=k>this</span><span class=p>.</span><span class=nx>preventRepeatRequest</span> <span class=o>=</span> <span class=kc>true</span>
+</span></span><span class=line><span class=cl>      <span class=c1>// 再加载20条数据
+</span></span></span><span class=line><span class=cl><span class=c1></span>      <span class=k>this</span><span class=p>.</span><span class=nx>offset</span> <span class=o>+=</span> <span class=mi>20</span>
+</span></span><span class=line><span class=cl>      <span class=kd>let</span> <span class=nx>res</span> <span class=o>=</span> <span class=nx>await</span> <span class=nx>shopList</span><span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=nx>latitude</span><span class=p>,</span> <span class=k>this</span><span class=p>.</span><span class=nx>longitude</span><span class=p>,</span> <span class=k>this</span><span class=p>.</span><span class=nx>offset</span><span class=p>,</span> <span class=k>this</span><span class=p>.</span><span class=nx>restaurantCategoryId</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>      <span class=c1>// 隐藏loading
+</span></span></span><span class=line><span class=cl><span class=c1></span>      <span class=k>this</span><span class=p>.</span><span class=nx>hideLoading</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>      <span class=c1>// 扩展shopList
+</span></span></span><span class=line><span class=cl><span class=c1></span>      <span class=k>this</span><span class=p>.</span><span class=nx>shopList</span> <span class=o>=</span> <span class=p>[...</span><span class=k>this</span><span class=p>.</span><span class=nx>shopList</span><span class=p>,</span> <span class=p>...</span><span class=nx>res</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>      <span class=c1>// 获取数据小于2-，表明没有更多数据了
+</span></span></span><span class=line><span class=cl><span class=c1></span>      <span class=k>if</span><span class=p>(</span><span class=nx>res</span><span class=p>.</span><span class=nx>length</span> <span class=o>&lt;</span> <span class=mi>20</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>touchend</span> <span class=o>=</span> <span class=kc>true</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span>
+</span></span><span class=line><span class=cl>      <span class=k>this</span><span class=p>.</span><span class=nx>preventRepeatRequest</span> <span class=o>=</span> <span class=kc>false</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>script</span><span class=p>&gt;</span>
+</span></span></code></pre></td></tr></table></div></div><h1 id=返回顶部功能>返回顶部功能<a hidden class=anchor aria-hidden=true href=#返回顶部功能>#</a></h1><p>返回顶部函数，只要文本高度大于 500，显示返回顶部按钮（在 callback 中自定义）</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-js data-lang=js><span class=line><span class=cl><span class=kr>const</span> <span class=nx>showBackFun</span> <span class=o>=</span> <span class=p>()</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=k>if</span> <span class=p>(</span><span class=nb>document</span><span class=p>.</span><span class=nx>body</span><span class=p>.</span><span class=nx>scrollTop</span> <span class=o>&gt;</span> <span class=mi>500</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>cb</span><span class=p>(</span><span class=kc>true</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>cb</span><span class=p>(</span><span class=kc>false</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>完整代码是在开始、结束、运动都对页面所在的位置进行判断决定是否显示按钮</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-js data-lang=js><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>showBack</span> <span class=o>=</span> <span class=nx>cb</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=kd>let</span> <span class=nx>requestFram</span>
+</span></span><span class=line><span class=cl>  <span class=kd>let</span> <span class=nx>oldScrollTop</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=nb>document</span><span class=p>.</span><span class=nx>addEventListener</span><span class=p>(</span><span class=s1>&#39;scroll&#39;</span><span class=p>,</span> <span class=p>()</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>showBackFun</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>  <span class=p>},</span> <span class=kc>false</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=nb>document</span><span class=p>.</span><span class=nx>addEventListener</span><span class=p>(</span><span class=s1>&#39;touchstart&#39;</span><span class=p>,</span> <span class=p>()</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>showBackFun</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>  <span class=p>},</span> <span class=kc>false</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=nb>document</span><span class=p>.</span><span class=nx>addEventListener</span><span class=p>(</span><span class=s1>&#39;touchmove&#39;</span><span class=p>,</span> <span class=p>()</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>showBackFun</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>  <span class=p>},</span> <span class=p>{</span> <span class=nx>passive</span><span class=o>:</span> <span class=kc>true</span> <span class=p>})</span>
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>  <span class=nb>document</span><span class=p>.</span><span class=nx>addEventListener</span><span class=p>(</span><span class=s1>&#39;touchend&#39;</span><span class=p>,</span> <span class=p>()</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>oldScrollTop</span> <span class=o>=</span> <span class=nb>document</span><span class=p>.</span><span class=nx>body</span><span class=p>.</span><span class=nx>scrollTop</span>
+</span></span><span class=line><span class=cl>    <span class=nx>moveEnd</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>  <span class=p>},</span> <span class=p>{</span> <span class=nx>passive</span><span class=o>:</span> <span class=kc>true</span> <span class=p>})</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=kr>const</span> <span class=nx>moveEnd</span> <span class=o>=</span> <span class=p>()</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>requestFram</span> <span class=o>=</span> <span class=nx>requestAnimationFrame</span><span class=p>(()</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=k>if</span> <span class=p>(</span><span class=nb>document</span><span class=p>.</span><span class=nx>body</span><span class=p>.</span><span class=nx>scrollTop</span> <span class=o>!==</span> <span class=nx>oldScrollTop</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>oldScrollTop</span> <span class=o>=</span> <span class=nb>document</span><span class=p>.</span><span class=nx>body</span><span class=p>.</span><span class=nx>scrollTop</span>
+</span></span><span class=line><span class=cl>        <span class=nx>moveEnd</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>cancelAnimationFrame</span><span class=p>(</span><span class=nx>requestFram</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>})</span>
+</span></span><span class=line><span class=cl>    <span class=nx>showBackFun</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=kr>const</span> <span class=nx>showBackFun</span> <span class=o>=</span> <span class=p>()</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=nb>document</span><span class=p>.</span><span class=nx>body</span><span class=p>.</span><span class=nx>scrollTop</span> <span class=o>&gt;</span> <span class=mi>500</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=nx>cb</span><span class=p>(</span><span class=kc>true</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=nx>cb</span><span class=p>(</span><span class=kc>false</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>在需要使用的组件的 mounted 中挂载</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-js data-lang=js><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>showBack</span> <span class=p>}</span> <span class=nx>from</span> <span class=s1>&#39;../../../config/mUtils&#39;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=nx>data</span><span class=o>:</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>showBackTop</span><span class=o>:</span> <span class=kc>false</span> <span class=c1>// 显示返回顶部按钮
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=p>},</span>
+</span></span><span class=line><span class=cl>  <span class=nx>mounted</span><span class=o>:</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>showBack</span><span class=p>(</span><span class=nx>status</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=k>this</span><span class=p>.</span><span class=nx>showBackTop</span> <span class=o>=</span> <span class=nx>status</span>
+</span></span><span class=line><span class=cl>    <span class=p>})</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>创建返回顶部 svg，引入，添加点击返回顶部事件</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-vue data-lang=vue><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>template</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>  <span class=c>&lt;!--</span> <span class=nx>返回顶部</span> <span class=o>--&gt;</span>
+</span></span><span class=line><span class=cl>  <span class=p>&lt;</span><span class=nt>aside</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;back-top&#34;</span> <span class=nt>@click</span><span class=s>=&#34;backTop&#34;</span> <span class=nt>v-if</span><span class=s>=&#34;showBackTop&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>svg</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;back_top_svg&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>      <span class=p>&lt;</span><span class=nt>use</span> <span class=na>xmlns</span><span class=nt>:xlink</span><span class=s>=&#34;http://www.w3.org/1999/xlink&#34;</span> <span class=na>xlink</span><span class=nt>:href</span><span class=s>=&#34;#backtop&#34;</span><span class=p>&gt;&lt;/</span><span class=nt>use</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>&lt;/</span><span class=nt>svg</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>  <span class=p>&lt;/</span><span class=nt>aside</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>template</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>script</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>  <span class=kr>export</span> <span class=k>default</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>methods</span><span class=o>:</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=nx>backTop</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>animate</span><span class=p>(</span><span class=nb>document</span><span class=p>.</span><span class=nx>body</span><span class=p>,</span> <span class=p>{</span><span class=nx>scrollTop</span><span class=o>:</span> <span class=s1>&#39;0&#39;</span><span class=p>},</span> <span class=mi>400</span><span class=p>,</span> <span class=s1>&#39;ease-out&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>script</span><span class=p>&gt;</span>
+</span></span></code></pre></td></tr></table></div></div><h1 id=加载动画>加载动画<a hidden class=anchor aria-hidden=true href=#加载动画>#</a></h1><p>创建单独的 Loading 子组件</p><h2 id=制作动画>制作动画<a hidden class=anchor aria-hidden=true href=#制作动画>#</a></h2><p>一跳一跳的 load 动画</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-css data-lang=css><span class=line><span class=cl><span class=p>@</span><span class=k>keyframes</span> <span class=nt>load</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=nt>0</span><span class=o>%</span>   <span class=p>{</span> <span class=k>transform</span><span class=p>:</span> <span class=nb>translateY</span><span class=p>(</span><span class=mi>0</span><span class=p>);</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=nt>50</span><span class=o>%</span>  <span class=p>{</span> <span class=k>transform</span><span class=p>:</span> <span class=nb>translateY</span><span class=p>(</span><span class=mi>-50</span><span class=kt>px</span><span class=p>);</span> <span class=p>}</span> 
+</span></span><span class=line><span class=cl>  <span class=nt>100</span><span class=o>%</span> <span class=p>{</span> <span class=k>transform</span><span class=p>:</span> <span class=nb>translateY</span><span class=p>(</span><span class=mi>0</span><span class=kt>px</span><span class=p>);</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>下方椭圆阴影变化动画（水果跳上去阴影变小，水果落下来阴影变大）</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-css data-lang=css><span class=line><span class=cl><span class=p>@</span><span class=k>keyframes</span> <span class=nt>ellipse</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=nt>0</span><span class=o>%</span>   <span class=p>{</span> <span class=k>transform</span><span class=p>:</span> <span class=nb>scale</span><span class=p>(</span><span class=mi>1</span><span class=p>);</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=nt>50</span><span class=o>%</span>  <span class=p>{</span> <span class=k>transform</span><span class=p>:</span> <span class=nb>scale</span><span class=p>(</span><span class=mf>0.3</span><span class=p>);</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=nt>100</span><span class=o>%</span> <span class=p>{</span> <span class=k>transform</span><span class=p>:</span> <span class=nb>scale</span><span class=p>(</span><span class=mi>1</span><span class=p>);</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>animation 语法</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-css data-lang=css><span class=line><span class=cl><span class=nt>animation</span><span class=o>:</span> <span class=nt>name</span> <span class=nt>duration</span> <span class=nt>timing-function</span> <span class=nt>delay</span> <span class=nt>iteration-count</span> <span class=nt>direction</span> <span class=nt>fill-mode</span> <span class=nt>play-state</span><span class=o>;</span>
+</span></span></code></pre></td></tr></table></div></div><p>name 是设定的关键帧的名字；duration 是多久完成这个动画；timing-function 是动画运动的方式，比方说 linear 就是线性运动，ease-in-out 是动画缓慢过渡，加速再减速；iteration-count 设置为 infinite 迭代次数无穷大，即为不断重复。</p><p>设定背景图片为加载动画图，并配上动画：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-css data-lang=css><span class=line><span class=cl><span class=p>.</span><span class=nc>load-img</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=k>background</span><span class=p>:</span> <span class=nb>url</span><span class=p>(</span><span class=sx>../../../images/icon_loading.png</span><span class=p>)</span> <span class=kc>no-repeat</span> <span class=mi>0</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=k>animation</span><span class=p>:</span> <span class=n>load</span> <span class=mf>.6</span><span class=kt>s</span> <span class=kc>ease-in-out</span> <span class=kc>infinite</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>.</span><span class=nc>load-ellipse</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=k>animation</span><span class=p>:</span> <span class=n>ellipse</span> <span class=mf>.6</span><span class=kt>s</span> <span class=kc>ease-in-out</span> <span class=kc>infinite</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=图片定时切换>图片定时切换<a hidden class=anchor aria-hidden=true href=#图片定时切换>#</a></h2><p>load 图片一列七个，每次弹跳变换不同的图片，绑定一个变换的 style 属性，通过调整 background 的位置改变图片</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-html data-lang=html><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>div</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;load-img&#34;</span> <span class=na>:style</span><span class=o>=</span><span class=s>&#34;{ backgroundPositionY: -(positionY%7) + &#39;rem&#39; }&#34;</span><span class=p>&gt;&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span></code></pre></td></tr></table></div></div><p>再开一个定时器，每 0.6s 换一次图片。一定记得销毁组件之前销毁定时器。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-js data-lang=js><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=nx>data</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=nx>positionY</span><span class=o>:</span> <span class=mi>0</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>      <span class=nx>timer</span><span class=o>:</span> <span class=kc>null</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=p>},</span>
+</span></span><span class=line><span class=cl>  <span class=nx>mounted</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>this</span><span class=p>.</span><span class=nx>timer</span> <span class=o>=</span> <span class=nx>setInterval</span><span class=p>(()</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>positionY</span><span class=o>++</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>},</span> <span class=mi>600</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=p>},</span>
+</span></span><span class=line><span class=cl>  <span class=nx>beforeDestroy</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>clearInterval</span><span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=nx>timer</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li><a href=https://developer.mozilla.org/en-US/docs/Web/CSS/background>background 参考</a></li><li><a href=https://developer.mozilla.org/en-US/docs/Web/CSS/animation>animation 参考</a></li></ul><h2 id=使用>使用<a hidden class=anchor aria-hidden=true href=#使用>#</a></h2><p>引入 Loading 子组件</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-vue data-lang=vue><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>template</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>  <span class=c>&lt;!--</span> <span class=nx>加载动画</span> <span class=o>--&gt;</span>
+</span></span><span class=line><span class=cl>  <span class=p>&lt;</span><span class=nt>transition</span> <span class=nt>v-if</span><span class=s>=&#34;showLoading&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>Loading</span><span class=p>/&gt;</span>
+</span></span><span class=line><span class=cl>  <span class=p>&lt;/</span><span class=nt>transition</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>template</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>script</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>  <span class=kr>import</span> <span class=nx>Loading</span> <span class=nx>from</span> <span class=s1>&#39;../fun/Loading.vue&#39;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=kr>export</span> <span class=k>default</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>data</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=k>return</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>showLoading</span><span class=o>:</span> <span class=kc>true</span><span class=p>,</span> <span class=c1>// 显示加载动画，默认显示，页面加载后隐藏
+</span></span></span><span class=line><span class=cl><span class=c1></span>      <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>},</span>
+</span></span><span class=line><span class=cl>    <span class=nx>components</span><span class=o>:</span> <span class=p>{</span> <span class=nx>Loading</span> <span class=p>},</span>
+</span></span><span class=line><span class=cl>    <span class=nx>mounted</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=nx>shopList</span><span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=nx>latitude</span><span class=p>,</span> <span class=k>this</span><span class=p>.</span><span class=nx>longitude</span><span class=p>,</span> <span class=k>this</span><span class=p>.</span><span class=nx>offset</span><span class=p>,</span> <span class=k>this</span><span class=p>.</span><span class=nx>restaurantCategoryId</span><span class=p>).</span><span class=nx>then</span><span class=p>(</span><span class=nx>res</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>hideLoading</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>      <span class=p>})</span>
+</span></span><span class=line><span class=cl>    <span class=p>},</span>
+</span></span><span class=line><span class=cl>    <span class=nx>methods</span><span class=o>:</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=nx>hideLoading</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>showLoading</span> <span class=o>=</span> <span class=kc>false</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>script</span><span class=p>&gt;</span>
+</span></span></code></pre></td></tr></table></div></div><h1 id=星星打分>星星打分<a hidden class=anchor aria-hidden=true href=#星星打分>#</a></h1><p>新建一个组件，先做一排五个灰色星星</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-vue data-lang=vue><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>template</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>  <span class=p>&lt;</span><span class=nt>div</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;container&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>span</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;star-container&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=p>&lt;</span><span class=nt>svg</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;star&#34;</span> <span class=nt>v-for</span><span class=s>=&#34;item in 5&#34; </span><span class=nt>:key</span><span class=s>=&#34;item&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>            <span class=p>&lt;</span><span class=nt>use</span> <span class=na>xmlns</span><span class=nt>:xlink</span><span class=s>=&#34;http://www.w3.org/1999/xlink&#34;</span> <span class=na>xlink</span><span class=nt>:href</span><span class=s>=&#34;#star&#34;</span><span class=p>&gt;&lt;/</span><span class=nt>use</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=p>&lt;/</span><span class=nt>svg</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>&lt;/</span><span class=nt>span</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>  <span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>template</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>style</span> <span class=na>lang</span><span class=o>=</span><span class=s>&#39;scss&#39;</span> <span class=na>scoped</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl><span class=err>@</span><span class=kr>import</span> <span class=s1>&#39;../../../style/mixin.scss&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>.</span><span class=nx>container</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=nx>position</span><span class=o>:</span> <span class=nx>relative</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=nx>width</span><span class=o>:</span> <span class=mi>3</span><span class=nx>rem</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>.</span><span class=nx>star</span><span class=o>-</span><span class=nx>container</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=nx>display</span><span class=o>:</span> <span class=nx>flex</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=nx>position</span><span class=o>:</span> <span class=nx>absolute</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=nx>height</span><span class=o>:</span> <span class=mf>0.6</span><span class=nx>rem</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=nx>top</span><span class=o>:</span> <span class=mf>0.2</span><span class=nx>rem</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>.</span><span class=nx>star</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=nx>height</span><span class=o>:</span> <span class=mf>0.6</span><span class=nx>rem</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=nx>width</span><span class=o>:</span> <span class=mf>0.6</span><span class=nx>rem</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=nx>fill</span><span class=o>:</span> <span class=err>#</span><span class=nx>d1d1d1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>style</span><span class=p>&gt;</span>
+</span></span></code></pre></td></tr></table></div></div><p>再做一排橙色星星，宽度按照父组件传过来的 rating 计算比例</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-vue data-lang=vue><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>template</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>  <span class=p>&lt;</span><span class=nt>div</span> <span class=o>:</span><span class=na>style</span><span class=o>=</span><span class=s>&#34;{ width: (rating/5)*3 + &#39;rem&#39; }&#34;</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;star-overflow&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>span</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;star-container&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>      <span class=p>&lt;</span><span class=nt>svg</span> <span class=na>class</span><span class=o>=</span><span class=s>&#34;star orange&#34;</span> <span class=nt>v-for</span><span class=s>=&#34;item in 5&#34; </span><span class=nt>:key</span><span class=s>=&#34;item&#34;</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>          <span class=p>&lt;</span><span class=nt>use</span> <span class=na>xmlns</span><span class=nt>:xlink</span><span class=s>=&#34;http://www.w3.org/1999/xlink&#34;</span> <span class=na>xlink</span><span class=nt>:href</span><span class=s>=&#34;#star&#34;</span><span class=p>&gt;&lt;/</span><span class=nt>use</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>      <span class=p>&lt;/</span><span class=nt>svg</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>&lt;/</span><span class=nt>span</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>  <span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>template</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>script</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=nx>props</span><span class=o>:</span> <span class=p>[</span><span class=s1>&#39;rating&#39;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>script</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>style</span> <span class=na>lang</span><span class=o>=</span><span class=s>&#39;scss&#39;</span> <span class=na>scoped</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl><span class=p>.</span><span class=nx>star</span><span class=o>-</span><span class=nx>overflow</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=nx>overflow</span><span class=o>:</span> <span class=nx>hidden</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=nx>height</span><span class=o>:</span> <span class=mi>100</span><span class=o>%</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=nx>position</span><span class=o>:</span> <span class=nx>relative</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=p>.</span><span class=nx>orange</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>fill</span><span class=o>:</span> <span class=nx>$orange</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>style</span><span class=p>&gt;</span>
+</span></span></code></pre></td></tr></table></div></div><p>在父组件中引入，使用，传入 rating：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-vue data-lang=vue><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>template</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>  <span class=p>&lt;</span><span class=nt>RatingStar</span> <span class=o>:</span><span class=na>rating</span><span class=o>=</span><span class=s>&#39;item.rating&#39;</span><span class=p>&gt;&lt;/</span><span class=nt>RatingStar</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>template</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>script</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl><span class=kr>import</span> <span class=nx>RatingStar</span> <span class=nx>from</span> <span class=s1>&#39;../fun/RatingStar.vue&#39;</span>
+</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=nx>components</span><span class=o>:</span> <span class=p>{</span> <span class=nx>RatingStar</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>script</span><span class=p>&gt;</span>
+</span></span></code></pre></td></tr></table></div></div><h1 id=目标功能>目标功能<a hidden class=anchor aria-hidden=true href=#目标功能>#</a></h1><ul><li><input checked disabled type=checkbox> 定位功能</li><li><input checked disabled type=checkbox> 选择城市</li><li><input checked disabled type=checkbox> 搜索地址</li><li><input checked disabled type=checkbox> 展示所选地址附近商家列表</li></ul></div><footer class=post-footer><ul class=post-tags><li><a href=/tags/vue2/>vue2</a></li><li><a href=/tags/%E9%A1%B9%E7%9B%AE%E8%AE%B0%E5%BD%95/>项目记录</a></li></ul><nav class=paginav><a class=prev href=/posts/frontend/vue2-elm-day4/><span class=title>« Prev</span><br><span>Vue2 Elm 项目记录 Day4</span></a>
+<a class=next href=/posts/frontend/vue2-elm-day2/><span class=title>Next »</span><br><span>Vue2 Elm 项目记录 Day2</span></a></nav><div class=share-buttons><a target=_blank rel="noopener noreferrer" aria-label="share Vue2 Elm 项目记录 Day3 on twitter" href="https://twitter.com/intent/tweet/?text=Vue2%20Elm%20%e9%a1%b9%e7%9b%ae%e8%ae%b0%e5%bd%95%20Day3&url=%2fposts%2ffrontend%2fvue2-elm-day3%2f&hashtags=vue2%2c%e9%a1%b9%e7%9b%ae%e8%ae%b0%e5%bd%95"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentcolor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zM195.519 424.544c135.939.0 210.268-112.643 210.268-210.268.0-3.218.0-6.437-.153-9.502 14.406-10.421 26.973-23.448 36.935-38.314-13.18 5.824-27.433 9.809-42.452 11.648 15.326-9.196 26.973-23.602 32.49-40.92-14.252 8.429-30.038 14.56-46.896 17.931-13.487-14.406-32.644-23.295-53.946-23.295-40.767.0-73.87 33.104-73.87 73.87.0 5.824.613 11.494 1.992 16.858-61.456-3.065-115.862-32.49-152.337-77.241-6.284 10.881-9.962 23.601-9.962 37.088.0 25.594 13.027 48.276 32.95 61.456-12.107-.307-23.448-3.678-33.41-9.196v.92c0 35.862 25.441 65.594 59.311 72.49-6.13 1.686-12.72 2.606-19.464 2.606-4.751.0-9.348-.46-13.946-1.38 9.349 29.426 36.628 50.728 68.965 51.341-25.287 19.771-57.164 31.571-91.8 31.571-5.977.0-11.801-.306-17.625-1.073 32.337 21.15 71.264 33.41 112.95 33.41z"/></svg></a><a target=_blank rel="noopener noreferrer" aria-label="share Vue2 Elm 项目记录 Day3 on reddit" href="https://reddit.com/submit?url=%2fposts%2ffrontend%2fvue2-elm-day3%2f&title=Vue2%20Elm%20%e9%a1%b9%e7%9b%ae%e8%ae%b0%e5%bd%95%20Day3"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentcolor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zM446 265.638c0-22.964-18.616-41.58-41.58-41.58-11.211.0-21.361 4.457-28.841 11.666-28.424-20.508-67.586-33.757-111.204-35.278l18.941-89.121 61.884 13.157c.756 15.734 13.642 28.29 29.56 28.29 16.407.0 29.706-13.299 29.706-29.701.0-16.403-13.299-29.702-29.706-29.702-11.666.0-21.657 6.792-26.515 16.578l-69.105-14.69c-1.922-.418-3.939-.042-5.585 1.036-1.658 1.073-2.811 2.761-3.224 4.686l-21.152 99.438c-44.258 1.228-84.046 14.494-112.837 35.232-7.468-7.164-17.589-11.591-28.757-11.591-22.965.0-41.585 18.616-41.585 41.58.0 16.896 10.095 31.41 24.568 37.918-.639 4.135-.99 8.328-.99 12.576.0 63.977 74.469 115.836 166.33 115.836s166.334-51.859 166.334-115.836c0-4.218-.347-8.387-.977-12.493 14.564-6.47 24.735-21.034 24.735-38.001zM326.526 373.831c-20.27 20.241-59.115 21.816-70.534 21.816-11.428.0-50.277-1.575-70.522-21.82-3.007-3.008-3.007-7.882.0-10.889 3.003-2.999 7.882-3.003 10.885.0 12.777 12.781 40.11 17.317 59.637 17.317 19.522.0 46.86-4.536 59.657-17.321 3.016-2.999 7.886-2.995 10.885.008 3.008 3.011 3.003 7.882-.008 10.889zm-5.23-48.781c-16.373.0-29.701-13.324-29.701-29.698.0-16.381 13.328-29.714 29.701-29.714 16.378.0 29.706 13.333 29.706 29.714.0 16.374-13.328 29.698-29.706 29.698zM160.91 295.348c0-16.381 13.328-29.71 29.714-29.71 16.369.0 29.689 13.329 29.689 29.71.0 16.373-13.32 29.693-29.689 29.693-16.386.0-29.714-13.32-29.714-29.693z"/></svg></a><a target=_blank rel="noopener noreferrer" aria-label="share Vue2 Elm 项目记录 Day3 on facebook" href="https://facebook.com/sharer/sharer.php?u=%2fposts%2ffrontend%2fvue2-elm-day3%2f"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentcolor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H342.978V319.085h66.6l12.672-82.621h-79.272v-53.617c0-22.603 11.073-44.636 46.58-44.636H425.6v-70.34s-32.71-5.582-63.982-5.582c-65.288.0-107.96 39.569-107.96 111.204v62.971h-72.573v82.621h72.573V512h-191.104c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892z"/></svg></a><a target=_blank rel="noopener noreferrer" aria-label="share Vue2 Elm 项目记录 Day3 on whatsapp" href="https://api.whatsapp.com/send?text=Vue2%20Elm%20%e9%a1%b9%e7%9b%ae%e8%ae%b0%e5%bd%95%20Day3%20-%20%2fposts%2ffrontend%2fvue2-elm-day3%2f"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentcolor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zm-58.673 127.703c-33.842-33.881-78.847-52.548-126.798-52.568-98.799.0-179.21 80.405-179.249 179.234-.013 31.593 8.241 62.428 23.927 89.612l-25.429 92.884 95.021-24.925c26.181 14.28 55.659 21.807 85.658 21.816h.074c98.789.0 179.206-80.413 179.247-179.243.018-47.895-18.61-92.93-52.451-126.81zM263.976 403.485h-.06c-26.734-.01-52.954-7.193-75.828-20.767l-5.441-3.229-56.386 14.792 15.05-54.977-3.542-5.637c-14.913-23.72-22.791-51.136-22.779-79.287.033-82.142 66.867-148.971 149.046-148.971 39.793.014 77.199 15.531 105.329 43.692 28.128 28.16 43.609 65.592 43.594 105.4-.034 82.149-66.866 148.983-148.983 148.984zm81.721-111.581c-4.479-2.242-26.499-13.075-30.604-14.571-4.105-1.495-7.091-2.241-10.077 2.241-2.986 4.483-11.569 14.572-14.182 17.562-2.612 2.988-5.225 3.364-9.703 1.12-4.479-2.241-18.91-6.97-36.017-22.23C231.8 264.15 222.81 249.484 220.198 245s-.279-6.908 1.963-9.14c2.016-2.007 4.48-5.232 6.719-7.847 2.24-2.615 2.986-4.484 4.479-7.472 1.493-2.99.747-5.604-.374-7.846-1.119-2.241-10.077-24.288-13.809-33.256-3.635-8.733-7.327-7.55-10.077-7.688-2.609-.13-5.598-.158-8.583-.158-2.986.0-7.839 1.121-11.944 5.604-4.105 4.484-15.675 15.32-15.675 37.364.0 22.046 16.048 43.342 18.287 46.332 2.24 2.99 31.582 48.227 76.511 67.627 10.685 4.615 19.028 7.371 25.533 9.434 10.728 3.41 20.492 2.929 28.209 1.775 8.605-1.285 26.499-10.833 30.231-21.295 3.732-10.464 3.732-19.431 2.612-21.298-1.119-1.869-4.105-2.99-8.583-5.232z"/></svg></a><a target=_blank rel="noopener noreferrer" aria-label="share Vue2 Elm 项目记录 Day3 on telegram" href="https://telegram.me/share/url?text=Vue2%20Elm%20%e9%a1%b9%e7%9b%ae%e8%ae%b0%e5%bd%95%20Day3&url=%2fposts%2ffrontend%2fvue2-elm-day3%2f"><svg viewBox="2 2 28 28" height="30" width="30" fill="currentcolor"><path d="M26.49 29.86H5.5a3.37 3.37.0 01-2.47-1 3.35 3.35.0 01-1-2.47V5.48A3.36 3.36.0 013 3 3.37 3.37.0 015.5 2h21A3.38 3.38.0 0129 3a3.36 3.36.0 011 2.46V26.37a3.35 3.35.0 01-1 2.47 3.38 3.38.0 01-2.51 1.02zm-5.38-6.71a.79.79.0 00.85-.66L24.73 9.24a.55.55.0 00-.18-.46.62.62.0 00-.41-.17q-.08.0-16.53 6.11a.59.59.0 00-.41.59.57.57.0 00.43.52l4 1.24 1.61 4.83a.62.62.0 00.63.43.56.56.0 00.4-.17L16.54 20l4.09 3A.9.9.0 0021.11 23.15zM13.8 20.71l-1.21-4q8.72-5.55 8.78-5.55c.15.0.23.0.23.16a.18.18.0 010 .06s-2.51 2.3-7.52 6.8z"/></svg></a></div></footer></article><script src=https://utteranc.es/client.js repo=OooldGreen/blog-sources issue-term=pathname theme=github-light crossorigin=anonymous async></script></main><footer class=footer><footer class=entry-footer><div class=social-icons><a href="https://github.com/OooldGreen?tab=repositories" target=_blank rel="noopener noreferrer me" title=Github><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37.0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44.0 0020 4.77 5.07 5.07.0 0019.91 1S18.73.65 16 2.48a13.38 13.38.0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07.0 005 4.77 5.44 5.44.0 003.5 8.55c0 5.42 3.3 6.61 6.44 7A3.37 3.37.0 009 18.13V22"/></svg></a><a href=https://twitter.com/home target=_blank rel="noopener noreferrer me" title=Twitter><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9.0 01-3.14 1.53 4.48 4.48.0 00-7.86 3v1A10.66 10.66.0 013 4s-4 9 5 13a11.64 11.64.0 01-7 2c9 5 20 0 20-11.5a4.5 4.5.0 00-.08-.83A7.72 7.72.0 0023 3z"/></svg></a><a href=mailto:954895224@qq.com target=_blank rel="noopener noreferrer me" title=Email><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 21" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1.0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1.0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a><a href=index.xml target=_blank rel="noopener noreferrer me" title=RSS><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 019 9"/><path d="M4 4a16 16 0 0116 16"/><circle cx="5" cy="19" r="1"/></svg></a></div></footer><span>&copy; 2025 <a href>Snow Cabin</a></span>
+<span>Powered by
+<a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a> &
+        <a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z"/></svg></a><a href=/search aria-label=search-link title=Search class=search-link id=search-link accesskey=/><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a><script>let menu=document.getElementById("menu");menu&&(menu.scrollLeft=localStorage.getItem("menu-scroll-position"),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}),document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var t=this.getAttribute("href").substr(1);window.matchMedia("(prefers-reduced-motion: reduce)").matches?document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView({behavior:"smooth"}),t==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${t}`)})})</script><script>var mybutton=document.getElementById("top-link"),mybutton2=document.getElementById("search-link");window.onscroll=function(){document.body.scrollTop>400||document.documentElement.scrollTop>400?(mybutton.style.visibility="visible",mybutton.style.opacity="1",mybutton2.style.visibility="visible",mybutton2.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0",mybutton2.style.visibility="hidden",mybutton2.style.opacity="0")}</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{document.body.className.includes("dark")?(document.body.classList.remove("dark"),localStorage.setItem("pref-theme","light")):(document.body.classList.add("dark"),localStorage.setItem("pref-theme","dark"))})</script><script>document.querySelectorAll("pre > code").forEach(e=>{const n=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerHTML="copy";function s(){t.innerHTML="copied!",setTimeout(()=>{t.innerHTML="copy"},2e3)}t.addEventListener("click",t=>{if("clipboard"in navigator){navigator.clipboard.writeText(e.textContent),s();return}const n=document.createRange();n.selectNodeContents(e);const o=window.getSelection();o.removeAllRanges(),o.addRange(n);try{document.execCommand("copy"),s()}catch{}o.removeRange(n)}),n.classList.contains("highlight")?n.appendChild(t):n.parentNode.firstChild==n||(e.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?e.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(t):e.parentNode.appendChild(t))})</script></body></html>

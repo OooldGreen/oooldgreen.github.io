@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>class note on Snow Cabin</title>
+    <link>/tags/class-note/</link>
+    <description>Recent content in class note on Snow Cabin</description>
+    <image>
+      <url></url>
+      <link></link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 30 Aug 2023 10:01:00 +0800</lastBuildDate><atom:link href="/tags/class-note/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>みんなの日本語</title>
+      <link>/posts/language/%E3%81%BF%E3%82%93%E3%81%AA%E3%81%AE%E6%97%A5%E6%9C%AC%E8%AA%9E/</link>
+      <pubDate>Wed, 30 Aug 2023 10:01:00 +0800</pubDate>
+      
+      <guid>/posts/language/%E3%81%BF%E3%82%93%E3%81%AA%E3%81%AE%E6%97%A5%E6%9C%AC%E8%AA%9E/</guid>
+      <description>大家的日语课堂笔记</description>
+    </item>
+    
+    <item>
+      <title>计算机网络</title>
+      <link>/posts/cs/computer-networks/</link>
+      <pubDate>Mon, 14 Nov 2022 15:57:02 +0800</pubDate>
+      
+      <guid>/posts/cs/computer-networks/</guid>
+      <description>Computer Network is a MOOC class.</description>
+    </item>
+    
+  </channel>
+</rss>

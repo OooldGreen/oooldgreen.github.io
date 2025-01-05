@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>promise on Snow Cabin</title>
+    <link>/tags/promise/</link>
+    <description>Recent content in promise on Snow Cabin</description>
+    <image>
+      <url></url>
+      <link></link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sun, 06 Nov 2022 15:35:31 +0800</lastBuildDate><atom:link href="/tags/promise/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Promise</title>
+      <link>/posts/frontend/js-promise/</link>
+      <pubDate>Sun, 06 Nov 2022 15:35:31 +0800</pubDate>
+      
+      <guid>/posts/frontend/js-promise/</guid>
+      <description>汇总 Promise 对象的由来、用法、方法和 async/await。
+从是什么，怎么用开始讲起，然后讲讲具体有哪些方法和应用场景，最后再浅提一下 async/await。
+为什么要有 Promise 对象 一句话：解决回调地狱 (callback hell)
+如果你想进行一个异步操作，比方说，有先后顺序的打印两个结果，你会怎么写？
+也许你可以使用回调函数（callback），因为回调函数必须依赖另一个函数执行，我们可以借此确保打印的先后顺序。定时器就是一个常见的回调函数。
+1 2 3 4 // 1s后输出callback setTimeout(function () { console.log(&amp;#39;callback&amp;#39;) }, 1000); 当要嵌套很多回调函数时，每个嵌套都用一层括号包裹，最后的结果就是嵌套了很多层括号，代码变得非常复杂，令人迷惑&amp;hellip;&amp;hellip; 摘抄JavaScript高级程序设计（第4版）上的一段代码体会一下，这段代码表现的是异步返回值依赖了另一个异步返回值时的情况——
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 function double(value, success, failure) { setTimeout(() =&amp;gt; { try { if (typeof value !== &amp;#39;number&amp;#39;) { throw &amp;#39;Must provide number as first argument&amp;#39;; } success(2 * value); } catch (e) { failure(e); } }, 1000); } const successCallback = (x) =&amp;gt; { double(x, (y) =&amp;gt; console.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -9,15 +9,15 @@
 :root {
   --radius: 0px;
   /* post背景颜色 */
-  --theme: #fff;
+  --theme: #afc6d2;
   /* 博客卡片背景颜色 */
-  --entry: #efefef;
+  --entry: #e8e7de;
   /* 网页字体颜色 */
   --primary: #002FA7; 
   --secondary: #002fa7;
-  --third: #9d9d9d;
+  --third: #ebe8d9;
   /* 搜索/返回顶部按钮背景颜色 */
-  --tertiary: #cbcbcb;
+  --tertiary: #596b74;
   /* post内容字体颜色 */
   --content: #212121;
   /* --hljs-bg: rgb(28, 29, 33); */

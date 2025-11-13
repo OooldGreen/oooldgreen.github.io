@@ -2,7 +2,8 @@ baseURL: "https://oooldgreen.github.io/"
 
 title: Snow Cabin
 enableEmoji: true
-paginate: 10
+pagination: 
+  pageSize: 10
 theme: PaperMod
 
 enableRobotsTXT: true
@@ -10,7 +11,7 @@ buildDrafts: false
 buildFuture: false
 buildExpired: false
 
-googleAnalytics: UA-123-45
+googleAnalytics: G-ZHWQHVKXV2
 
 minify:
   disableXML: true
@@ -21,14 +22,14 @@ params:
   title: Snow Cabin
   description: "Records for frontend learning and daily life."
   keywords: [Blog, Portfolio, PaperMod, Hugo, Frontend, CS]
-  author: Silva
+  author: Sylvie
   # author: ["Me", "You"] # multiple authors
   images: [""]
   DateFormat: "January 2, 2006"
   defaultTheme: auto # dark, light
   disableThemeToggle: false
 
-  ShowLastMod: true #显示文章更新时间
+  ShowLastMod: false #显示文章更新时间
   ShowReadingTime: false  # 阅读时间
   ShowShareButtons: true # 分享按钮
   ShowPostNavLinks: true
@@ -86,15 +87,11 @@ params:
     Content: 属于自己的房间💙
 
   # 社交链接
-  socialIcons:
-    - name: github
-      url: "https://github.com/OooldGreen?tab=repositories"
-    - name: twitter
-      url: "https://twitter.com/home"
-    - name: email
-      url: "mailto:954895224@qq.com"
-    - name: RSS
-      url: "index.xml"
+  social: 
+    github: "https://github.com/OooldGreen?tab=repositories"
+    twitter: "https://twitter.com/home"
+    email: "mailto:changshiyu99@gmail.com"
+    RSS: "index.xml"
     # - name: stackoverflow
     #   url: "https://stackoverflow.com"
 
@@ -161,6 +158,8 @@ markup:
     guessSyntax: true
     lineNos: true
     style: monokai
+    unsafe: true
+ignoreLogs: 'warning-goldmark-raw-html'
 
 # for search page
 outputs:
@@ -168,3 +167,4 @@ outputs:
         - HTML
         - RSS
         - JSON # is necessary
+

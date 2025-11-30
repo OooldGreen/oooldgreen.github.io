@@ -1,5 +1,5 @@
 ---
-title: "Full Stack Helsinki" #标题
+title: "Full Stack Helsinki 1" #标题
 date: 2025-10-28 #创建时间
 lastmod: 2025-10-28 #更新时间
 categories: [""]
@@ -226,7 +226,7 @@ npm run deploy:full 包含更新后端的指令
 MongoDB 是一种文档型数据库，使用的时候现在 MongoDB Atlas 建立一个空数据库，调用代码可以封装在一个文件 `/models/person.js` 里：
 
 ```
-// 使用 mongoDB 数据库
+// 先安装：npm install mongoose, 然后使用 mongoDB 数据库
 const mongoose = require('mongoose')
 
 /* 
@@ -371,3 +371,138 @@ const personSchema = new mongoose.Schema({
 │   └── middleware.js  
 
 ```
+
+## 使用 jest 测试
+
+- 安装 jest `npm install --save-dev jest`
+- 修改 `npm test` ：
+    ```
+    "scripts": {
+        "test": "jest --verbose"
+    }
+    ```
+- 还必须用 node 运行，所以要在 package.json 加上
+```
+{
+ //...
+ "jest": {
+   "testEnvironment": "node"
+ }
+}
+```
+
+- 写测试
+
+```
+test('reverse of a', () => {
+  const result = reverse('a')
+
+  // expect 比较结果是否正确
+  expect(result).toBe('a')
+})
+
+// 封装一个名叫 average 的测试
+describe('average', () => {
+  // tests
+})
+
+```
+
+## 给后端写测试
+
+Development Mode：
+
+- package.json 增加 NODE_ENV 环境标识
+    ```
+    {
+    // ...
+    "scripts": {
+        "start": "cross-env NODE_ENV=production node index.js",
+        "dev": "cross-env NODE_ENV=development nodemon index.js",
+        "build:ui": "rm -rf build && cd ../frontend/ && npm run build && cp -r build ../backend",
+        "deploy": "fly deploy",
+        "deploy:full": "npm run build:ui && npm run deploy",
+        "logs:prod": "fly logs",
+        "lint": "eslint .",
+        "test": "cross-env NODE_ENV=test jest --verbose --runInBand"
+    },
+    // ...
+    }
+    ```
+    `npm install cross-env` 使其可以在 windows 上运行（可以在不同的操作系统上用一致的方式设置环境变量）
+- config.js
+    ```
+    // 开发者模式使用本地测试链接
+    const MONGODB_URI = process.env.NODE_ENV === 'test' 
+        ? process.env.TEST_MONGODB_URI
+        : process.env.MONGODB_URI
+    ```
+- .env
+    ```
+    // 添加开发者模式测试链接
+    TEST_MONGODB_URI=mongodb+srv://fullstack:thepasswordishere@cluster0.o1opl.mongodb.net/testNoteApp?retryWrites=true&w=majority
+    ```
+- supertest：用来测试 HTTP API 的工具，模拟各种真实的 HTTP 请求并返回数据（状态吗，响应体，响应头，JSON内容等） `npm install --save-dev supertest`
+- 用 supertest 正常写测试，包裹成 api
+    ```
+    const supertest = require('supertest')
+    const api = supertest(app)  // superagent 一个超级代理
+    ```
+    
+可能的报错：
+mongoosee 等待时间过长导致失败，可以：
+1. 给 test 增加第三个参数
+    ```
+    test('notes are returned as json', async () => {
+      await api
+        .get('/api/blogs')
+        .expect(200)
+        // 这里使用正则表达式来匹配，因为响应头中还包含了其他信息：“application/json; charset=utf-8”
+        .expect('Content-Type', /application\/json/)
+    }, 100000) //增加第三个参数可以延长等待时间（默认5000ms），非必需动作，只是防止等待时间过长导致运行失败报错
+
+    ```
+2. 定义一个 `mongoose.set("bufferTimeoutMS", 30000)`(30s)
+
+
+- 用 `require('express-async-errors')` 替代 `next try catch` 的使用，简化代码
+
+### async/await Promise.all
+
+
+## 用户管理
+
+1. 创建一个 userSchema （包含用户名，密码，blog 的 type `type: mongoose.Schema.Types.ObjectId` 和 ref）
+2. 博客定义中也增加用户的 type 和 ref
+3. 创建 users 路由， post、get 等
+4. 创建新笔记/博客的代码需要修改
+5. populate() 让用户和博客内容显示在同一个页面
+
+## 用户登录
+
+1. 登录表单
+2. 请求，验证用户名和密码
+3. 生成 token
+4. 后端响应状态码，同时一起返回 token 
+5. 将 token 保存在 react 状态中
+
+### 1. 登陆功能
+- 安装 jasonwebtoken （生成 token）
+- 登陆逻辑
+    - 写一个单独的 loginRouter
+    - findOne 在数据库中根据 username 搜索用户
+    - 用 bcrypt.compare(password, user,passwordHash) 检查 password 
+    - 如果用户或密码不正确，返回 401
+    - 如果都正确，用 `jwt.sign(userForToken, process.env.SECRET, { expiresIn: 60*60 })` 创建一个 token，有效期 60*60s = 1h （先在 env 中配置 SECRET（任意值）），记得写错误处理 TokenExpiredError
+    - 返回 200
+    - 如果写 tokenExtractor 中间件必须要在路由之前调用
+- 将登陆 js 添加到应用中
+
+### 2. 将 token 发送到服务器（bearer）
+
+- getTokenFrom 的到 authorization
+- 添加新笔记的时候，用 `jwt.verify(getTokenFrom(request), process.env.SECRET)` 检查 token 有效性
+- 如果 token 丢失或无效，将引发 JsonWebTokenError （自己写错误处理中间件）
+- decodeToken 解码 token，其中包含 id 和 username 字段
+- 如果 token 解码对象不包含用户 id，返回 401
+- 如果 authorization 头正确，就可以创建新笔记/博客了

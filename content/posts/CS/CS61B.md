@@ -101,4 +101,49 @@ Hello.java -> javac compiler编译器 -> Hello.class -> java interpreter解释�
 - 对于机器更好运行
 - 保护知识产权（一定程度上）
 
-## 类
+# Data Struction
+
+## The Disjoint Sets Data Structure
+
+
+### Asymptotics
+
+- for loop (嵌套循环 sum of first natural numbers): O(N^2) 
+- for loop (sum of first powers of 2): O(N) 
+- recursion: O(2^N)
+- binary search: O(logN)
+- merge sort: O(NlogN)
+
+### Tree
+
+要求数据 comparable
+
+#### BST (binary search trees)
+
+Runtime: O(N)
+
+#### 2-3 tree (B trees)
+
+Runtime: O(logN)
+
+很难实现
+
+#### red black trees (LLRBs)
+
+Runtime: O(logN)
+最长路径：2N + 1
+
+Five rules:
+1. 每个节点都是红色或者黑色 Chaque nœud soit rouge, soit noir.
+2. 根结点必须是黑色 Le racine est noire.
+3. 所有叶节点必须是黑色 Toutes les feuilles sont noires
+4. 如果有一个节点是红色，那么他的两个子节点都必须是黑色， 红色节点不能相邻 Si un nœud est rouge, alors ses deux enfants doivent être noirs.
+5. 从任一节点到所有叶子节点的简单路径上所包含的黑色节点数量相同 Pour tout nœud, le nombre de nœuds noirs sur tout chemin simple menant àun descendant feuille est identique.
+
+### Hash
+
+重要规则：
+- override equals 方法，确保添加相同数据有相同的 hashcode
+- Never mutate an Object being used as a key (修改后的数据会丢失)
+
+``` Immutable data types： `public final int month` -- an instance cannot change in any observable way ```

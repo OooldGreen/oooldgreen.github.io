@@ -1,5 +1,5 @@
 ---
-title: "Full Stack Helsinki2" #标题
+title: "Full Stack Helsinki 2" #标题
 date: 2025-11-30T19:00:44+01:00 #创建时间
 lastmod: 2025-11-30T19:00:44+01:00 #更新时间
 categories: [""]
@@ -16,6 +16,9 @@ weight: # 输入1可以顶置文章，用来给文章展示排序，不填就默
 # cover:
 #     image: "" #图片路径：posts/tech/文章1/picture.png
 #     caption: "" #图片底部描述
-#     alt: ""
+
 #     relative: false
 ---
+
+# Part 5 (继续前端)
+

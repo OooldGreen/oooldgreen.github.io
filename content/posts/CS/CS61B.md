@@ -49,7 +49,7 @@ weight: # 输入1可以顶置文章，用来给文章展示排序，不填就默
 - 参数、局部变量、方法首字母小写，之后每个单词首字母用大写
 - 类型、类型参数的命名首字母用大写
 - packages 小写开头
-- 实例变量和非final class变量用小写字母或者 `_` 开头
+- 实例变量和非final className变量用小写字母或者 `_` 开头
 
 ## Java 风格规范
 - String[] names
@@ -70,17 +70,17 @@ weight: # 输入1可以顶置文章，用来给文章展示排序，不填就默
 ## 限制
 单个文件代码不超过 2000 行，每行不超过 120 字符；
 每个方法不超过 80 行，不超过 8 个参数；
-每个文件只包含一个 outer class （nested classes 不算）
+每个文件只包含一个 outer className （nested classNamees 不算）
 
 
 # Java Introduction
 
-1. 所有的代码都要放在class中: `public class CLASSNAME { }`
+1. 所有的代码都要放在className中: `public className className { }`
 2. 每行结束都需要分号`;`
 3. 我们需要运行的代码放在 `public static void main(String[] args)`中
 4. 声明变量需要确定变量类型 `int x = 0`，声明之后变量类型不可更改
 5. 代码在运行之前先进行验证，
-6. 在java中定义Function：必须在class中定义函数（methods）——`public static`，所有的参数都要定义数据类型，返回值也需要定义数据类型，只能返回一个值
+6. 在java中定义Function：必须在className中定义函数（methods）——`public static`，所有的参数都要定义数据类型，返回值也需要定义数据类型，只能返回一个值
 
 ## 静态类型的优缺点
 优点：
@@ -94,9 +94,9 @@ weight: # 输入1可以顶置文章，用来给文章展示排序，不填就默
 - 代码通用性更差
 
 ## Java编译（Compilation）
-Hello.java -> javac compiler编译器 -> Hello.class -> java interpreter解释器 -> 运行
+Hello.java -> javac compiler编译器 -> Hello.className -> java interpreter解释器 -> 运行
 
-.class文件的作用
+.className文件的作用
 - 类型检查，确保代码安全
 - 对于机器更好运行
 - 保护知识产权（一定程度上）

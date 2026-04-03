@@ -5,22 +5,22 @@
 这一个多月经历了很多，阳了，以为是无症状，结果还是烧了，阴了，又皮炎了；因为皮炎好吃的爱吃的全都不能吃，吃的药还让我足足吐了一晚上；拒了我仅有的俩offer，一切从头开始；憋了一个月多的论文，总算写完了，不敢出去玩，只去山上玩了一天；学会了飞无人机，还没来的及好好玩就回学校了；拒绝了同学聚会，和好姊妹和发小吃了两次饭，看了电影深海，据说是春节档最好看的；看了好多年没举办过的舞龙，看了长大后再也没看过的但是记忆里最漂亮的烟花秀，不过都是市民自己放的。
 本命年的开端迷茫又忙碌又好像什么都没忙，一晃神开学了又要每天来实验室了，普通话都觉得说不太利索了，夹杂了好多方言习惯；走在路上努力回想来学校的地铁流程，恍惚连门牌号都不太记得了，仿佛这三年不存在一般。很想快点毕业，又不知道毕业能去哪里，我会在哪里流浪？我会过的快乐吗？我能实现梦想吗？眼前的事情都很急迫，脑子却早已漂浮到外太空，身边的一切仿佛都不是真实。可能大脑放了太久的假，一时之间找不到在哪里。
 新一年的计划已经写好，未来三年的计划也在脑袋里盘旋又盘旋，所求不过健康安乐自由。继续学习，直到学不动；继续看世界，直到再也看不到。</p></div><footer class="entry-footer footer-meta"><span class=read-more><a class=title-link aria-label="post link to 开 学 啦！" href=https://oooldgreen.github.io/posts/daily/hello2023/>Read More... >></a>
-</span><span class=footer-time>February 6, 2023&amp;nbsp;&amp;nbsp;4 words</span></footer></article><article class=post-entry><header class=entry-header><h2>Vue2 Elm 项目记录 Day4</h2></header><div class=entry-content><p>从 Msite 导航进入的商家列表 从 url 得到点击的分类 id 1 2 3 4 5 6 7 8 9 10 11 &lt;router-link v-for="foodItem in item" :key="foodItem.id" :to="{ path: '/food', query: { geohash, title: foodItem.title, restaurantCateId: getCateId(foodItem.link) } }" >&lt;/router-link> 1 2 3 4 5 6 7 8 9 // 得到餐厅分类id getCateId(url) { let urlData = decodeURIComponent(url.split('=')[1].replace('&amp;target_name','')); if (/restaurant_category_id/gi.test(urlData)) { return JSON.parse(urlData).restaurant_category_id.id } else { return '' } } 下拉菜单制作 CSS 类的动态选择 可以使用 计算属性 或者 通过模版代码孔氏是否添加CSS样式
+</span><span class=footer-time>February 6, 2023</span></footer></article><article class=post-entry><header class=entry-header><h2>Vue2 Elm 项目记录 Day4</h2></header><div class=entry-content><p>从 Msite 导航进入的商家列表 从 url 得到点击的分类 id 1 2 3 4 5 6 7 8 9 10 11 &lt;router-link v-for="foodItem in item" :key="foodItem.id" :to="{ path: '/food', query: { geohash, title: foodItem.title, restaurantCateId: getCateId(foodItem.link) } }" >&lt;/router-link> 1 2 3 4 5 6 7 8 9 // 得到餐厅分类id getCateId(url) { let urlData = decodeURIComponent(url.split('=')[1].replace('&amp;target_name','')); if (/restaurant_category_id/gi.test(urlData)) { return JSON.parse(urlData).restaurant_category_id.id } else { return '' } } 下拉菜单制作 CSS 类的动态选择 可以使用 计算属性 或者 通过模版代码孔氏是否添加CSS样式
 ...</p></div><footer class="entry-footer footer-meta"><span class=read-more><a class=title-link aria-label="post link to Vue2 Elm 项目记录 Day4" href=https://oooldgreen.github.io/posts/frontend/vue2-elm-day4/>Read More... >></a>
-</span><span class=footer-time>November 28, 2022&amp;nbsp;&amp;nbsp;835 words</span></footer></article><article class=post-entry><header class=entry-header><h2>Vue2 Elm 项目记录 Day3</h2></header><div class=entry-content><p>第三天啦，加油！
+</span><span class=footer-time>November 28, 2022</span></footer></article><article class=post-entry><header class=entry-header><h2>Vue2 Elm 项目记录 Day3</h2></header><div class=entry-content><p>第三天啦，加油！
 数据处理 需要处理数据将数组分成 8 个一组，方便后面引入 Swiper 的分页器效果
 1 2 3 4 5 msiteFood(geohash).then(res => { while (res.length !== 0) { this.foodCate.push(res.splice(0, 8)) } }) 处理前返回的结果: 处理后的数组: 使用 Swiper 在 Vue 中使用Swiper Swiper 文档 先安装 Swiper
 1 npm install swiper --save-dev 根据文档在组件中引入 Swiper 的 js 和 css，引入 Swiper 只有基础模块，如果需要其他组件功能需要另外引用，最后在 mounted 中初始化。
 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 // msite.vue // 引入 js import Swiper, { Pagination } from 'swiper' // 引入 css import 'swiper/css' import 'swiper/css/pagination' export default { components: { Swiper, SwiperSlide }, mounted() { // 引入 Swiper const swiper = new Swiper('.swiper', { modules: [Pagination] }) } } 调试很久，报错 swiper is not a constructor，看到另一篇博客也有说这种报错，解决方法就是直接本地引入 js 和 css：
 ...</p></div><footer class="entry-footer footer-meta"><span class=read-more><a class=title-link aria-label="post link to Vue2 Elm 项目记录 Day3" href=https://oooldgreen.github.io/posts/frontend/vue2-elm-day3/>Read More... >></a>
-</span><span class=footer-time>November 22, 2022&amp;nbsp;&amp;nbsp;1350 words</span></footer></article><article class=post-entry><header class=entry-header><h2>Vue2 Elm 项目记录 Day2</h2></header><div class=entry-content><p>路由 参考
+</span><span class=footer-time>November 22, 2022</span></footer></article><article class=post-entry><header class=entry-header><h2>Vue2 Elm 项目记录 Day2</h2></header><div class=entry-content><p>路由 参考
 路由跳转 标签跳转 使用 &lt;router-link> 进行导航，通过传递 to 来指定链接，&lt;router-view> 作为路由出口，是路由匹配的组件渲染的地方。
 1 2 3 4 5 &lt;router-link to="/">Go to Home&lt;/router-link> &lt;router-link to="/city">&lt;router-link> &lt;!-- 需要传参的情况 --> &lt;router-link :to="'/city/' + this.id">&lt;/router-link> 事件跳转（编程式路由导航） 使用 this.$router.push('') 或 router.push('')
 1 2 // 固定页面 this.$router.push('/home'); 带参数的情况 第一种方法：解构赋值
 1 2 3 4 this.$router.push(`/city/${id}`) router.push(`/users/${username}`) router.push({ path: `/user/${username}` }) 第二种方法：query 传参，相当于 get 请求，router.push 用法相同
 1 2 3 4 5 6 this.$router.push({ path: '/city', query: { id: this.id } }) 第三种方法：params 传参，相当于 post 请求
 ...</p></div><footer class="entry-footer footer-meta"><span class=read-more><a class=title-link aria-label="post link to Vue2 Elm 项目记录 Day2" href=https://oooldgreen.github.io/posts/frontend/vue2-elm-day2/>Read More... >></a>
-</span><span class=footer-time>November 19, 2022&amp;nbsp;&amp;nbsp;1196 words</span></footer></article><article class=post-entry><header class=entry-header><h2>计算机网络</h2></header><div class=entry-content><p>《计算机网络（自顶向下方法 第7版，James F.Kurose，Keith W.Ross）》 课程 是 2020 年秋科大自动化系本科课程录制版。在介绍计算机网络体系架构的基础上，自上而下、以互联网为例系统地阐述了网络体系结构各层次的主要服务、工作原理、常用技术和协议，包括应用层、传输层、网络层、数据链路层和物理层，最后是网络安全原理和协议。
+</span><span class=footer-time>November 19, 2022</span></footer></article><article class=post-entry><header class=entry-header><h2>计算机网络</h2></header><div class=entry-content><p>《计算机网络（自顶向下方法 第7版，James F.Kurose，Keith W.Ross）》 课程 是 2020 年秋科大自动化系本科课程录制版。在介绍计算机网络体系架构的基础上，自上而下、以互联网为例系统地阐述了网络体系结构各层次的主要服务、工作原理、常用技术和协议，包括应用层、传输层、网络层、数据链路层和物理层，最后是网络安全原理和协议。
 计算机网络和互联网 Internet：是一堆的网络，通过一系列网络交换节点互联互通，向用户提供服务。互联网是分布式的应用进程和提供通信服务的基础设施（应用层以下都是）。
 Internet 标准：
 RFC IETF 互联网组成：
@@ -32,11 +32,11 @@ TCP 服务的特性：
 1. 电路交换
 端到端的资源被分配给从源端到目标端的呼叫 “call”，为每个呼叫预留一条专有通道进行数据交换。
 ...</p></div><footer class="entry-footer footer-meta"><span class=read-more><a class=title-link aria-label="post link to 计算机网络" href=https://oooldgreen.github.io/posts/cs/computer-networks/>Read More... >></a>
-</span><span class=footer-time>November 14, 2022&amp;nbsp;&amp;nbsp;744 words</span></footer></article><article class=post-entry><header class=entry-header><h2>Test 测试用例</h2></header><div class=entry-content><p>月光之下，我们哭过笑过；月光之下，你曾说你爱我
+</span><span class=footer-time>November 14, 2022</span></footer></article><article class=post-entry><header class=entry-header><h2>Test 测试用例</h2></header><div class=entry-content><p>月光之下，我们哭过笑过；月光之下，你曾说你爱我
 ...</p></div><footer class="entry-footer footer-meta"><span class=read-more><a class=title-link aria-label="post link to Test 测试用例" href=https://oooldgreen.github.io/posts/daily/test/>Read More... >></a>
-</span><span class=footer-time>November 10, 2022&amp;nbsp;&amp;nbsp;162 words</span></footer></article><article class=post-entry><header class=entry-header><h2>立冬有感</h2></header><div class=entry-content><p>我羡慕鹰，因为它拥有自由。我羡慕云，因为它可以走到哪就是哪，不问来处，不问去处。
+</span><span class=footer-time>November 10, 2022</span></footer></article><article class=post-entry><header class=entry-header><h2>立冬有感</h2></header><div class=entry-content><p>我羡慕鹰，因为它拥有自由。我羡慕云，因为它可以走到哪就是哪，不问来处，不问去处。
 ...</p></div><footer class="entry-footer footer-meta"><span class=read-more><a class=title-link aria-label="post link to 立冬有感" href=https://oooldgreen.github.io/posts/draft/emotion-221109/>Read More... >></a>
-</span><span class=footer-time>November 9, 2022&amp;nbsp;&amp;nbsp;6 words</span></footer></article><article class=post-entry><header class=entry-header><h2>Promise</h2></header><div class=entry-content><p>汇总 Promise 对象的由来、用法、方法和 async/await。
+</span><span class=footer-time>November 9, 2022</span></footer></article><article class=post-entry><header class=entry-header><h2>Promise</h2></header><div class=entry-content><p>汇总 Promise 对象的由来、用法、方法和 async/await。
 从是什么，怎么用开始讲起，然后讲讲具体有哪些方法和应用场景，最后再浅提一下 async/await。
 为什么要有 Promise 对象 一句话：解决回调地狱 (callback hell)
 如果你想进行一个异步操作，比方说，有先后顺序的打印两个结果，你会怎么写？
@@ -44,11 +44,11 @@ TCP 服务的特性：
 1 2 3 4 // 1s后输出callback setTimeout(function () { console.log('callback') }, 1000); 当要嵌套很多回调函数时，每个嵌套都用一层括号包裹，最后的结果就是嵌套了很多层括号，代码变得非常复杂，令人迷惑…… 摘抄JavaScript高级程序设计（第4版）上的一段代码体会一下，这段代码表现的是异步返回值依赖了另一个异步返回值时的情况——
 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 function double(value, success, failure) { setTimeout(() => { try { if (typeof value !== 'number') { throw 'Must provide number as first argument'; } success(2 * value); } catch (e) { failure(e); } }, 1000); } const successCallback = (x) => { double(x, (y) => console.log(`Success: ${y}`)); }; const failureCallback = (e) => console.log(`Failure: ${e}`); double(3, successCallback, failureCallback); // Success: 12（大约 1000 毫秒之后） 这个时候如果可以推出一种方法，可以方便又直观的表示出异步操作的先后顺序，又不用一层一层的写回调函数就好了……
 ...</p></div><footer class="entry-footer footer-meta"><span class=read-more><a class=title-link aria-label="post link to Promise" href=https://oooldgreen.github.io/posts/frontend/js-promise/>Read More... >></a>
-</span><span class=footer-time>November 6, 2022&amp;nbsp;&amp;nbsp;620 words</span></footer></article><article class=post-entry><header class=entry-header><h2>Shell操作指南</h2></header><div class=entry-content><p>记录一些 shell 指令
+</span><span class=footer-time>November 6, 2022</span></footer></article><article class=post-entry><header class=entry-header><h2>Shell操作指南</h2></header><div class=entry-content><p>记录一些 shell 指令
 ...</p></div><footer class="entry-footer footer-meta"><span class=read-more><a class=title-link aria-label="post link to Shell操作指南" href=https://oooldgreen.github.io/posts/cs/shell/>Read More... >></a>
-</span><span class=footer-time>November 1, 2022&amp;nbsp;&amp;nbsp;747 words</span></footer></article><article class=post-entry><header class=entry-header><h2>期末知识点复习</h2></header><div class=entry-content><p>方便反复诵读复习
+</span><span class=footer-time>November 1, 2022</span></footer></article><article class=post-entry><header class=entry-header><h2>期末知识点复习</h2></header><div class=entry-content><p>方便反复诵读复习
 ...</p></div><footer class="entry-footer footer-meta"><span class=read-more><a class=title-link aria-label="post link to 期末知识点复习" href=https://oooldgreen.github.io/posts/frontend/interview-practice/>Read More... >></a>
-</span><span class=footer-time>October 30, 2022&amp;nbsp;&amp;nbsp;3940 words</span></footer></article><footer class=page-footer><nav class=pagination><a class=prev href=https://oooldgreen.github.io/page/2/>«&nbsp;Prev&nbsp;
+</span><span class=footer-time>October 30, 2022</span></footer></article><footer class=page-footer><nav class=pagination><a class=prev href=https://oooldgreen.github.io/page/2/>«&nbsp;Prev&nbsp;
 </a><a class=next href=https://oooldgreen.github.io/page/4/>Next&nbsp;&nbsp;»</a></nav></footer></main><footer class=footer><footer class=entry-footer><div class=social-icons></div></footer><span>&copy; 2026 <a href=https://oooldgreen.github.io/>Snow Cabin</a></span>
 <span>Powered by
 <a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a> &

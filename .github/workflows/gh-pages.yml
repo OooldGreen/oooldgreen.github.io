@@ -30,7 +30,7 @@ jobs:
           extended: true
 
       - name: Build
-        run: hugo --gc --minify --verbose
+        run: hugo --gc --minify --debug
         # run: hugo --gc --minify
 
       - name: Deploy

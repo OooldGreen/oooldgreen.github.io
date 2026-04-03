@@ -6,6 +6,9 @@ pagination:
   pageSize: 10
 theme: PaperMod
 
+disableKinds:
+  - RSS
+
 enableRobotsTXT: true
 buildDrafts: false
 buildFuture: false
@@ -17,12 +20,14 @@ minify:
   disableXML: true
   minifyOutput: true
 
+
 params:
   env: production # to enable google analytics, opengraph, twitter-cards and schema.
   title: Snow Cabin
   description: "Records for frontend learning and daily life."
   keywords: [Blog, Portfolio, PaperMod, Hugo, Frontend, CS]
-  author: Sylvie
+  author:
+    name: "Shiyu"
   # author: ["Me", "You"] # multiple authors
   images: [""]
   DateFormat: "January 2, 2006"
@@ -35,7 +40,7 @@ params:
   ShowPostNavLinks: true
   ShowBreadCrumbs: true
   ShowCodeCopyButtons: true # 复制代码按钮
-  ShowWordCount: false # 博客字数
+  ShowWordCount: true # 博客字数
   ShowRssButtonInSectionTermList: true
   UseHugoToc: false
   disableSpecial1stPost: false

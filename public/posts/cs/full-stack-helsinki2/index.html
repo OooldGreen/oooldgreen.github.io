@@ -1,0 +1,1151 @@
+<!doctype html><html lang=en dir=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>Full Stack Helsinki 2 | Snow Cabin</title><meta name=keywords content><meta name=description content="Part 5 (继续前端)
+Eslint 检查
+
+安装、初始化：
+
+
+1
+2
+3
+
+
+npm install eslint @eslint/js --save-dev
+npx eslint --init
+npm install --save-dev @stylistic/eslint-plugin-js
+
+
+
+配置文件：
+
+
+ 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+
+
+// eslint.config.js
+import globals from 'globals'
+import js from '@eslint/js'
+import stylisticJs from '@stylistic/eslint-plugin-js'
+
+export default [
+    // 预定义配置
+    js.configs.recommended,，
+    {
+        files: ['**/*.js'],
+        languageOptions: {
+            sourceType: 'commonjs',
+            globals: { ...globals.node },
+            ecmaVersion: 'latest',
+        },
+        // 插件
+        plugins: { 
+            '@stylistic/js': stylisticJs,
+        },
+        // 规则
+        rules: { 
+            '@stylistic/js/indent': ['error', 2],
+            '@stylistic/js/linebreak-style': ['error', 'unix'],
+            '@stylistic/js/quotes': ['error', 'single'],
+            '@stylistic/js/semi': ['error', 'never'],
+            eqeqeq: 'error',
+            'no-trailing-spaces': 'error',
+            'object-curly-spacing': ['error', 'always'],
+            'arrow-spacing': ['error', { before: true, after: true }],
+            'no-console': 'off'
+        }, 
+        // 忽略一些文件
+        { 
+            ignores: ['dist/**'], 
+        }
+    }
+
+]
+
+
+
+建立运行 eslint 脚本
+
+
+1
+2
+3
+4
+5
+6
+7
+
+
+{
+    // package.json
+    &#34;scripts&#34;: {
+        &#34;start&#34;: &#34;node index.js&#34;,
+        &#34;lint&#34;: &#34;eslint .&#34;
+    },
+ }
+
+
+
+运行检查
+
+
+1
+
+
+npm run lint
+
+
+
+
+测试 React 应用
+Jest 和 Vitest 十分相似"><meta name=author content="map[name:Shiyu]"><link rel=canonical href=https://oooldgreen.github.io/posts/cs/full-stack-helsinki2/><meta name=google-site-verification content="XYZabc"><meta name=yandex-verification content="XYZabc"><meta name=msvalidate.01 content="XYZabc"><link crossorigin=anonymous href=/assets/css/stylesheet.719ba588b92d43e03b35703a22c96630be07c7234055a95c95a4f27c17841e1b.css integrity="sha256-cZuliLktQ+A7NXA6IslmML4HxyNAValclaTyfBeEHhs=" rel="preload stylesheet" as=style><script defer crossorigin=anonymous src=/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG+9vmJ0cTS+ovo0FeA=" onload=hljs.initHighlightingOnLoad()></script><link rel=icon href=https://oooldgreen.github.io/favicon.ico><link rel=icon type=image/png sizes=16x16 href=https://oooldgreen.github.io/favicon-16x16.png><link rel=icon type=image/png sizes=32x32 href=https://oooldgreen.github.io/favicon-32x32.png><link rel=apple-touch-icon href=https://oooldgreen.github.io/%3Clink%20/%20absolute%20url%3E><link rel=mask-icon href=https://oooldgreen.github.io/%3Clink%20/%20absolute%20url%3E><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=en href=https://oooldgreen.github.io/posts/cs/full-stack-helsinki2/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--hljs-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51)}.list{background:var(--theme)}.list:not(.dark)::-webkit-scrollbar-track{background:0 0}.list:not(.dark)::-webkit-scrollbar-thumb{border-color:var(--theme)}}</style></noscript><link href=https://fonts.cdnfonts.com/css/montserrat rel=stylesheet><link href=https://fonts.cdnfonts.com/css/freemono rel=stylesheet><progress id=content_progress value=0></progress>
+<script>document.addEventListener("DOMContentLoaded",function(){var t=window.innerHeight,n=document.documentElement.scrollHeight,e=document.querySelector("#content_progress");e.max=n-t,e.value=window.scrollY,document.addEventListener("scroll",function(){e.max=document.documentElement.scrollHeight-window.innerHeight,e.value=window.scrollY})})</script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.3/dist/katex.min.css integrity=sha384-Juol1FqnotbkyZUT5Z7gUPjQ9gzlwCENvUZTpQBAPxtusdwFLRy382PSDx5UUJ4/ crossorigin=anonymous><script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.3/dist/katex.min.js integrity=sha384-97gW6UIJxnlKemYavrqDHSX3SiygeOwIZhwyOKRfSaf0JWKRVj9hLASHgFTzT+0O crossorigin=anonymous></script><script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.3/dist/contrib/auto-render.min.js integrity=sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05 crossorigin=anonymous onload=renderMathInElement(document.body)></script><script async src="https://www.googletagmanager.com/gtag/js?id=G-ZHWQHVKXV2"></script><script>var dnt,doNotTrack=!1;if(!1&&(dnt=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack,doNotTrack=dnt=="1"||dnt=="yes"),!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-ZHWQHVKXV2")}</script><meta property="og:title" content="Full Stack Helsinki 2"><meta property="og:description" content="Part 5 (继续前端)
+Eslint 检查
+
+安装、初始化：
+
+
+1
+2
+3
+
+
+npm install eslint @eslint/js --save-dev
+npx eslint --init
+npm install --save-dev @stylistic/eslint-plugin-js
+
+
+
+配置文件：
+
+
+ 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+
+
+// eslint.config.js
+import globals from 'globals'
+import js from '@eslint/js'
+import stylisticJs from '@stylistic/eslint-plugin-js'
+
+export default [
+    // 预定义配置
+    js.configs.recommended,，
+    {
+        files: ['**/*.js'],
+        languageOptions: {
+            sourceType: 'commonjs',
+            globals: { ...globals.node },
+            ecmaVersion: 'latest',
+        },
+        // 插件
+        plugins: { 
+            '@stylistic/js': stylisticJs,
+        },
+        // 规则
+        rules: { 
+            '@stylistic/js/indent': ['error', 2],
+            '@stylistic/js/linebreak-style': ['error', 'unix'],
+            '@stylistic/js/quotes': ['error', 'single'],
+            '@stylistic/js/semi': ['error', 'never'],
+            eqeqeq: 'error',
+            'no-trailing-spaces': 'error',
+            'object-curly-spacing': ['error', 'always'],
+            'arrow-spacing': ['error', { before: true, after: true }],
+            'no-console': 'off'
+        }, 
+        // 忽略一些文件
+        { 
+            ignores: ['dist/**'], 
+        }
+    }
+
+]
+
+
+
+建立运行 eslint 脚本
+
+
+1
+2
+3
+4
+5
+6
+7
+
+
+{
+    // package.json
+    &#34;scripts&#34;: {
+        &#34;start&#34;: &#34;node index.js&#34;,
+        &#34;lint&#34;: &#34;eslint .&#34;
+    },
+ }
+
+
+
+运行检查
+
+
+1
+
+
+npm run lint
+
+
+
+
+测试 React 应用
+Jest 和 Vitest 十分相似"><meta property="og:type" content="article"><meta property="og:url" content="https://oooldgreen.github.io/posts/cs/full-stack-helsinki2/"><meta property="og:image" content="https://oooldgreen.github.io/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2025-11-30T19:00:44+01:00"><meta property="article:modified_time" content="2025-11-30T19:00:44+01:00"><meta property="og:site_name" content="Snow Cabin"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://oooldgreen.github.io/"><meta name=twitter:title content="Full Stack Helsinki 2"><meta name=twitter:description content="Part 5 (继续前端)
+Eslint 检查
+
+安装、初始化：
+
+
+1
+2
+3
+
+
+npm install eslint @eslint/js --save-dev
+npx eslint --init
+npm install --save-dev @stylistic/eslint-plugin-js
+
+
+
+配置文件：
+
+
+ 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+
+
+// eslint.config.js
+import globals from 'globals'
+import js from '@eslint/js'
+import stylisticJs from '@stylistic/eslint-plugin-js'
+
+export default [
+    // 预定义配置
+    js.configs.recommended,，
+    {
+        files: ['**/*.js'],
+        languageOptions: {
+            sourceType: 'commonjs',
+            globals: { ...globals.node },
+            ecmaVersion: 'latest',
+        },
+        // 插件
+        plugins: { 
+            '@stylistic/js': stylisticJs,
+        },
+        // 规则
+        rules: { 
+            '@stylistic/js/indent': ['error', 2],
+            '@stylistic/js/linebreak-style': ['error', 'unix'],
+            '@stylistic/js/quotes': ['error', 'single'],
+            '@stylistic/js/semi': ['error', 'never'],
+            eqeqeq: 'error',
+            'no-trailing-spaces': 'error',
+            'object-curly-spacing': ['error', 'always'],
+            'arrow-spacing': ['error', { before: true, after: true }],
+            'no-console': 'off'
+        }, 
+        // 忽略一些文件
+        { 
+            ignores: ['dist/**'], 
+        }
+    }
+
+]
+
+
+
+建立运行 eslint 脚本
+
+
+1
+2
+3
+4
+5
+6
+7
+
+
+{
+    // package.json
+    &#34;scripts&#34;: {
+        &#34;start&#34;: &#34;node index.js&#34;,
+        &#34;lint&#34;: &#34;eslint .&#34;
+    },
+ }
+
+
+
+运行检查
+
+
+1
+
+
+npm run lint
+
+
+
+
+测试 React 应用
+Jest 和 Vitest 十分相似"><meta name=twitter:site content="@https://twitter.com/home"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://oooldgreen.github.io/posts/"},{"@type":"ListItem","position":2,"name":"CS","item":"https://oooldgreen.github.io/posts/CS/"},{"@type":"ListItem","position":3,"name":"Full Stack Helsinki 2","item":"https://oooldgreen.github.io/posts/cs/full-stack-helsinki2/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"Full Stack Helsinki 2","name":"Full Stack Helsinki 2","description":"Part 5 (继续前端) Eslint 检查 安装、初始化： 1 2 3 npm install eslint @eslint/js --save-dev npx eslint --init npm install --save-dev @stylistic/eslint-plugin-js 配置文件： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 // eslint.config.js import globals from \u0026#39;globals\u0026#39; import js from \u0026#39;@eslint/js\u0026#39; import stylisticJs from \u0026#39;@stylistic/eslint-plugin-js\u0026#39; export default [ // 预定义配置 js.configs.recommended,， { files: [\u0026#39;**/*.js\u0026#39;], languageOptions: { sourceType: \u0026#39;commonjs\u0026#39;, globals: { ...globals.node }, ecmaVersion: \u0026#39;latest\u0026#39;, }, // 插件 plugins: { \u0026#39;@stylistic/js\u0026#39;: stylisticJs, }, // 规则 rules: { \u0026#39;@stylistic/js/indent\u0026#39;: [\u0026#39;error\u0026#39;, 2], \u0026#39;@stylistic/js/linebreak-style\u0026#39;: [\u0026#39;error\u0026#39;, \u0026#39;unix\u0026#39;], \u0026#39;@stylistic/js/quotes\u0026#39;: [\u0026#39;error\u0026#39;, \u0026#39;single\u0026#39;], \u0026#39;@stylistic/js/semi\u0026#39;: [\u0026#39;error\u0026#39;, \u0026#39;never\u0026#39;], eqeqeq: \u0026#39;error\u0026#39;, \u0026#39;no-trailing-spaces\u0026#39;: \u0026#39;error\u0026#39;, \u0026#39;object-curly-spacing\u0026#39;: [\u0026#39;error\u0026#39;, \u0026#39;always\u0026#39;], \u0026#39;arrow-spacing\u0026#39;: [\u0026#39;error\u0026#39;, { before: true, after: true }], \u0026#39;no-console\u0026#39;: \u0026#39;off\u0026#39; }, // 忽略一些文件 { ignores: [\u0026#39;dist/**\u0026#39;], } } ] 建立运行 eslint 脚本 1 2 3 4 5 6 7 { // package.json \u0026#34;scripts\u0026#34;: { \u0026#34;start\u0026#34;: \u0026#34;node index.js\u0026#34;, \u0026#34;lint\u0026#34;: \u0026#34;eslint .\u0026#34; }, } 运行检查 1 npm run lint 测试 React 应用 Jest 和 Vitest 十分相似\n","keywords":[""],"articleBody":"Part 5 (继续前端) Eslint 检查 安装、初始化： 1 2 3 npm install eslint @eslint/js --save-dev npx eslint --init npm install --save-dev @stylistic/eslint-plugin-js 配置文件： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 // eslint.config.js import globals from 'globals' import js from '@eslint/js' import stylisticJs from '@stylistic/eslint-plugin-js' export default [ // 预定义配置 js.configs.recommended,， { files: ['**/*.js'], languageOptions: { sourceType: 'commonjs', globals: { ...globals.node }, ecmaVersion: 'latest', }, // 插件 plugins: { '@stylistic/js': stylisticJs, }, // 规则 rules: { '@stylistic/js/indent': ['error', 2], '@stylistic/js/linebreak-style': ['error', 'unix'], '@stylistic/js/quotes': ['error', 'single'], '@stylistic/js/semi': ['error', 'never'], eqeqeq: 'error', 'no-trailing-spaces': 'error', 'object-curly-spacing': ['error', 'always'], 'arrow-spacing': ['error', { before: true, after: true }], 'no-console': 'off' }, // 忽略一些文件 { ignores: ['dist/**'], } } ] 建立运行 eslint 脚本 1 2 3 4 5 6 7 { // package.json \"scripts\": { \"start\": \"node index.js\", \"lint\": \"eslint .\" }, } 运行检查 1 npm run lint 测试 React 应用 Jest 和 Vitest 十分相似\n安装 Vitest 和相关库\n1 2 3 npm install --save-dev vitest jsdom npm install --save-dev @testing-library/react @testing-library/jest-dom npm install --save-dev @testing-library/user-event 写测试脚本\n1 2 3 4 5 6 // package.json { \"scripts\": { \"test\": \"vitest run\" } } 建立测试配置文件 testSetup.js\n1 2 3 4 5 6 7 import { afterEach } from 'vitest' import { cleanup } from '@testing-library/react' import '@testing-library/jest-dom/vitest' afterEach(() =\u003e { cleanup() }) 扩展 vite.config.js\n1 2 3 4 5 6 7 8 export default defineConfig({ // ... test: { environment: 'jsdom', globals: true, setupFiles: './testSetup.js', } }) 编写测试\n运行测试\n1 npm test Tip: 让 Eslint 闭嘴：\n1 2 3 4 5 6 7 8 9 10 11 12 // eslint.config.js export default [ // ... { files: ['**/*.test.{js,jsx}'], languageOptions: { globals: { ...globals.vitest } } } ] 写测试 查找 content 的方法 getByText: 搜索只含作为参数提供的文本且不包含其他内容的元素: const element = screen.getByText('xxx') 查找包含特定文本的元素: const element = screen.getByText('Does not work anymore :(', { exact: false }) findByText: 返回的是一个 promise: const element = await screen.findByText('Does not work anymore :(') getByTestId: 在元素中添加 queryByText: 该方法会返回元素，但如果未找到，则不会引发异常, 可以使用该方法来确保某些内容没有被渲染到组件中 1 2 3 4 render(\u003cNote note={note} /\u003e) const element = screen.queryByText('do not want this thing to be rendered') expect(element).toBeNull() querySelector: 1 2 3 4 5 6 const { container } = render(\u003cNote note={note} /\u003e) const div = container.querySelector('.note') expect(div).toHaveTextContent( 'Component testing is done with react-testing-library' ) 模拟用户输入 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 import { render, screen } from '@testing-library/react' import userEvent from '@testing-library/user-event' import Note from './Note' // ... test('clicking the button calls event handler once', async () =\u003e { const note = { content: 'Component testing is done with react-testing-library', important: true } // mock 函数 const mockHandler = vi.fn() render( \u003cNote note={note} toggleImportance={mockHandler} /\u003e ) // session 启动以与呈现的组件进行交互 const user = userEvent.setup() // 测试基于呈现组件的文本找到按钮并单击元素 const button = screen.getByText('make not important') // 模拟点击按钮 await user.click(button) expect(mockHandler.mock.calls).toHaveLength(1) }) 测试覆盖率 npm test -- --coverage\n端到端测试 (Playwright) Playwright文档[https://playwright.dev/docs/intro]\n安装，建立一个独立的项目\n1 npm init playwright@latest package.json 配置\n1 2 3 4 5 6 7 { \"scripts\": { \"test\": \"playwright test\", \"test:report\": \"playwright show-report\", }, // ... } 1 2 3 4 5 6 7 // 后端脚本创建 { // ... \"scripts\": { \"start:test\": \"cross-env NODE_ENV=test node --watch index.js\" }, } 减少测试失败等待时间\n1 2 3 4 5 6 7 8 9 10 11 12 13 // playwright.config.js export default defineConfig({ // ... timeout: 3000, // 文件执行是否并行，默认为true需要修改 fullyParallel: false, // 默认就有此设置 workers: 1, use: { baseURL: 'http://localhost:5173', // ... }, }) 测试\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 npm run // 打开测试报告 npm run test:report // 通过图形界面运行测试 npm test -- --ui // 运行测试保持跟踪查看器 npm run test -- --trace on // 查看跟踪 npx playwright show-report // 可以通过命令行参数定义要使用的浏览器引擎： npm test -- --project chromium // 测试生成器，录制测试 npx playwright codegen http://localhost:5173/ Part 6 (状态管理： Redux) Redux 基本介绍 Redux 是一个全局状态管理系统\n安装 redux 1 2 3 4 5 npm install redux npm install --save-dev deep-freeze npm install react-redux // 简化管理状态 npm install @reduxjs/toolkit Redux 的使用：其中 react-redux 提供了 Provider 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 // main.jsx import { createStore, combineReducers } from 'redux' import noteReducer from './reducers/noteReducer' import { Provider } from 'react-redux' import { configureStore } from '@reduxjs/toolkit' const store = configureStore({ reducer: { notes: noteReducer, } }) // const store = createStore(reducer) ReactDOM.createRoot(document.getElementById('root')).render( \u003cProvider store={store}\u003e \u003cApp /\u003e \u003c/Provider\u003e, document.getElementById('root') ) 创建 reducer 用于改变状态，创建动作可以写在同一个文件中 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 // noteReducer.js const initialState = [ ... ] const noteReducer = (state = [], action) =\u003e { switch(action.type) { case 'NEW_NOTE': return [...state, action.data] case 'TOGGLE_IMPORTANCE': // ... default: return state } } export const createNote = (content) =\u003e { return { type: 'NEW_NOTE', data: { content, important: false, id: generateId() } } } export default noteReducer 或者使用 toolkit 中的 createSlice 直接创建：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 // noteReducer.js import { createSlice } from '@reduxjs/toolkit' const initialState = [ ... ] const generateId = () =\u003e { ... } const noteSlice = createSlice({ name: 'notes', initialState, reducers: { createNote(state, action) { const content = action.payload state.push({ content, important: false, id: generateId(), }) }, }, }) export const { createNote } = noteSlice.actions export default noteSlice.reducer 在 App 组件（或者是单独的 component 中）中使用 dispatch 更改状态, selector 访问数据 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 import { createNote } from './reducers/noteReducer' import { useSelector, useDispatch } from 'react-redux' const App = () =\u003e { const dispatch = useDispatch() const notes = useSelector(state =\u003e state) const addNote = (event) =\u003e { event.preventDefault() const content = event.target.note.value event.target.note.value = '' dispatch(createNote(content)) } return ( \u003cdiv\u003e \u003cform onSubmit={addNote}\u003e \u003cinput name=\"note\" /\u003e \u003cbutton type=\"submit\"\u003eadd\u003c/button\u003e \u003c/form\u003e // ... \u003c/div\u003e ) } export default App React Query 在处理复杂业务时，使用 react query 处理缓存和同步可以减少 useState 和 useEffect 的使用。 因此在实际应用中，react query 可以用于处理核心的数据流，useState 则用于存储局部（组件内部）有用的状态\n1 npm install @tanstack/react-query 1 2 3 4 5 6 7 8 9 // main.jsx import { QueryClient, QueryClientProvider } from '@tanstack/react-query' const queryClient = new QueryClient() createRoot(document.getElementById('root')).render( \u003cQueryClientProvider client={queryClient}\u003e \u003cApp /\u003e \u003c/QueryClientProvider\u003e ) 1 2 // app.jsx import { useQuery } from '@tanstack/react-query' 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 export const createNote = async (newNote) =\u003e { const options = { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(newNote) } const response = await fetch(baseUrl, options) if (!response.ok) { throw new Error('Failed to create note') } return await response.json() } useContext 使用 Context 处理不怎么变但到处都要用到的数据，减少 props 在组件间的传递\n1 2 3 4 // CounterContext.jsx import { createContext } from 'react' const CounterContext = createContext() export default CounterContext 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 // 在 App.jsx 中使用事例 // 用一个组件包裹 App import CounterContext from './CounterContext' const App = () =\u003e { const [counter, counterDispatch] = useReducer(counterReducer, 0) return ( \u003cCounterContext.Provider value={{ counter, counterDispatch }}\u003e \u003cdiv\u003e // ... \u003c/div\u003e \u003c/CounterContext.Provider\u003e ) } 1 2 3 4 5 6 7 8 9 // 使用 context 中存储的数据 import { useContext } from 'react' import CounterContext from './CounterContext' const Display = () =\u003e { const { counter } = useContext(CounterContext) return \u003cdiv\u003e{counter}\u003c/div\u003e } useReducer 改变局部状态\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 import { useReducer } from 'react' const counterReducer = (state, action) =\u003e { switch (action.type) { case 'INC': return state + 1 case 'DEC': return state - 1 case 'ZERO': return 0 default: return state } } const App = () =\u003e { const [counter, counterDispatch] = useReducer(counterReducer, 0) return ( \u003cdiv\u003e \u003cdiv\u003e{counter}\u003c/div\u003e \u003cdiv\u003e \u003cbutton onClick={() =\u003e counterDispatch({ type: 'INC' })}\u003e+\u003c/button\u003e \u003cbutton onClick={() =\u003e counterDispatch({ type: 'DEC' })}\u003e-\u003c/button\u003e \u003cbutton onClick={() =\u003e counterDispatch({ type: 'ZERO' })}\u003e0\u003c/button\u003e \u003c/div\u003e \u003c/div\u003e ) } export default App Part 7 ","wordCount":"1381","inLanguage":"en","datePublished":"2025-11-30T19:00:44+01:00","dateModified":"2025-11-30T19:00:44+01:00","author":{"@type":"Person","name":{"name":"Shiyu"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://oooldgreen.github.io/posts/cs/full-stack-helsinki2/"},"publisher":{"@type":"Organization","name":"Snow Cabin","logo":{"@type":"ImageObject","url":"https://oooldgreen.github.io/favicon.ico"}}}</script></head><body id=top><script>localStorage.getItem("pref-theme")==="dark"?document.body.classList.add("dark"):localStorage.getItem("pref-theme")==="light"?document.body.classList.remove("dark"):window.matchMedia("(prefers-color-scheme: dark)").matches&&document.body.classList.add("dark")</script><header class=header><nav class=nav><div class=logo><a href=https://oooldgreen.github.io/ accesskey=h title="SNOW CABIN (Alt + H)"><img src=https://oooldgreen.github.io/snowman.png alt aria-label=logo height=35>SNOW CABIN</a><div class=logo-switches><button id=theme-toggle accesskey=t title="(Alt + T)">
+<svg id="moon" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+<svg id="sun" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button><ul class=lang-switch><li>|</li></ul></div></div><ul id=menu><li><a href=https://oooldgreen.github.io/archives/ title=Archive><span>Archive</span></a></li><li><a href=https://oooldgreen.github.io/categories/ title=Categories><span>Categories</span></a></li><li><a href=https://oooldgreen.github.io/tags/ title=Tags><span>Tags</span></a></li><li><a href=https://oooldgreen.github.io/about/ title=About><span>About</span></a></li></ul><div id=menu2><button onclick=done() id=guideBtn class=guideBtn>
+<svg viewBox="0 0 100 80" width="25" height="25" fill="var(--primary)"><rect width="100" height="10" rx="2"/><rect y="30" width="100" height="10" rx="2"/><rect y="60" width="100" height="10" rx="2"/></svg></button></div><nav id=guide style=display:none><ul class=guide-ul><li><a href=https://oooldgreen.github.io/archives/ title=Archive><span>Archive</span></a></li><li><a href=https://oooldgreen.github.io/categories/ title=Categories><span>Categories</span></a></li><li><a href=https://oooldgreen.github.io/tags/ title=Tags><span>Tags</span></a></li><li><a href=https://oooldgreen.github.io/about/ title=About><span>About</span></a></li></ul></nav></nav></header><script type=text/javascript>var guideBtn=document.getElementById("guideBtn"),guide=document.getElementById("guide");function done(){guide.style.display=="none"?guide.style.display="block":guide.style.display="none"}</script><main class=main><article class=post-single><header class=post-header><div class=breadcrumbs><a href=https://oooldgreen.github.io/>Home</a>
+&nbsp; > &nbsp;<a href=https://oooldgreen.github.io/posts/>Posts</a>
+&nbsp; > &nbsp;<a href=https://oooldgreen.github.io/posts/CS/>CS</a></div><h1 class=post-title>Full Stack Helsinki 2</h1><div class=post-meta>November 30, 2025</div></header><aside id=toc-container class="toc-container wide"><div class=toc><details open><summary accesskey=c title="(Alt + C)"><span class=details>Table of Contents</span></summary><div class=inner><ul><li><a href=#part-5-%e7%bb%a7%e7%bb%ad%e5%89%8d%e7%ab%af aria-label="Part 5 (继续前端)">Part 5 (继续前端)</a><ul><li><a href=#eslint-%e6%a3%80%e6%9f%a5 aria-label="Eslint 检查">Eslint 检查</a></li><li><a href=#%e6%b5%8b%e8%af%95-react-%e5%ba%94%e7%94%a8 aria-label="测试 React 应用">测试 React 应用</a><ul><li><a href=#%e5%86%99%e6%b5%8b%e8%af%95 aria-label=写测试>写测试</a><ul><li><a href=#%e6%9f%a5%e6%89%be-content-%e7%9a%84%e6%96%b9%e6%b3%95 aria-label="查找 content 的方法">查找 content 的方法</a></li><li><a href=#%e6%a8%a1%e6%8b%9f%e7%94%a8%e6%88%b7%e8%be%93%e5%85%a5 aria-label=模拟用户输入>模拟用户输入</a></li></ul></li><li><a href=#%e6%b5%8b%e8%af%95%e8%a6%86%e7%9b%96%e7%8e%87 aria-label=测试覆盖率>测试覆盖率</a></li></ul></li><li><a href=#%e7%ab%af%e5%88%b0%e7%ab%af%e6%b5%8b%e8%af%95-playwright aria-label="端到端测试 (Playwright)">端到端测试 (Playwright)</a></li></ul></li><li><a href=#part-6-%e7%8a%b6%e6%80%81%e7%ae%a1%e7%90%86-redux aria-label="Part 6 (状态管理： Redux)">Part 6 (状态管理： Redux)</a><ul><li><a href=#redux-%e5%9f%ba%e6%9c%ac%e4%bb%8b%e7%bb%8d aria-label="Redux 基本介绍">Redux 基本介绍</a><ul><li><a href=#%e5%ae%89%e8%a3%85-redux aria-label="安装 redux">安装 redux</a></li><li><a href=#redux-%e7%9a%84%e4%bd%bf%e7%94%a8%e5%85%b6%e4%b8%ad-react-redux-%e6%8f%90%e4%be%9b%e4%ba%86-provider aria-label="Redux 的使用：其中 react-redux 提供了 Provider">Redux 的使用：其中 react-redux 提供了 Provider</a></li><li><a href=#%e5%88%9b%e5%bb%ba-reducer-%e7%94%a8%e4%ba%8e%e6%94%b9%e5%8f%98%e7%8a%b6%e6%80%81%e5%88%9b%e5%bb%ba%e5%8a%a8%e4%bd%9c%e5%8f%af%e4%bb%a5%e5%86%99%e5%9c%a8%e5%90%8c%e4%b8%80%e4%b8%aa%e6%96%87%e4%bb%b6%e4%b8%ad aria-label="创建 reducer 用于改变状态，创建动作可以写在同一个文件中">创建 reducer 用于改变状态，创建动作可以写在同一个文件中</a></li><li><a href=#%e5%9c%a8-app-%e7%bb%84%e4%bb%b6%e6%88%96%e8%80%85%e6%98%af%e5%8d%95%e7%8b%ac%e7%9a%84-component-%e4%b8%ad%e4%b8%ad%e4%bd%bf%e7%94%a8-dispatch-%e6%9b%b4%e6%94%b9%e7%8a%b6%e6%80%81-selector-%e8%ae%bf%e9%97%ae%e6%95%b0%e6%8d%ae aria-label="在 App 组件（或者是单独的 component 中）中使用 dispatch 更改状态, selector 访问数据">在 App 组件（或者是单独的 component 中）中使用 dispatch 更改状态, selector 访问数据</a></li></ul></li><li><a href=#react-query aria-label="React Query">React Query</a></li><li><a href=#usecontext aria-label=useContext>useContext</a></li><li><a href=#usereducer aria-label=useReducer>useReducer</a></li></ul></li><li><a href=#part-7 aria-label="Part 7">Part 7</a></li></ul></div></details></div></aside><script>let activeElement,elements;window.addEventListener("DOMContentLoaded",function(){checkTocPosition(),elements=document.querySelectorAll("h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]"),activeElement=elements[0];const t=encodeURI(activeElement.getAttribute("id")).toLowerCase();document.querySelector(`.inner ul li a[href="#${t}"]`).classList.add("active")},!1),window.addEventListener("resize",function(){checkTocPosition()},!1),window.addEventListener("scroll",()=>{activeElement=Array.from(elements).find(e=>{if(getOffsetTop(e)-window.pageYOffset>0&&getOffsetTop(e)-window.pageYOffset<window.innerHeight/2)return e})||activeElement,elements.forEach(e=>{const t=encodeURI(e.getAttribute("id")).toLowerCase();e===activeElement?document.querySelector(`.inner ul li a[href="#${t}"]`).classList.add("active"):document.querySelector(`.inner ul li a[href="#${t}"]`).classList.remove("active")})},!1);const main=parseInt(getComputedStyle(document.body).getPropertyValue("--article-width"),10),toc=parseInt(getComputedStyle(document.body).getPropertyValue("--toc-width"),10),gap=parseInt(getComputedStyle(document.body).getPropertyValue("--gap"),10);function checkTocPosition(){const e=document.body.scrollWidth;e-main-toc*2-gap*4>0?document.getElementById("toc-container").classList.add("wide"):document.getElementById("toc-container").classList.remove("wide")}function getOffsetTop(e){if(!e.getClientRects().length)return 0;let t=e.getBoundingClientRect(),n=e.ownerDocument.defaultView;return t.top+n.pageYOffset}</script><div class=post-content><h1 id=part-5-继续前端>Part 5 (继续前端)<a hidden class=anchor aria-hidden=true href=#part-5-继续前端>#</a></h1><h2 id=eslint-检查>Eslint 检查<a hidden class=anchor aria-hidden=true href=#eslint-检查>#</a></h2><ul><li>安装、初始化：<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>npm install eslint @eslint/js --save-dev
+</span></span><span class=line><span class=cl>npx eslint --init
+</span></span><span class=line><span class=cl>npm install --save-dev @stylistic/eslint-plugin-js
+</span></span></code></pre></td></tr></table></div></div></li><li>配置文件：<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=o>//</span> <span class=n>eslint</span><span class=o>.</span><span class=n>config</span><span class=o>.</span><span class=n>js</span>
+</span></span><span class=line><span class=cl><span class=n>import</span> <span class=n>globals</span> <span class=n>from</span> <span class=s1>&#39;globals&#39;</span>
+</span></span><span class=line><span class=cl><span class=n>import</span> <span class=n>js</span> <span class=n>from</span> <span class=s1>&#39;@eslint/js&#39;</span>
+</span></span><span class=line><span class=cl><span class=n>import</span> <span class=n>stylisticJs</span> <span class=n>from</span> <span class=s1>&#39;@stylistic/eslint-plugin-js&#39;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>export</span> <span class=n>default</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>    <span class=o>//</span> <span class=err>预定义配置</span>
+</span></span><span class=line><span class=cl>    <span class=n>js</span><span class=o>.</span><span class=n>configs</span><span class=o>.</span><span class=n>recommended</span><span class=p>,</span><span class=err>，</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>files</span><span class=p>:</span> <span class=p>[</span><span class=s1>&#39;**/*.js&#39;</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>        <span class=n>languageOptions</span><span class=p>:</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>sourceType</span><span class=p>:</span> <span class=s1>&#39;commonjs&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=n>globals</span><span class=p>:</span> <span class=p>{</span> <span class=o>...</span><span class=n>globals</span><span class=o>.</span><span class=n>node</span> <span class=p>},</span>
+</span></span><span class=line><span class=cl>            <span class=n>ecmaVersion</span><span class=p>:</span> <span class=s1>&#39;latest&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=p>},</span>
+</span></span><span class=line><span class=cl>        <span class=o>//</span> <span class=err>插件</span>
+</span></span><span class=line><span class=cl>        <span class=n>plugins</span><span class=p>:</span> <span class=p>{</span> 
+</span></span><span class=line><span class=cl>            <span class=s1>&#39;@stylistic/js&#39;</span><span class=p>:</span> <span class=n>stylisticJs</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=p>},</span>
+</span></span><span class=line><span class=cl>        <span class=o>//</span> <span class=err>规则</span>
+</span></span><span class=line><span class=cl>        <span class=n>rules</span><span class=p>:</span> <span class=p>{</span> 
+</span></span><span class=line><span class=cl>            <span class=s1>&#39;@stylistic/js/indent&#39;</span><span class=p>:</span> <span class=p>[</span><span class=s1>&#39;error&#39;</span><span class=p>,</span> <span class=mi>2</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>            <span class=s1>&#39;@stylistic/js/linebreak-style&#39;</span><span class=p>:</span> <span class=p>[</span><span class=s1>&#39;error&#39;</span><span class=p>,</span> <span class=s1>&#39;unix&#39;</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>            <span class=s1>&#39;@stylistic/js/quotes&#39;</span><span class=p>:</span> <span class=p>[</span><span class=s1>&#39;error&#39;</span><span class=p>,</span> <span class=s1>&#39;single&#39;</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>            <span class=s1>&#39;@stylistic/js/semi&#39;</span><span class=p>:</span> <span class=p>[</span><span class=s1>&#39;error&#39;</span><span class=p>,</span> <span class=s1>&#39;never&#39;</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>            <span class=n>eqeqeq</span><span class=p>:</span> <span class=s1>&#39;error&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=s1>&#39;no-trailing-spaces&#39;</span><span class=p>:</span> <span class=s1>&#39;error&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=s1>&#39;object-curly-spacing&#39;</span><span class=p>:</span> <span class=p>[</span><span class=s1>&#39;error&#39;</span><span class=p>,</span> <span class=s1>&#39;always&#39;</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>            <span class=s1>&#39;arrow-spacing&#39;</span><span class=p>:</span> <span class=p>[</span><span class=s1>&#39;error&#39;</span><span class=p>,</span> <span class=p>{</span> <span class=n>before</span><span class=p>:</span> <span class=bp>true</span><span class=p>,</span> <span class=n>after</span><span class=p>:</span> <span class=bp>true</span> <span class=p>}],</span>
+</span></span><span class=line><span class=cl>            <span class=s1>&#39;no-console&#39;</span><span class=p>:</span> <span class=s1>&#39;off&#39;</span>
+</span></span><span class=line><span class=cl>        <span class=p>},</span> 
+</span></span><span class=line><span class=cl>        <span class=o>//</span> <span class=err>忽略一些文件</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span> 
+</span></span><span class=line><span class=cl>            <span class=n>ignores</span><span class=p>:</span> <span class=p>[</span><span class=s1>&#39;dist/**&#39;</span><span class=p>],</span> 
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>]</span>
+</span></span></code></pre></td></tr></table></div></div></li><li>建立运行 eslint 脚本<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>{
+</span></span><span class=line><span class=cl>    // package.json
+</span></span><span class=line><span class=cl>    &#34;scripts&#34;: {
+</span></span><span class=line><span class=cl>        &#34;start&#34;: &#34;node index.js&#34;,
+</span></span><span class=line><span class=cl>        &#34;lint&#34;: &#34;eslint .&#34;
+</span></span><span class=line><span class=cl>    },
+</span></span><span class=line><span class=cl> }
+</span></span></code></pre></td></tr></table></div></div></li><li>运行检查<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>npm run lint
+</span></span></code></pre></td></tr></table></div></div></li></ul><h2 id=测试-react-应用>测试 React 应用<a hidden class=anchor aria-hidden=true href=#测试-react-应用>#</a></h2><p>Jest 和 Vitest 十分相似</p><ul><li><p>安装 Vitest 和相关库</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>npm install --save-dev vitest jsdom
+</span></span><span class=line><span class=cl>npm install --save-dev @testing-library/react @testing-library/jest-dom
+</span></span><span class=line><span class=cl>npm install --save-dev @testing-library/user-event
+</span></span></code></pre></td></tr></table></div></div></li><li><p>写测试脚本</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>// package.json
+</span></span><span class=line><span class=cl>{
+</span></span><span class=line><span class=cl>    &#34;scripts&#34;: {
+</span></span><span class=line><span class=cl>        &#34;test&#34;: &#34;vitest run&#34;
+</span></span><span class=line><span class=cl>    }
+</span></span><span class=line><span class=cl>}
+</span></span></code></pre></td></tr></table></div></div></li><li><p>建立测试配置文件 testSetup.js</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>import { afterEach } from &#39;vitest&#39;
+</span></span><span class=line><span class=cl>import { cleanup } from &#39;@testing-library/react&#39;
+</span></span><span class=line><span class=cl>import &#39;@testing-library/jest-dom/vitest&#39;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>afterEach(() =&gt; {
+</span></span><span class=line><span class=cl>cleanup()
+</span></span><span class=line><span class=cl>})
+</span></span></code></pre></td></tr></table></div></div></li><li><p>扩展 vite.config.js</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=k>export</span> <span class=n>default</span> <span class=n>defineConfig</span><span class=p>({</span>
+</span></span><span class=line><span class=cl><span class=o>//</span> <span class=o>...</span>
+</span></span><span class=line><span class=cl><span class=n>test</span><span class=p>:</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>environment</span><span class=p>:</span> <span class=s1>&#39;jsdom&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>globals</span><span class=p>:</span> <span class=bp>true</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>setupFiles</span><span class=p>:</span> <span class=s1>&#39;./testSetup.js&#39;</span><span class=p>,</span> 
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>})</span>
+</span></span></code></pre></td></tr></table></div></div></li><li><p>编写测试</p></li><li><p>运行测试</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>npm test
+</span></span></code></pre></td></tr></table></div></div></li><li><p>Tip: 让 Eslint 闭嘴：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=o>//</span> <span class=n>eslint</span><span class=o>.</span><span class=n>config</span><span class=o>.</span><span class=n>js</span>
+</span></span><span class=line><span class=cl><span class=k>export</span> <span class=n>default</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl><span class=o>//</span> <span class=o>...</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>files</span><span class=p>:</span> <span class=p>[</span><span class=s1>&#39;**/*.test.{js,jsx}&#39;</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>    <span class=n>languageOptions</span><span class=p>:</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>globals</span><span class=p>:</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=o>...</span><span class=n>globals</span><span class=o>.</span><span class=n>vitest</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>]</span>
+</span></span></code></pre></td></tr></table></div></div></li></ul><h3 id=写测试>写测试<a hidden class=anchor aria-hidden=true href=#写测试>#</a></h3><h4 id=查找-content-的方法>查找 content 的方法<a hidden class=anchor aria-hidden=true href=#查找-content-的方法>#</a></h4><ol><li>getByText:<ul><li>搜索只含作为参数提供的文本且不包含其他内容的元素: <code>const element = screen.getByText('xxx')</code></li><li>查找包含特定文本的元素: <code>const element = screen.getByText('Does not work anymore :(', { exact: false })</code></li></ul></li><li>findByText:
+返回的是一个 promise: <code>const element = await screen.findByText('Does not work anymore :(')</code></li><li>getByTestId: 在元素中添加</li><li>queryByText:
+该方法会返回元素，但如果未找到，则不会引发异常, 可以使用该方法来确保某些内容没有被渲染到组件中<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=n>render</span><span class=p>(</span><span class=o>&lt;</span><span class=n>Note</span> <span class=n>note</span><span class=o>=</span><span class=p>{</span><span class=n>note</span><span class=p>}</span> <span class=o>/&gt;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>const</span> <span class=n>element</span> <span class=o>=</span> <span class=n>screen</span><span class=o>.</span><span class=n>queryByText</span><span class=p>(</span><span class=s1>&#39;do not want this thing to be rendered&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>expect</span><span class=p>(</span><span class=n>element</span><span class=p>)</span><span class=o>.</span><span class=n>toBeNull</span><span class=p>()</span>
+</span></span></code></pre></td></tr></table></div></div></li><li>querySelector:<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=k>const</span> <span class=p>{</span> <span class=n>container</span> <span class=p>}</span> <span class=o>=</span> <span class=n>render</span><span class=p>(</span><span class=o>&lt;</span><span class=n>Note</span> <span class=n>note</span><span class=o>=</span><span class=p>{</span><span class=n>note</span><span class=p>}</span> <span class=o>/&gt;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>const</span> <span class=n>div</span> <span class=o>=</span> <span class=n>container</span><span class=o>.</span><span class=n>querySelector</span><span class=p>(</span><span class=s1>&#39;.note&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>expect</span><span class=p>(</span><span class=n>div</span><span class=p>)</span><span class=o>.</span><span class=n>toHaveTextContent</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>    <span class=s1>&#39;Component testing is done with react-testing-library&#39;</span>
+</span></span><span class=line><span class=cl><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div></li></ol><h4 id=模拟用户输入>模拟用户输入<a hidden class=anchor aria-hidden=true href=#模拟用户输入>#</a></h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=n>import</span> <span class=p>{</span> <span class=n>render</span><span class=p>,</span> <span class=n>screen</span> <span class=p>}</span> <span class=n>from</span> <span class=s1>&#39;@testing-library/react&#39;</span>
+</span></span><span class=line><span class=cl><span class=n>import</span> <span class=n>userEvent</span> <span class=n>from</span> <span class=s1>&#39;@testing-library/user-event&#39;</span>
+</span></span><span class=line><span class=cl><span class=n>import</span> <span class=n>Note</span> <span class=n>from</span> <span class=s1>&#39;./Note&#39;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>//</span> <span class=o>...</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>test</span><span class=p>(</span><span class=s1>&#39;clicking the button calls event handler once&#39;</span><span class=p>,</span> <span class=n>async</span> <span class=p>()</span> <span class=o>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=k>const</span> <span class=n>note</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>content</span><span class=p>:</span> <span class=s1>&#39;Component testing is done with react-testing-library&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>important</span><span class=p>:</span> <span class=bp>true</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>  <span class=o>//</span> <span class=n>mock</span> <span class=err>函数</span>
+</span></span><span class=line><span class=cl>  <span class=k>const</span> <span class=n>mockHandler</span> <span class=o>=</span> <span class=n>vi</span><span class=o>.</span><span class=n>fn</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=n>render</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=o>&lt;</span><span class=n>Note</span> <span class=n>note</span><span class=o>=</span><span class=p>{</span><span class=n>note</span><span class=p>}</span> <span class=n>toggleImportance</span><span class=o>=</span><span class=p>{</span><span class=n>mockHandler</span><span class=p>}</span> <span class=o>/&gt;</span>
+</span></span><span class=line><span class=cl>  <span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=o>//</span> <span class=n>session</span> <span class=err>启动以与呈现的组件进行交互</span>
+</span></span><span class=line><span class=cl>  <span class=k>const</span> <span class=n>user</span> <span class=o>=</span> <span class=n>userEvent</span><span class=o>.</span><span class=n>setup</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>  <span class=o>//</span> <span class=err>测试基于呈现组件的文本找到按钮并单击元素</span>
+</span></span><span class=line><span class=cl>  <span class=k>const</span> <span class=n>button</span> <span class=o>=</span> <span class=n>screen</span><span class=o>.</span><span class=n>getByText</span><span class=p>(</span><span class=s1>&#39;make not important&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=o>//</span> <span class=err>模拟点击按钮</span>
+</span></span><span class=line><span class=cl>  <span class=n>await</span> <span class=n>user</span><span class=o>.</span><span class=n>click</span><span class=p>(</span><span class=n>button</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=n>expect</span><span class=p>(</span><span class=n>mockHandler</span><span class=o>.</span><span class=n>mock</span><span class=o>.</span><span class=n>calls</span><span class=p>)</span><span class=o>.</span><span class=n>toHaveLength</span><span class=p>(</span><span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>})</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=测试覆盖率>测试覆盖率<a hidden class=anchor aria-hidden=true href=#测试覆盖率>#</a></h3><p><code>npm test -- --coverage</code></p><h2 id=端到端测试-playwright>端到端测试 (Playwright)<a hidden class=anchor aria-hidden=true href=#端到端测试-playwright>#</a></h2><p>Playwright文档[https://playwright.dev/docs/intro]</p><ul><li><p>安装，建立一个独立的项目</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>npm init playwright@latest
+</span></span></code></pre></td></tr></table></div></div></li><li><p>package.json 配置</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>{
+</span></span><span class=line><span class=cl>    &#34;scripts&#34;: {
+</span></span><span class=line><span class=cl>        &#34;test&#34;: &#34;playwright test&#34;,
+</span></span><span class=line><span class=cl>        &#34;test:report&#34;: &#34;playwright show-report&#34;,
+</span></span><span class=line><span class=cl>    },
+</span></span><span class=line><span class=cl>    // ...
+</span></span><span class=line><span class=cl>}
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>// 后端脚本创建
+</span></span><span class=line><span class=cl>{
+</span></span><span class=line><span class=cl>    // ...
+</span></span><span class=line><span class=cl>    &#34;scripts&#34;: {
+</span></span><span class=line><span class=cl>        &#34;start:test&#34;: &#34;cross-env NODE_ENV=test node --watch index.js&#34;
+</span></span><span class=line><span class=cl>    },
+</span></span><span class=line><span class=cl>}
+</span></span></code></pre></td></tr></table></div></div></li><li><p>减少测试失败等待时间</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=o>//</span> <span class=n>playwright</span><span class=o>.</span><span class=n>config</span><span class=o>.</span><span class=n>js</span>
+</span></span><span class=line><span class=cl><span class=k>export</span> <span class=n>default</span> <span class=n>defineConfig</span><span class=p>({</span>
+</span></span><span class=line><span class=cl>    <span class=o>//</span> <span class=o>...</span>
+</span></span><span class=line><span class=cl>    <span class=n>timeout</span><span class=p>:</span> <span class=mi>3000</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=o>//</span> <span class=err>文件执行是否并行，默认为</span><span class=n>true需要修改</span>
+</span></span><span class=line><span class=cl>    <span class=n>fullyParallel</span><span class=p>:</span> <span class=bp>false</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=o>//</span> <span class=err>默认就有此设置</span>
+</span></span><span class=line><span class=cl>    <span class=n>workers</span><span class=p>:</span> <span class=mi>1</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>use</span><span class=p>:</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>baseURL</span><span class=p>:</span> <span class=s1>&#39;http://localhost:5173&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=o>//</span> <span class=o>...</span>
+</span></span><span class=line><span class=cl>    <span class=p>},</span>
+</span></span><span class=line><span class=cl><span class=p>})</span>
+</span></span></code></pre></td></tr></table></div></div></li><li><p>测试</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>npm run
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>// 打开测试报告
+</span></span><span class=line><span class=cl>npm run test:report
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>// 通过图形界面运行测试
+</span></span><span class=line><span class=cl>npm test -- --ui
+</span></span><span class=line><span class=cl>// 运行测试保持跟踪查看器
+</span></span><span class=line><span class=cl>npm run test -- --trace on
+</span></span><span class=line><span class=cl>// 查看跟踪
+</span></span><span class=line><span class=cl>npx playwright show-report
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>// 可以通过命令行参数定义要使用的浏览器引擎：
+</span></span><span class=line><span class=cl>npm test -- --project chromium
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>// 测试生成器，录制测试
+</span></span><span class=line><span class=cl>npx playwright codegen http://localhost:5173/
+</span></span></code></pre></td></tr></table></div></div></li></ul><h1 id=part-6-状态管理-redux>Part 6 (状态管理： Redux)<a hidden class=anchor aria-hidden=true href=#part-6-状态管理-redux>#</a></h1><h2 id=redux-基本介绍>Redux 基本介绍<a hidden class=anchor aria-hidden=true href=#redux-基本介绍>#</a></h2><p>Redux 是一个全局状态管理系统</p><h3 id=安装-redux>安装 redux<a hidden class=anchor aria-hidden=true href=#安装-redux>#</a></h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=n>npm</span> <span class=n>install</span> <span class=n>redux</span>
+</span></span><span class=line><span class=cl><span class=n>npm</span> <span class=n>install</span> <span class=o>--</span><span class=n>save</span><span class=o>-</span><span class=n>dev</span> <span class=n>deep</span><span class=o>-</span><span class=n>freeze</span>
+</span></span><span class=line><span class=cl><span class=n>npm</span> <span class=n>install</span> <span class=n>react</span><span class=o>-</span><span class=n>redux</span>
+</span></span><span class=line><span class=cl><span class=o>//</span> <span class=err>简化管理状态</span>
+</span></span><span class=line><span class=cl><span class=n>npm</span> <span class=n>install</span> <span class=err>@</span><span class=n>reduxjs</span><span class=o>/</span><span class=n>toolkit</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=redux-的使用其中-react-redux-提供了-provider>Redux 的使用：其中 react-redux 提供了 Provider<a hidden class=anchor aria-hidden=true href=#redux-的使用其中-react-redux-提供了-provider>#</a></h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=o>//</span> <span class=n>main</span><span class=o>.</span><span class=n>jsx</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>import</span> <span class=p>{</span> <span class=n>createStore</span><span class=p>,</span> <span class=n>combineReducers</span> <span class=p>}</span> <span class=n>from</span> <span class=s1>&#39;redux&#39;</span>
+</span></span><span class=line><span class=cl><span class=n>import</span> <span class=n>noteReducer</span> <span class=n>from</span> <span class=s1>&#39;./reducers/noteReducer&#39;</span>
+</span></span><span class=line><span class=cl><span class=n>import</span> <span class=p>{</span> <span class=n>Provider</span> <span class=p>}</span> <span class=n>from</span> <span class=s1>&#39;react-redux&#39;</span>
+</span></span><span class=line><span class=cl><span class=n>import</span> <span class=p>{</span> <span class=n>configureStore</span> <span class=p>}</span> <span class=n>from</span> <span class=s1>&#39;@reduxjs/toolkit&#39;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>const</span> <span class=n>store</span> <span class=o>=</span> <span class=n>configureStore</span><span class=p>({</span>
+</span></span><span class=line><span class=cl>  <span class=n>reducer</span><span class=p>:</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>notes</span><span class=p>:</span> <span class=n>noteReducer</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>})</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>//</span> <span class=k>const</span> <span class=n>store</span> <span class=o>=</span> <span class=n>createStore</span><span class=p>(</span><span class=n>reducer</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>ReactDOM</span><span class=o>.</span><span class=n>createRoot</span><span class=p>(</span><span class=n>document</span><span class=o>.</span><span class=n>getElementById</span><span class=p>(</span><span class=s1>&#39;root&#39;</span><span class=p>))</span><span class=o>.</span><span class=n>render</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>  <span class=o>&lt;</span><span class=n>Provider</span> <span class=n>store</span><span class=o>=</span><span class=p>{</span><span class=n>store</span><span class=p>}</span><span class=o>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=o>&lt;</span><span class=n>App</span> <span class=o>/&gt;</span>
+</span></span><span class=line><span class=cl>  <span class=o>&lt;/</span><span class=n>Provider</span><span class=o>&gt;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=n>document</span><span class=o>.</span><span class=n>getElementById</span><span class=p>(</span><span class=s1>&#39;root&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=创建-reducer-用于改变状态创建动作可以写在同一个文件中>创建 reducer 用于改变状态，创建动作可以写在同一个文件中<a hidden class=anchor aria-hidden=true href=#创建-reducer-用于改变状态创建动作可以写在同一个文件中>#</a></h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=o>//</span> <span class=n>noteReducer</span><span class=o>.</span><span class=n>js</span>
+</span></span><span class=line><span class=cl><span class=k>const</span> <span class=n>initialState</span> <span class=o>=</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>    <span class=o>...</span>
+</span></span><span class=line><span class=cl><span class=p>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>const</span> <span class=n>noteReducer</span> <span class=o>=</span> <span class=p>(</span><span class=n>state</span> <span class=o>=</span> <span class=p>[],</span> <span class=n>action</span><span class=p>)</span> <span class=o>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>switch</span><span class=p>(</span><span class=n>action</span><span class=o>.</span><span class=n>type</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>case</span> <span class=s1>&#39;NEW_NOTE&#39;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=p>[</span><span class=o>...</span><span class=n>state</span><span class=p>,</span> <span class=n>action</span><span class=o>.</span><span class=n>data</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>        <span class=k>case</span> <span class=s1>&#39;TOGGLE_IMPORTANCE&#39;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=o>//</span> <span class=o>...</span>
+</span></span><span class=line><span class=cl>        <span class=n>default</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=n>state</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>export</span> <span class=k>const</span> <span class=n>createNote</span> <span class=o>=</span> <span class=p>(</span><span class=n>content</span><span class=p>)</span> <span class=o>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>type</span><span class=p>:</span> <span class=s1>&#39;NEW_NOTE&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>data</span><span class=p>:</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>content</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=n>important</span><span class=p>:</span> <span class=bp>false</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=n>id</span><span class=p>:</span> <span class=n>generateId</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>export</span> <span class=n>default</span> <span class=n>noteReducer</span>
+</span></span></code></pre></td></tr></table></div></div><p>或者使用 toolkit 中的 createSlice 直接创建：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=o>//</span> <span class=n>noteReducer</span><span class=o>.</span><span class=n>js</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>import</span> <span class=p>{</span> <span class=n>createSlice</span> <span class=p>}</span> <span class=n>from</span> <span class=s1>&#39;@reduxjs/toolkit&#39;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>const</span> <span class=n>initialState</span> <span class=o>=</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>    <span class=o>...</span>
+</span></span><span class=line><span class=cl><span class=p>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>const</span> <span class=n>generateId</span> <span class=o>=</span> <span class=p>()</span> <span class=o>=&gt;</span> <span class=p>{</span> <span class=o>...</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>const</span> <span class=n>noteSlice</span> <span class=o>=</span> <span class=n>createSlice</span><span class=p>({</span>
+</span></span><span class=line><span class=cl>  <span class=n>name</span><span class=p>:</span> <span class=s1>&#39;notes&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=n>initialState</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=n>reducers</span><span class=p>:</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>createNote</span><span class=p>(</span><span class=n>state</span><span class=p>,</span> <span class=n>action</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=k>const</span> <span class=n>content</span> <span class=o>=</span> <span class=n>action</span><span class=o>.</span><span class=n>payload</span>
+</span></span><span class=line><span class=cl>      <span class=n>state</span><span class=o>.</span><span class=n>push</span><span class=p>({</span>
+</span></span><span class=line><span class=cl>        <span class=n>content</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>important</span><span class=p>:</span> <span class=bp>false</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>id</span><span class=p>:</span> <span class=n>generateId</span><span class=p>(),</span>
+</span></span><span class=line><span class=cl>      <span class=p>})</span>
+</span></span><span class=line><span class=cl>    <span class=p>},</span>
+</span></span><span class=line><span class=cl>  <span class=p>},</span>
+</span></span><span class=line><span class=cl><span class=p>})</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>export</span> <span class=k>const</span> <span class=p>{</span> <span class=n>createNote</span> <span class=p>}</span> <span class=o>=</span> <span class=n>noteSlice</span><span class=o>.</span><span class=n>actions</span>
+</span></span><span class=line><span class=cl><span class=k>export</span> <span class=n>default</span> <span class=n>noteSlice</span><span class=o>.</span><span class=n>reducer</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=在-app-组件或者是单独的-component-中中使用-dispatch-更改状态-selector-访问数据>在 App 组件（或者是单独的 component 中）中使用 dispatch 更改状态, selector 访问数据<a hidden class=anchor aria-hidden=true href=#在-app-组件或者是单独的-component-中中使用-dispatch-更改状态-selector-访问数据>#</a></h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=n>import</span> <span class=p>{</span> <span class=n>createNote</span> <span class=p>}</span> <span class=n>from</span> <span class=s1>&#39;./reducers/noteReducer&#39;</span>
+</span></span><span class=line><span class=cl><span class=n>import</span> <span class=p>{</span> <span class=n>useSelector</span><span class=p>,</span> <span class=n>useDispatch</span> <span class=p>}</span> <span class=n>from</span> <span class=s1>&#39;react-redux&#39;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>const</span> <span class=n>App</span> <span class=o>=</span> <span class=p>()</span> <span class=o>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>const</span> <span class=n>dispatch</span> <span class=o>=</span> <span class=n>useDispatch</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=k>const</span> <span class=n>notes</span> <span class=o>=</span> <span class=n>useSelector</span><span class=p>(</span><span class=n>state</span> <span class=o>=&gt;</span> <span class=n>state</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>const</span> <span class=n>addNote</span> <span class=o>=</span> <span class=p>(</span><span class=n>event</span><span class=p>)</span> <span class=o>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>event</span><span class=o>.</span><span class=n>preventDefault</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=k>const</span> <span class=n>content</span> <span class=o>=</span> <span class=n>event</span><span class=o>.</span><span class=n>target</span><span class=o>.</span><span class=n>note</span><span class=o>.</span><span class=n>value</span>
+</span></span><span class=line><span class=cl>        <span class=n>event</span><span class=o>.</span><span class=n>target</span><span class=o>.</span><span class=n>note</span><span class=o>.</span><span class=n>value</span> <span class=o>=</span> <span class=s1>&#39;&#39;</span>
+</span></span><span class=line><span class=cl>        <span class=n>dispatch</span><span class=p>(</span><span class=n>createNote</span><span class=p>(</span><span class=n>content</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=o>&lt;</span><span class=n>div</span><span class=o>&gt;</span>
+</span></span><span class=line><span class=cl>            <span class=o>&lt;</span><span class=n>form</span> <span class=n>onSubmit</span><span class=o>=</span><span class=p>{</span><span class=n>addNote</span><span class=p>}</span><span class=o>&gt;</span>
+</span></span><span class=line><span class=cl>                <span class=o>&lt;</span><span class=n>input</span> <span class=n>name</span><span class=o>=</span><span class=s2>&#34;note&#34;</span> <span class=o>/&gt;</span>
+</span></span><span class=line><span class=cl>                <span class=o>&lt;</span><span class=n>button</span> <span class=n>type</span><span class=o>=</span><span class=s2>&#34;submit&#34;</span><span class=o>&gt;</span><span class=n>add</span><span class=o>&lt;/</span><span class=n>button</span><span class=o>&gt;</span>
+</span></span><span class=line><span class=cl>            <span class=o>&lt;/</span><span class=n>form</span><span class=o>&gt;</span>
+</span></span><span class=line><span class=cl>            <span class=o>//</span> <span class=o>...</span>
+</span></span><span class=line><span class=cl>        <span class=o>&lt;/</span><span class=n>div</span><span class=o>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>export</span> <span class=n>default</span> <span class=n>App</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=react-query>React Query<a hidden class=anchor aria-hidden=true href=#react-query>#</a></h2><p>在处理复杂业务时，使用 react query 处理缓存和同步可以减少 useState 和 useEffect 的使用。
+因此在实际应用中，react query 可以用于处理核心的数据流，useState 则用于存储局部（组件内部）有用的状态</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>npm install @tanstack/react-query
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=o>//</span> <span class=n>main</span><span class=o>.</span><span class=n>jsx</span>
+</span></span><span class=line><span class=cl><span class=n>import</span> <span class=p>{</span> <span class=n>QueryClient</span><span class=p>,</span> <span class=n>QueryClientProvider</span> <span class=p>}</span> <span class=n>from</span> <span class=s1>&#39;@tanstack/react-query&#39;</span>
+</span></span><span class=line><span class=cl><span class=k>const</span> <span class=n>queryClient</span> <span class=o>=</span> <span class=n>new</span> <span class=n>QueryClient</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>createRoot</span><span class=p>(</span><span class=n>document</span><span class=o>.</span><span class=n>getElementById</span><span class=p>(</span><span class=s1>&#39;root&#39;</span><span class=p>))</span><span class=o>.</span><span class=n>render</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>  <span class=o>&lt;</span><span class=n>QueryClientProvider</span> <span class=n>client</span><span class=o>=</span><span class=p>{</span><span class=n>queryClient</span><span class=p>}</span><span class=o>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=o>&lt;</span><span class=n>App</span> <span class=o>/&gt;</span>
+</span></span><span class=line><span class=cl>  <span class=o>&lt;/</span><span class=n>QueryClientProvider</span><span class=o>&gt;</span>
+</span></span><span class=line><span class=cl><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>// app.jsx
+</span></span><span class=line><span class=cl>import { useQuery } from &#39;@tanstack/react-query&#39;
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=k>export</span> <span class=k>const</span> <span class=n>createNote</span> <span class=o>=</span> <span class=n>async</span> <span class=p>(</span><span class=n>newNote</span><span class=p>)</span> <span class=o>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=k>const</span> <span class=n>options</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>method</span><span class=p>:</span> <span class=s1>&#39;POST&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>headers</span><span class=p>:</span> <span class=p>{</span> <span class=s1>&#39;Content-Type&#39;</span><span class=p>:</span> <span class=s1>&#39;application/json&#39;</span> <span class=p>},</span>
+</span></span><span class=line><span class=cl>    <span class=n>body</span><span class=p>:</span> <span class=n>JSON</span><span class=o>.</span><span class=n>stringify</span><span class=p>(</span><span class=n>newNote</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>  <span class=k>const</span> <span class=n>response</span> <span class=o>=</span> <span class=n>await</span> <span class=n>fetch</span><span class=p>(</span><span class=n>baseUrl</span><span class=p>,</span> <span class=n>options</span><span class=p>)</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>  <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=n>response</span><span class=o>.</span><span class=n>ok</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>throw</span> <span class=n>new</span> <span class=n>Error</span><span class=p>(</span><span class=s1>&#39;Failed to create note&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=n>await</span> <span class=n>response</span><span class=o>.</span><span class=n>json</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=usecontext>useContext<a hidden class=anchor aria-hidden=true href=#usecontext>#</a></h2><p>使用 Context 处理不怎么变但到处都要用到的数据，减少 props 在组件间的传递</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=o>//</span> <span class=n>CounterContext</span><span class=o>.</span><span class=n>jsx</span>
+</span></span><span class=line><span class=cl><span class=n>import</span> <span class=p>{</span> <span class=n>createContext</span> <span class=p>}</span> <span class=n>from</span> <span class=s1>&#39;react&#39;</span>
+</span></span><span class=line><span class=cl><span class=k>const</span> <span class=n>CounterContext</span> <span class=o>=</span> <span class=n>createContext</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=k>export</span> <span class=n>default</span> <span class=n>CounterContext</span>
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=o>//</span> <span class=err>在</span> <span class=n>App</span><span class=o>.</span><span class=n>jsx</span> <span class=err>中使用事例</span>
+</span></span><span class=line><span class=cl><span class=o>//</span> <span class=err>用一个组件包裹</span> <span class=n>App</span>
+</span></span><span class=line><span class=cl><span class=n>import</span> <span class=n>CounterContext</span> <span class=n>from</span> <span class=s1>&#39;./CounterContext&#39;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>const</span> <span class=n>App</span> <span class=o>=</span> <span class=p>()</span> <span class=o>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=k>const</span> <span class=p>[</span><span class=n>counter</span><span class=p>,</span> <span class=n>counterDispatch</span><span class=p>]</span> <span class=o>=</span> <span class=n>useReducer</span><span class=p>(</span><span class=n>counterReducer</span><span class=p>,</span> <span class=mi>0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>    <span class=o>&lt;</span><span class=n>CounterContext</span><span class=o>.</span><span class=n>Provider</span> <span class=n>value</span><span class=o>=</span><span class=p>{{</span> <span class=n>counter</span><span class=p>,</span> <span class=n>counterDispatch</span> <span class=p>}}</span><span class=o>&gt;</span>
+</span></span><span class=line><span class=cl>      <span class=o>&lt;</span><span class=n>div</span><span class=o>&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=o>//</span> <span class=o>...</span>
+</span></span><span class=line><span class=cl>      <span class=o>&lt;/</span><span class=n>div</span><span class=o>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=o>&lt;/</span><span class=n>CounterContext</span><span class=o>.</span><span class=n>Provider</span><span class=o>&gt;</span>
+</span></span><span class=line><span class=cl>  <span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=o>//</span> <span class=err>使用</span> <span class=n>context</span> <span class=err>中存储的数据</span>
+</span></span><span class=line><span class=cl><span class=n>import</span> <span class=p>{</span> <span class=n>useContext</span> <span class=p>}</span> <span class=n>from</span> <span class=s1>&#39;react&#39;</span>
+</span></span><span class=line><span class=cl><span class=n>import</span> <span class=n>CounterContext</span> <span class=n>from</span> <span class=s1>&#39;./CounterContext&#39;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>const</span> <span class=n>Display</span> <span class=o>=</span> <span class=p>()</span> <span class=o>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=k>const</span> <span class=p>{</span> <span class=n>counter</span> <span class=p>}</span> <span class=o>=</span> <span class=n>useContext</span><span class=p>(</span><span class=n>CounterContext</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=o>&lt;</span><span class=n>div</span><span class=o>&gt;</span><span class=p>{</span><span class=n>counter</span><span class=p>}</span><span class=o>&lt;/</span><span class=n>div</span><span class=o>&gt;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=usereducer>useReducer<a hidden class=anchor aria-hidden=true href=#usereducer>#</a></h2><p>改变局部状态</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=n>import</span> <span class=p>{</span> <span class=n>useReducer</span> <span class=p>}</span> <span class=n>from</span> <span class=s1>&#39;react&#39;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>const</span> <span class=n>counterReducer</span> <span class=o>=</span> <span class=p>(</span><span class=n>state</span><span class=p>,</span> <span class=n>action</span><span class=p>)</span> <span class=o>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=k>switch</span> <span class=p>(</span><span class=n>action</span><span class=o>.</span><span class=n>type</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>case</span> <span class=s1>&#39;INC&#39;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>      <span class=k>return</span> <span class=n>state</span> <span class=o>+</span> <span class=mi>1</span>
+</span></span><span class=line><span class=cl>    <span class=k>case</span> <span class=s1>&#39;DEC&#39;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>      <span class=k>return</span> <span class=n>state</span> <span class=o>-</span> <span class=mi>1</span>
+</span></span><span class=line><span class=cl>    <span class=k>case</span> <span class=s1>&#39;ZERO&#39;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>      <span class=k>return</span> <span class=mi>0</span>
+</span></span><span class=line><span class=cl>    <span class=n>default</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>      <span class=k>return</span> <span class=n>state</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>const</span> <span class=n>App</span> <span class=o>=</span> <span class=p>()</span> <span class=o>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=k>const</span> <span class=p>[</span><span class=n>counter</span><span class=p>,</span> <span class=n>counterDispatch</span><span class=p>]</span> <span class=o>=</span> <span class=n>useReducer</span><span class=p>(</span><span class=n>counterReducer</span><span class=p>,</span> <span class=mi>0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>    <span class=o>&lt;</span><span class=n>div</span><span class=o>&gt;</span>
+</span></span><span class=line><span class=cl>      <span class=o>&lt;</span><span class=n>div</span><span class=o>&gt;</span><span class=p>{</span><span class=n>counter</span><span class=p>}</span><span class=o>&lt;/</span><span class=n>div</span><span class=o>&gt;</span>
+</span></span><span class=line><span class=cl>      <span class=o>&lt;</span><span class=n>div</span><span class=o>&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=o>&lt;</span><span class=n>button</span> <span class=n>onClick</span><span class=o>=</span><span class=p>{()</span> <span class=o>=&gt;</span> <span class=n>counterDispatch</span><span class=p>({</span> <span class=n>type</span><span class=p>:</span> <span class=s1>&#39;INC&#39;</span> <span class=p>})}</span><span class=o>&gt;+&lt;/</span><span class=n>button</span><span class=o>&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=o>&lt;</span><span class=n>button</span> <span class=n>onClick</span><span class=o>=</span><span class=p>{()</span> <span class=o>=&gt;</span> <span class=n>counterDispatch</span><span class=p>({</span> <span class=n>type</span><span class=p>:</span> <span class=s1>&#39;DEC&#39;</span> <span class=p>})}</span><span class=o>&gt;-&lt;/</span><span class=n>button</span><span class=o>&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=o>&lt;</span><span class=n>button</span> <span class=n>onClick</span><span class=o>=</span><span class=p>{()</span> <span class=o>=&gt;</span> <span class=n>counterDispatch</span><span class=p>({</span> <span class=n>type</span><span class=p>:</span> <span class=s1>&#39;ZERO&#39;</span> <span class=p>})}</span><span class=o>&gt;</span><span class=mi>0</span><span class=o>&lt;/</span><span class=n>button</span><span class=o>&gt;</span>
+</span></span><span class=line><span class=cl>      <span class=o>&lt;/</span><span class=n>div</span><span class=o>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=o>&lt;/</span><span class=n>div</span><span class=o>&gt;</span>
+</span></span><span class=line><span class=cl>  <span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>export</span> <span class=n>default</span> <span class=n>App</span>
+</span></span></code></pre></td></tr></table></div></div><h1 id=part-7>Part 7<a hidden class=anchor aria-hidden=true href=#part-7>#</a></h1></div><footer class=post-footer><ul class=post-tags></ul><nav class=paginav><a class=prev href=https://oooldgreen.github.io/posts/daily/hello2026/><span class=title>« Prev</span><br><span>Happy New Year 2026</span>
+</a><a class=next href=https://oooldgreen.github.io/posts/cs/cs61b/><span class=title>Next »</span><br><span>CS61B 2025Fall</span></a></nav><div class=share-buttons><a target=_blank rel="noopener noreferrer" aria-label="share Full Stack Helsinki 2 on twitter" href="https://twitter.com/intent/tweet/?text=Full%20Stack%20Helsinki%202&amp;url=https%3a%2f%2foooldgreen.github.io%2fposts%2fcs%2ffull-stack-helsinki2%2f&amp;hashtags="><svg viewBox="0 0 512 512" height="30" width="30" fill="currentColor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zM195.519 424.544c135.939.0 210.268-112.643 210.268-210.268.0-3.218.0-6.437-.153-9.502 14.406-10.421 26.973-23.448 36.935-38.314-13.18 5.824-27.433 9.809-42.452 11.648 15.326-9.196 26.973-23.602 32.49-40.92-14.252 8.429-30.038 14.56-46.896 17.931-13.487-14.406-32.644-23.295-53.946-23.295-40.767.0-73.87 33.104-73.87 73.87.0 5.824.613 11.494 1.992 16.858-61.456-3.065-115.862-32.49-152.337-77.241-6.284 10.881-9.962 23.601-9.962 37.088.0 25.594 13.027 48.276 32.95 61.456-12.107-.307-23.448-3.678-33.41-9.196v.92c0 35.862 25.441 65.594 59.311 72.49-6.13 1.686-12.72 2.606-19.464 2.606-4.751.0-9.348-.46-13.946-1.38 9.349 29.426 36.628 50.728 68.965 51.341-25.287 19.771-57.164 31.571-91.8 31.571-5.977.0-11.801-.306-17.625-1.073 32.337 21.15 71.264 33.41 112.95 33.41z"/></svg>
+</a><a target=_blank rel="noopener noreferrer" aria-label="share Full Stack Helsinki 2 on reddit" href="https://reddit.com/submit?url=https%3a%2f%2foooldgreen.github.io%2fposts%2fcs%2ffull-stack-helsinki2%2f&title=Full%20Stack%20Helsinki%202"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentColor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zM446 265.638c0-22.964-18.616-41.58-41.58-41.58-11.211.0-21.361 4.457-28.841 11.666-28.424-20.508-67.586-33.757-111.204-35.278l18.941-89.121 61.884 13.157c.756 15.734 13.642 28.29 29.56 28.29 16.407.0 29.706-13.299 29.706-29.701.0-16.403-13.299-29.702-29.706-29.702-11.666.0-21.657 6.792-26.515 16.578l-69.105-14.69c-1.922-.418-3.939-.042-5.585 1.036-1.658 1.073-2.811 2.761-3.224 4.686l-21.152 99.438c-44.258 1.228-84.046 14.494-112.837 35.232-7.468-7.164-17.589-11.591-28.757-11.591-22.965.0-41.585 18.616-41.585 41.58.0 16.896 10.095 31.41 24.568 37.918-.639 4.135-.99 8.328-.99 12.576.0 63.977 74.469 115.836 166.33 115.836s166.334-51.859 166.334-115.836c0-4.218-.347-8.387-.977-12.493 14.564-6.47 24.735-21.034 24.735-38.001zM326.526 373.831c-20.27 20.241-59.115 21.816-70.534 21.816-11.428.0-50.277-1.575-70.522-21.82-3.007-3.008-3.007-7.882.0-10.889 3.003-2.999 7.882-3.003 10.885.0 12.777 12.781 40.11 17.317 59.637 17.317 19.522.0 46.86-4.536 59.657-17.321 3.016-2.999 7.886-2.995 10.885.008 3.008 3.011 3.003 7.882-.008 10.889zm-5.23-48.781c-16.373.0-29.701-13.324-29.701-29.698.0-16.381 13.328-29.714 29.701-29.714 16.378.0 29.706 13.333 29.706 29.714.0 16.374-13.328 29.698-29.706 29.698zM160.91 295.348c0-16.381 13.328-29.71 29.714-29.71 16.369.0 29.689 13.329 29.689 29.71.0 16.373-13.32 29.693-29.689 29.693-16.386.0-29.714-13.32-29.714-29.693z"/></svg>
+</a><a target=_blank rel="noopener noreferrer" aria-label="share Full Stack Helsinki 2 on facebook" href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2foooldgreen.github.io%2fposts%2fcs%2ffull-stack-helsinki2%2f"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentColor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H342.978V319.085h66.6l12.672-82.621h-79.272v-53.617c0-22.603 11.073-44.636 46.58-44.636H425.6v-70.34s-32.71-5.582-63.982-5.582c-65.288.0-107.96 39.569-107.96 111.204v62.971h-72.573v82.621h72.573V512h-191.104c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892z"/></svg>
+</a><a target=_blank rel="noopener noreferrer" aria-label="share Full Stack Helsinki 2 on whatsapp" href="https://api.whatsapp.com/send?text=Full%20Stack%20Helsinki%202%20-%20https%3a%2f%2foooldgreen.github.io%2fposts%2fcs%2ffull-stack-helsinki2%2f"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentColor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zm-58.673 127.703c-33.842-33.881-78.847-52.548-126.798-52.568-98.799.0-179.21 80.405-179.249 179.234-.013 31.593 8.241 62.428 23.927 89.612l-25.429 92.884 95.021-24.925c26.181 14.28 55.659 21.807 85.658 21.816h.074c98.789.0 179.206-80.413 179.247-179.243.018-47.895-18.61-92.93-52.451-126.81zM263.976 403.485h-.06c-26.734-.01-52.954-7.193-75.828-20.767l-5.441-3.229-56.386 14.792 15.05-54.977-3.542-5.637c-14.913-23.72-22.791-51.136-22.779-79.287.033-82.142 66.867-148.971 149.046-148.971 39.793.014 77.199 15.531 105.329 43.692 28.128 28.16 43.609 65.592 43.594 105.4-.034 82.149-66.866 148.983-148.983 148.984zm81.721-111.581c-4.479-2.242-26.499-13.075-30.604-14.571-4.105-1.495-7.091-2.241-10.077 2.241-2.986 4.483-11.569 14.572-14.182 17.562-2.612 2.988-5.225 3.364-9.703 1.12-4.479-2.241-18.91-6.97-36.017-22.23C231.8 264.15 222.81 249.484 220.198 245s-.279-6.908 1.963-9.14c2.016-2.007 4.48-5.232 6.719-7.847 2.24-2.615 2.986-4.484 4.479-7.472 1.493-2.99.747-5.604-.374-7.846-1.119-2.241-10.077-24.288-13.809-33.256-3.635-8.733-7.327-7.55-10.077-7.688-2.609-.13-5.598-.158-8.583-.158-2.986.0-7.839 1.121-11.944 5.604-4.105 4.484-15.675 15.32-15.675 37.364.0 22.046 16.048 43.342 18.287 46.332 2.24 2.99 31.582 48.227 76.511 67.627 10.685 4.615 19.028 7.371 25.533 9.434 10.728 3.41 20.492 2.929 28.209 1.775 8.605-1.285 26.499-10.833 30.231-21.295 3.732-10.464 3.732-19.431 2.612-21.298-1.119-1.869-4.105-2.99-8.583-5.232z"/></svg>
+</a><a target=_blank rel="noopener noreferrer" aria-label="share Full Stack Helsinki 2 on telegram" href="https://telegram.me/share/url?text=Full%20Stack%20Helsinki%202&amp;url=https%3a%2f%2foooldgreen.github.io%2fposts%2fcs%2ffull-stack-helsinki2%2f"><svg viewBox="2 2 28 28" height="30" width="30" fill="currentColor"><path d="M26.49 29.86H5.5a3.37 3.37.0 01-2.47-1 3.35 3.35.0 01-1-2.47V5.48A3.36 3.36.0 013 3 3.37 3.37.0 015.5 2h21A3.38 3.38.0 0129 3a3.36 3.36.0 011 2.46V26.37a3.35 3.35.0 01-1 2.47 3.38 3.38.0 01-2.51 1.02zm-5.38-6.71a.79.79.0 00.85-.66L24.73 9.24a.55.55.0 00-.18-.46.62.62.0 00-.41-.17q-.08.0-16.53 6.11a.59.59.0 00-.41.59.57.57.0 00.43.52l4 1.24 1.61 4.83a.62.62.0 00.63.43.56.56.0 00.4-.17L16.54 20l4.09 3A.9.9.0 0021.11 23.15zM13.8 20.71l-1.21-4q8.72-5.55 8.78-5.55c.15.0.23.0.23.16a.18.18.0 010 .06s-2.51 2.3-7.52 6.8z"/></svg></a></div></footer></article><script src=https://utteranc.es/client.js repo=OooldGreen/blog-sources issue-term=pathname theme=github-light crossorigin=anonymous async></script></main><footer class=footer><footer class=entry-footer><div class=social-icons></div></footer><span>&copy; 2026 <a href=https://oooldgreen.github.io/>Snow Cabin</a></span>
+<span>Powered by
+<a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a> &
+<a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg viewBox="0 0 12 6" fill="currentColor"><path d="M12 6H0l6-6z"/></svg>
+</a><a href=/search aria-label=search-link title=Search class=search-link id=search-link accesskey=/><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+</a><script>let menu=document.getElementById("menu");menu&&(menu.scrollLeft=localStorage.getItem("menu-scroll-position"),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}),document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var t=this.getAttribute("href").substr(1);window.matchMedia("(prefers-reduced-motion: reduce)").matches?document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView({behavior:"smooth"}),t==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${t}`)})})</script><script>var mybutton=document.getElementById("top-link"),mybutton2=document.getElementById("search-link");window.onscroll=function(){document.body.scrollTop>400||document.documentElement.scrollTop>400?(mybutton.style.visibility="visible",mybutton.style.opacity="1",mybutton2.style.visibility="visible",mybutton2.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0",mybutton2.style.visibility="hidden",mybutton2.style.opacity="0")}</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{document.body.className.includes("dark")?(document.body.classList.remove("dark"),localStorage.setItem("pref-theme","light")):(document.body.classList.add("dark"),localStorage.setItem("pref-theme","dark"))})</script><script>document.querySelectorAll("pre > code").forEach(e=>{const n=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerHTML="copy";function s(){t.innerHTML="copied!",setTimeout(()=>{t.innerHTML="copy"},2e3)}t.addEventListener("click",t=>{if("clipboard"in navigator){navigator.clipboard.writeText(e.textContent),s();return}const n=document.createRange();n.selectNodeContents(e);const o=window.getSelection();o.removeAllRanges(),o.addRange(n);try{document.execCommand("copy"),s()}catch{}o.removeRange(n)}),n.classList.contains("highlight")?n.appendChild(t):n.parentNode.firstChild==n||(e.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?e.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(t):e.parentNode.appendChild(t))})</script></body></html>
